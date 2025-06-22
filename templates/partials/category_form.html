@@ -1,0 +1,22 @@
+{% load static %}
+<div class="modal-header">
+    <h3>{{ category|yesno:"Edit Category,Add Category" }}</h3>
+    <button class="modal-close" type="button" aria-label="Close modal">×</button>
+</div>
+<form method="POST" action="{% if category %}{% url 'news:edit_category' category.pk %}{% else %}{% url 'news:add_category' %}{% endif %}" 
+      class="post-form">
+    {% csrf_token %}
+    <div class="modal-body">
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn-secondary">Cancel</button>
+        <button type="submit" class="btn-primary">Save</button>
+    </div>
+</form>

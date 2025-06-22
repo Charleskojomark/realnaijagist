@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Contact Us - RealNaijaGist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <main class="main-content">
+        <h1 class="category-title">Contact Us</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="{% if message.tags == 'success' %}newsletter-success{% else %}newsletter-error{% endif %}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <p>We'd love to hear from you! Fill out the form below to get in touch.</p>
+        <form class="newsletter-form" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" class="newsletter-input" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="newsletter-input" placeholder="Your email address" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea name="message" id="message" class="newsletter-input" placeholder="Your message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="newsletter-btn">Send Message</button>
+        </form>
+    </main>
+</div>
+{% endblock %}

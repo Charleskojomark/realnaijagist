@@ -1,0 +1,69 @@
+{% load static %}
+<div class="search-filter-container">
+    <div class="search-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" placeholder="Search slides..." name="title" value="{{ query }}"
+               hx-get="{% url 'news:admin_dashboard' %}?section=carousel"
+               hx-target=".table-container"
+               hx-swap="innerHTML"
+               hx-trigger="keyup changed delay:500ms">
+    </div>
+</div>
+
+{% if page_obj %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Subtitle</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Active</th>
+                <th>Order</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for slide in page_obj %}
+                <tr>
+                    <td>{{ slide.title|truncatewords:50 }}</td>
+                    <td>{{ slide.subtitle|truncatewords:5 }}</td>
+                    <td>{{ slide.description|truncatewords:10 }}</td>
+                    <td>
+                        {% if slide.image_webp %}
+                            <img src="{{ slide.image_webp.url }}" alt="{{ slide.image_alt_text }}" style="max-width: 100px;">
+                                {% elif slide.image %}
+                            <img src="{{ slide.image.url }}" alt="{{ slide.image_alt_text }}" style="max-width: 100px;">
+                            {% else %}
+                                <span>-</span>
+                            {% endif %}
+                    </td>
+                    <td>
+                        <span class="status-badge {{ slide.is_active|yesno:'published,draft' }}">
+                            {{ slide.is_active|yesno:'Active,Inactive' }}
+                        </span>
+                    </td>
+                    <td>{{ slide.order }}</td>
+                    <td>
+                        <button hx-get="{% url 'news:edit_carousel_slide' slide.pk %}"
+                                hx-target="#modal-content"
+                                hx-swap="innerHTML"
+                                class="btn-primary small">
+                            Edit</button>
+                        <form method="post" action="{% url 'news:delete_carousel_slide' slide.pk %}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this slide?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-danger small">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7" class="empty-state">No slides available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% include 'partials/pagination.html' %}
+{% else %}
+    <div class="empty-state">No slides found.</div>
+{% endif %}

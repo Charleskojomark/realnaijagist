@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Delete Post - RealNaijaGist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <main class="main-content">
+        <h1 class="category-title">Delete Post</h1>
+        <p>Are you sure you want to delete "<strong>{{ post.title }}</strong>"? This action cannot be undone.</p>
+        <form method="post" class="newsletter-form">
+            {% csrf_token %}
+            <button type="submit" class="newsletter-btn"><i class="fas fa-trash"></i> Confirm Delete</button>
+            <a href="{% url 'news:post_list' %}" class="btn-secondary"><i class="fas fa-times"></i> Cancel</a>
+        </form>
+    </main>
+</div>
+{% endblock %}

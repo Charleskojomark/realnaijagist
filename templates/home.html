@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}RealNaijaGist - Latest News{% endblock %}
+{% block content %}
+{% include 'partials/messages.html' %}
+<section class="search-container">
+    <div class="search-wrapper">
+        <form class="search-box" action="{% url 'news:search' %}" method="get">
+            <input type="text" name="q" class="search-input" placeholder="Search for news..." value="{{ query|default:'' }}">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+        </form>
+        <div class="category-filters">
+            <a href="{% url 'news:home' %}" class="filter-btn {% if not category %}active{% endif %}">All</a>
+            {% for cat in categories %}
+                <a href="{% url 'news:category_detail' cat.slug %}" class="filter-btn {% if category and category.slug == cat.slug %}active{% endif %}">{{ cat.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="hero fade-in">
+    <div class="hero-content">
+        <div class="hero-main">
+            <div class="carousel">
+                <div class="carousel-slides">
+                    {% for slide in carousel_slides %}
+                        <div class="carousel-slide {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter }}">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="{{ slide.get_responsive_images.mobile }}">
+                                <source media="(max-width: 768px)" srcset="{{ slide.get_responsive_images.tablet }}">
+                                <source media="(min-width: 769px)" srcset="{{ slide.get_responsive_images.desktop }}">
+                                <img src="{{ slide.get_image_url }}" alt="{{ slide.image_alt_text|default:slide.title }}" class="hero-image" loading="lazy">
+                            </picture>
+                            <div class="hero-overlay">
+                                <h1 class="hero-title">{{ slide.title }}</h1>
+                                <div class="hero-meta">
+                                    <span><i class="fas fa-user"></i> By {{ slide.post.author.username }}</span>
+                                    <span><i class="fas fa-clock"></i> {{ slide.post.created_at|timesince }} ago</span>
+                                    <span><i class="fas fa-eye"></i> {{ slide.post.views }} views</span>
+                                </div>
+                                <a href="{{ slide.post.get_absolute_url }}" class="btn-primary">Read More</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="carousel-nav">
+                    <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="carousel-dots">
+                    {% for slide in carousel_slides %}
+                        <span class="carousel-dot {% if forloop.first %}active{% endif %}" data-dot="{{ forloop.counter }}"></span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="trending-sidebar">
+            <h3 class="trending-title"><i class="fas fa-fire"></i> Trending Now</h3>
+            {% for post in trending_posts %}
+                <div class="trending-item">
+                    <img src="{{ post.get_responsive_images.thumbnail }}" alt="{{ post.image_alt_text|default:post.title }}" class="trending-image" loading="lazy">
+                    <div class="trending-content">
+                        <h4>{{ post.title|truncatechars:50 }}</h4>
+                        <span>{{ post.created_at|timesince }} ago</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <main class="main-content">
+        <h2 class="category-title">{% if query %}Search Results for "{{ query }}"{% elif category %}Posts in {{ category.name }}{% else %}Latest Posts{% endif %}</h2>
+        <div class="posts-grid" id="postsGrid">
+            {% for post in posts %}
+                <article class="post-card slide-up">
+                    <img src="{{ post.get_responsive_images.thumbnail }}" alt="{{ post.image_alt_text|default:post.title }}" class="post-image" loading="lazy">
+                    <div class="post-content">
+                        <span class="post-category">{{ post.category.name }}</span>
+                        <h2 class="post-title">{{ post.title|truncatechars:50 }}</h2>
+                        <p class="post-excerpt">{{ post.excerpt|truncatechars:100 }}</p>
+                        <div class="post-meta">
+                            <div class="author">
+                                <span>{{ post.author.username }}</span>
+                            </div>
+                            <span>{{ post.created_at|timesince }} ago</span>
+                        </div>
+                        <a href="{{ post.get_absolute_url }}" class="btn-primary">Read More</a>
+                    </div>
+                </article>
+            {% empty %}
+                <p>No posts found.</p>
+            {% endfor %}
+        </div>
+        {% if posts.has_other_pages %}
+            <div class="pagination">
+                {% if posts.has_previous %}
+                    <a href="?page={{ posts.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category.slug }}{% endif %}" class="pagination-btn"><i class="fas fa-chevron-left"></i></a>
+                {% else %}
+                    <span class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></span>
+                {% endif %}
+                {% for num in posts.paginator.page_range %}
+                    <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category.slug }}{% endif %}" class="pagination-btn {% if posts.number == num %}active{% endif %}">{{ num }}</a>
+                {% endfor %}
+                {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category.slug }}{% endif %}" class="pagination-btn"><i class="fas fa-chevron-right"></i></a>
+                {% else %}
+                    <span class="pagination-btn disabled"><i class="fas fa-chevron-right"></i></span>
+                {% endif %}
+            </div>
+        {% endif %}
+    </main>
+    <aside class="sidebar">
+        <div class="widget">
+            <h3 class="widget-title">Popular Posts</h3>
+            {% for post in posts|slice:":3" %}
+                <div class="popular-post">
+                    <img src="{{ post.get_responsive_images.thumbnail }}" alt="{{ post.image_alt_text|default:post.title }}" class="popular-image" loading="lazy">
+                    <div class="popular-content">
+                        <h4>{{ post.title|truncatechars:50 }}</h4>
+                        <span>{{ post.created_at|timesince }} ago • {{ post.views }} views</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </aside>
+</div>
+{% endblock %}

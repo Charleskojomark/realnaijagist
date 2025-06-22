@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add New Post - RealNaijaGist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="auth-container">
+        <h2>Add New Post</h2>
+        <form class="auth-form" action="{% url 'news:add_post' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save Post</button>
+        </form>
+        <p><a href="{% url 'news:admin_dashboard' %}">Back to Dashboard</a></p>
+    </div>
+</div>
+{% endblock %}

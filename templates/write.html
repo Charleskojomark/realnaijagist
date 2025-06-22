@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Write for Us - RealNaijaGist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <main class="main-content">
+        <h1 class="category-title">Write for RealNaijaGist</h1>
+        <p>Do you have a passion for Nigerian entertainment, lifestyle, or news? Join our team of contributors!</p>
+        <h2>Submission Guidelines</h2>
+        <ul>
+            <li>Articles should be original and at least 500 words.</li>
+            <li>Focus on Nigerian culture, entertainment, or lifestyle.</li>
+            <li>Include a brief author bio and headshot.</li>
+        </ul>
+        <h2>How to Submit</h2>
+        <p>Email your pitch or full article to <a href="mailto:write@realnaijagist.com">write@realnaijagist.com</a> or use our <a href="{% url 'news:contact' %}">contact form</a>.</p>
+        <h2>Why Write for Us?</h2>
+        <p>Reach a wide audience, showcase your expertise, and join a community of passionate writers.</p>
+    </main>
+</div>
+{% endblock %}

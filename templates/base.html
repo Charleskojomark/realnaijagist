@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RealNaijaGist{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% block header %}
+    <header class="header">
+        <nav class="nav-container">
+            <a href="{% url 'news:home' %}" class="logo">RealNaijaGist</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="{% url 'news:home' %}" class="{% if request.path == '/' %}active{% endif %}"><i class="fas fa-home"></i> Home</a></li>
+                {% for category in categories|slice:":3" %}
+                    <li><a href="{% url 'news:category_detail' category.slug %}" class="{% if category.slug in request.path %}active{% endif %}"><i class="fas fa-film"></i> {{ category.name }}</a></li>
+                {% endfor %}
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser or user.is_staff %}
+                        <li><a href="{% url 'news:admin_dashboard' %}" class="{% if 'admin_dashboard' in request.path %}active{% endif %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'news:logout' %}" class="btn-secondary"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'news:login' %}" class="btn-secondary"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="{% url 'news:register' %}" class="btn-primary"><i class="fas fa-user-plus"></i> Register</a></li>
+                {% endif %}
+            </ul>
+            <button class="mobile-menu-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+        <div class="nav-overlay" id="navOverlay"></div>
+    </header>
+    {% endblock %}
+
+    <main>
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block footer %}
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About RealNaijaGist</h3>
+                <p>RealNaijaGist is your premier destination for the latest in Nigerian entertainment, lifestyle, and news.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Explore</h3>
+                <ul>
+                    {% for category in categories %}
+                        <li><a href="{% url 'news:category_detail' category.slug %}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{% url 'news:about' %}">About Us</a></li>
+                    <li><a href="{% url 'news:contact' %}">Contact</a></li>
+                    <li><a href="{% url 'news:privacy' %}">Privacy Policy</a></li>
+                    <li><a href="{% url 'news:terms' %}">Terms of Service</a></li>
+                    <li><a href="{% url 'news:advertise' %}">Advertise</a></li>
+                    <li><a href="{% url 'news:write' %}">Write for Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Stay Connected</h3>
+                <form id="newsletterForm" class="newsletter-form" action="{% url 'news:newsletter' %}" method="post">
+                    {% csrf_token %}
+                    <input type="email" name="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="newsletter-btn">Join Our Newsletter</button>
+                </form>
+                <div id="newsletterSuccess" class="message success" style="display: none;">Subscribed successfully!</div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© <span id="currentYear">{{ current_year }}</span> RealNaijaGist. All Rights Reserved.</p>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <!-- <script src="{% static 'js/scripts.js' %}"></script> -->
+    <script defer src="{% static 'js/scripts.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

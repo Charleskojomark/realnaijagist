@@ -1,0 +1,35 @@
+{% load static form_tags %}
+<div class="modal-header">
+    <h3>{{ slide | yesno:"Edit Slide,Add Slide" }}</h3>
+    <button class="modal-close" type="button" aria-label="Close modal">×</button>
+</div>
+<form method="POST" action="{% if slide %}{% url 'news:edit_carousel_slide' slide.pk %}{% else %}{% url 'news:add_carousel_slide' %}{% endif %}" 
+      class="post-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="modal-body">
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% if field.name == 'is_active' %}
+                    <div class="checkbox-wrapper">
+                        {{ field|add_class:"accent-red" }}
+                        <span>{{ field.label }}</span>
+                    </div>
+                {% else %}
+                    {{ field }}
+                {% endif %}
+                {% if field.errors %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn-secondary">Cancel</button>
+        <button type="submit" class="btn-primary">Save</button>
+    </div>
+</form>

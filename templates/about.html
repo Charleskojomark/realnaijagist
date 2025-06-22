@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}About Us - RealNaijaGist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <main class="main-content">
+        <h1 class="category-title">About RealNaijaGist</h1>
+        <p>RealNaijaGist is your premier destination for the latest in Nigerian entertainment, lifestyle, and news. Founded in 2023, our mission is to deliver authentic, engaging, and timely content that celebrates Nigeria's vibrant culture and keeps you informed.</p>
+        <p>Our team of dedicated writers and editors brings you stories that matter, from breaking news to in-depth features on music, movies, fashion, and more. Whether you're a fan of Nollywood, Afrobeats, or want to stay updated on lifestyle trends, RealNaijaGist is your go-to source.</p>
+        <h2>Our Vision</h2>
+        <p>To be the leading platform for Nigerian stories, connecting people with the pulse of the nation.</p>
+        <h2>Contact Us</h2>
+        <p>Have questions or suggestions? Reach out via our <a href="{% url 'news:contact' %}">contact page</a>.</p>
+    </main>
+</div>
+{% endblock %}

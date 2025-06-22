@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Advertise - RealNaijaGist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <main class="main-content">
+        <h1 class="category-title">Advertise with RealNaijaGist</h1>
+        <p>Reach a vibrant audience of Nigerian entertainment and lifestyle enthusiasts through advertising with RealNaijaGist.</p>
+        <h2>Advertising Options</h2>
+        <p>We offer banner ads, sponsored posts, and newsletter placements. Our audience includes engaged readers across Nigeria and the diaspora.</p>
+        <h2>Why Advertise with Us?</h2>
+        <ul>
+            <li>Targeted audience of entertainment and lifestyle fans</li>
+            <li>High engagement with daily visitors</li>
+            <li>Customizable ad packages</li>
+        </ul>
+        <h2>Get Started</h2>
+        <p>Contact our advertising team at <a href="mailto:ads@realnaijagist.com">ads@realnaijagist.com</a> or via our <a href="{% url 'news:contact' %}">contact form</a>.</p>
+    </main>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Privacy Policy - RealNaijaGist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <main class="main-content">
+        <h1 class="category-title">Privacy Policy</h1>
+        <p>At RealNaijaGist, we value your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information.</p>
+        <h2>Information We Collect</h2>
+        <p>We may collect personal information such as your email address when you subscribe to our newsletter or submit a contact form.</p>
+        <h2>How We Use Your Information</h2>
+        <p>Your information is used to send newsletters, respond to inquiries, and improve our services. We do not share your data with third parties without consent.</p>
+        <h2>Cookies</h2>
+        <p>Our website uses cookies to enhance user experience. You can manage cookie preferences in your browser settings.</p>
+        <h2>Contact Us</h2>
+        <p>For questions about this policy, please <a href="{% url 'news:contact' %}">contact us</a>.</p>
+    </main>
+</div>
+{% endblock %}

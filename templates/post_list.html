@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Posts - RealNaijaGist{% endblock %}
+
+{% block content %}
+<div class="container">
+    <main class="main-content">
+        <h1 class="category-title">Manage Posts</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="{% if message.tags == 'success' %}newsletter-success{% else %}newsletter-error{% endif %}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <div class="search-container">
+            <form method="get" class="search-box">
+                <input type="text" name="q" value="{{ query }}" class="search-input" placeholder="Search posts by title or content...">
+                <select name="category" class="search-input">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <a href="{% url 'news:post_create' %}" class="btn-primary" style="display: inline-block; margin: 1rem 0;"><i class="fas fa-plus"></i> Add New Post</a>
+        <div class="posts-grid">
+            {% for post in page_obj %}
+                <article class="post-card">
+                    {% if post.image_url %}
+                        <img src="{{ post.image_url }}" alt="{{ post.title }}" class="post-image" loading="lazy">
+                    {% else %}
+                        <div class="post-image" style="background: var(--light-gray);"></div>
+                    {% endif %}
+                    <div class="post-content">
+                        <span class="post-category">{{ post.category.name }}</span>
+                        <h2 class="post-title">{{ post.title }}</h2>
+                        <p class="post-excerpt">{{ post.excerpt|truncatewords:20 }}</p>
+                        <div class="post-meta">
+                            <span>By {{ post.author.username }}</span>
+                            <span>{{ post.created_at|timesince }} ago</span>
+                            <span>{{ post.views }} views</span>
+                        </div>
+                        <div style="margin-top: 0.5rem;">
+                            <a href="{% url 'news:post_update' post.pk %}" class="btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                            <a href="{% url 'news:post_delete' post.pk %}" class="btn-secondary"><i class="fas fa-trash"></i> Delete</a>
+                        </div>
+                    </div>
+                </article>
+            {% empty %}
+                <p>No posts found.</p>
+            {% endfor %}
+        </div>
+        {% if page_obj.has_other_pages %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="pagination-btn"><i class="fas fa-chevron-left"></i></a>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="pagination-btn {% if page_obj.number == num %}active{% endif %}">{{ num }}</a>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="pagination-btn"><i class="fas fa-chevron-right"></i></a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </main>
+</div>
+{% endblock %}

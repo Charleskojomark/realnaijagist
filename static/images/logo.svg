@@ -1,0 +1,38 @@
+<svg width="300" height="80" viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo Icon Circle -->
+  <circle cx="40" cy="40" r="32" fill="#2B8F47"/>
+  <circle cx="40" cy="40" r="26" fill="#ffffff"/>
+  
+  <!-- RNG Monogram in circle -->
+  <g fill="#2B8F47" font-family="Arial, sans-serif" font-weight="bold" font-size="16">
+    <text x="40" y="46" text-anchor="middle">RNG</text>
+  </g>
+  
+  <!-- Accent elements -->
+  <circle cx="64" cy="16" r="4" fill="#FFB300"/>
+  <rect x="16" y="60" width="8" height="3" rx="1.5" fill="#E53935"/>
+  
+  <!-- Main Text -->
+  <g font-family="Arial, sans-serif">
+    <!-- "Real" in primary green -->
+    <text x="85" y="35" font-size="24" font-weight="700" fill="#2B8F47">Real</text>
+    
+    <!-- "Naija" in golden yellow -->
+    <text x="140" y="35" font-size="24" font-weight="700" fill="#FFB300">Naija</text>
+    
+    <!-- "Gist" in accent red -->
+    <text x="205" y="35" font-size="24" font-weight="700" fill="#E53935">Gist</text>
+  </g>
+  
+  <!-- Tagline -->
+  <text x="85" y="55" font-family="Arial, sans-serif" font-size="12" font-weight="400" fill="#666666">Your Source for Real Nigerian Stories</text>
+  
+  <!-- Decorative elements -->
+  <line x1="85" y1="42" x2="265" y2="42" stroke="#E0E0E0" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Small Nigerian flag-inspired accent -->
+  <rect x="270" y="28" width="18" height="12" rx="2" fill="#E0E0E0" opacity="0.3"/>
+  <rect x="270" y="28" width="6" height="12" rx="2" fill="#2B8F47" opacity="0.7"/>
+  <rect x="276" y="28" width="6" height="12" fill="#ffffff"/>
+  <rect x="282" y="28" width="6" height="12" rx="2" fill="#2B8F47" opacity="0.7"/>
+</svg>
