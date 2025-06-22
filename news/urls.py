@@ -18,6 +18,7 @@ urlpatterns = [
     path('terms/', views.terms, name='terms'),
     path('advertise/', views.advertise, name='advertise'),
     path('write/', views.write, name='write'),
+    path('carousel/<int:pk>/', views.carousel_slide_detail, name='carousel_slide_detail'),
     
     path('tag/<slug:slug>/', views.tag_detail, name='tag_detail'),
     # Admin endpoints

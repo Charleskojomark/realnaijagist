@@ -1,13 +1,14 @@
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.template.loader import render_to_string
 from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse
-from .models import Post, Category, CarouselSlide, NewsletterSubscriber, PostView
+from .models import Post, Category, CarouselSlide, NewsletterSubscriber, PostView, SlideView
 from .forms import CustomUserCreationForm, LoginForm, PostForm, CategoryForm, CarouselSlideForm
 from datetime import datetime, timedelta
 from django.utils import timezone
@@ -19,7 +20,8 @@ from django.db.models import Max, Sum, Q
 from cloudinary.exceptions import BadRequest
 from django.db import IntegrityError
 from taggit.models import Tag
-
+import cloudinary
+import requests
 
 def global_context(request):
     return {
@@ -41,6 +43,9 @@ def home(request):
     posts = Post.objects.select_related('category', 'author').filter(status=Post.PostStatus.PUBLISHED)
     carousel_slides = CarouselSlide.get_active_slides()[:3]
     trending_posts = Post.get_trending_posts(limit=3)
+    popular_posts = Post.objects.filter(
+        status=Post.PostStatus.PUBLISHED
+    ).select_related('category', 'author').order_by('-views')[:3]
     categories = Category.objects.all()
     paginator = Paginator(posts, 4)
     page_number = request.GET.get('page')
@@ -49,6 +54,7 @@ def home(request):
         'posts': page_obj,
         'carousel_slides': carousel_slides,
         'trending_posts': trending_posts,
+        'popular_posts': popular_posts,
         'categories': categories,
         'current_year': datetime.now().year,
     }
@@ -62,8 +68,12 @@ def search(request):
     ).select_related('category', 'author') if query else Post.objects.filter(
         status=Post.PostStatus.PUBLISHED
     ).select_related('category', 'author')
+    carousel_slides = CarouselSlide.get_active_slides().select_related('author')[:5]
+    trending_posts = Post.get_trending_posts(limit=3)
+    popular_posts = Post.objects.filter(
+        status=Post.PostStatus.PUBLISHED
+    ).select_related('category', 'author').order_by('-views')[:3]
     categories = Category.objects.all()
-    carousel_slides = CarouselSlide.get_active_slides()[:5]
     paginator = Paginator(posts, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -72,6 +82,8 @@ def search(request):
         'query': query,
         'categories': categories,
         'carousel_slides': carousel_slides,
+        'trending_posts': trending_posts,
+        'popular_posts': popular_posts,
         'current_year': datetime.now().year,
     })
 
@@ -80,8 +92,12 @@ def category_filter(request, slug):
     posts = Post.objects.filter(
         category=category, status=Post.PostStatus.PUBLISHED
     ).select_related('category', 'author')
+    carousel_slides = CarouselSlide.get_active_slides().select_related('author')[:5]
+    trending_posts = Post.get_trending_posts(limit=3)
+    popular_posts = Post.objects.filter(
+        status=Post.PostStatus.PUBLISHED
+    ).select_related('category', 'author').order_by('-views')[:3]
     categories = Category.objects.all()
-    carousel_slides = CarouselSlide.get_active_slides()[:5]
     paginator = Paginator(posts, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -90,6 +106,8 @@ def category_filter(request, slug):
         'category': category,
         'categories': categories,
         'carousel_slides': carousel_slides,
+        'trending_posts': trending_posts,
+        'popular_posts': popular_posts,
         'current_year': datetime.now().year,
     })
 
@@ -154,7 +172,6 @@ def login_view(request):
                 login(request, user)
                 next_url = request.GET.get('next', 'news:home')
                 messages.success(request, f'Welcome back {username}')
-                print("it worked")
                 return redirect(next_url)
             else:
                 messages.error(request, 'Invalid username or password.')
@@ -315,34 +332,58 @@ def post_update(request, pk):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES, instance=post)
         try:
+            # Check for new uploaded image
             featured_image = request.FILES.get('featured_image')
-            if featured_image and featured_image.size > 10 * 1024 * 1024:
-                form.add_error(
-                    'featured_image',
-                    f"File size too large. Please reduce to less than 10 MB. "
-                    f"Uploaded file is {featured_image.size / (1024 * 1024):.2f} MB."
-                )
+            if featured_image:
+                if featured_image.size > 10 * 1024 * 1024:
+                    form.add_error(
+                        'featured_image',
+                        f"File size too large. Please reduce to less than 10 MB. "
+                        f"Uploaded file is {featured_image.size / (1024 * 1024):.2f} MB."
+                    )
             if form.is_valid():
                 updated_post = form.save(commit=False)
                 updated_post.slug = generate_unique_slug(updated_post.title, Post, instance=post)
                 updated_post.excerpt = updated_post.content[:150] if updated_post.content else ''
                 updated_post.meta_description = updated_post.excerpt or updated_post.content[:160]
                 updated_post.image_alt_text = updated_post.title
-                if updated_post.featured_image:
-                    img = Image.open(updated_post.featured_image)
+
+                # Process new image if uploaded
+                if featured_image:
+                    img = Image.open(featured_image)
                     webp_io = io.BytesIO()
                     img.save(webp_io, format='WEBP', quality=80)
+                    webp_filename = f"{featured_image.name.rsplit('.', 1)[0]}.webp"
                     updated_post.featured_image_webp.save(
-                        f"{updated_post.featured_image.name.rsplit('.', 1)[0]}.webp",
+                        webp_filename,
                         ContentFile(webp_io.getvalue()),
                         save=False
                     )
+                # Optionally process existing Cloudinary image to WebP if no new upload
+                elif updated_post.featured_image and not updated_post.featured_image_webp:
+                    try:
+                        # Fetch image from Cloudinary URL
+                        response = requests.get(updated_post.featured_image.url, stream=True)
+                        response.raise_for_status()
+                        img = Image.open(io.BytesIO(response.content))
+                        webp_io = io.BytesIO()
+                        img.save(webp_io, format='WEBP', quality=80)
+                        webp_filename = f"{updated_post.featured_image.public_id}.webp"
+                        updated_post.featured_image_webp.save(
+                            webp_filename,
+                            ContentFile(webp_io.getvalue()),
+                            save=False
+                        )
+                    except (requests.RequestException, CloudinaryError) as e:
+                        messages.warning(request, f"Failed to generate WebP for existing image: {str(e)}")
+
                 updated_post.cdn_image_url = ''
                 updated_post.save()
                 form.save_m2m()
                 updated_post.meta_keywords = ', '.join([tag.name for tag in updated_post.tags.all()] + [updated_post.category.name]) if updated_post.tags.exists() else updated_post.category.name
                 updated_post.save()
                 messages.success(request, 'Post updated successfully!')
+                
                 if request.headers.get('HX-Request'):
                     context = {
                         'section': 'posts',
@@ -358,10 +399,10 @@ def post_update(request, pk):
                     context = {'form': form, 'post': post}
                     return render(request, 'partials/post_form.html', context)
                 messages.error(request, 'Please correct the errors below.')
-        except BadRequest as e:
+        except CloudinaryError as e:
             form.add_error(
                 'featured_image',
-                f"Cloudinary error: {str(e)}. Please ensure the file is less than 10 MB."
+                f"Cloudinary error: {str(e)}. Please ensure the file is valid and less than 10 MB."
             )
             if request.headers.get('HX-Request'):
                 context = {'form': form, 'post': post}
@@ -381,7 +422,7 @@ def post_update(request, pk):
     
     context = {
         'form': form,
-        'post': post,  # Ensure post is passed for form action
+        'post': post,
         'current_year': datetime.now().year,
     }
     template = 'partials/post_form.html' if request.headers.get('HX-Request') else 'post_form.html'
@@ -487,6 +528,8 @@ def add_carousel_slide(request):
             slide = form.save(commit=False)
             max_order = CarouselSlide.objects.aggregate(Max('order'))['order__max']
             slide.order = (max_order + 1) if max_order is not None else 0
+            if not slide.author:
+                slide.author = request.user
             if slide.image:
                 img = Image.open(slide.image)
                 webp_io = io.BytesIO()
@@ -521,15 +564,41 @@ def edit_carousel_slide(request, pk):
         form = CarouselSlideForm(request.POST, request.FILES, instance=slide)
         if form.is_valid():
             slide = form.save(commit=False)
-            if slide.image:
-                img = Image.open(slide.image)
+            if not slide.author:
+                slide.author = request.user
+
+            # Handle image processing
+            if 'image' in request.FILES:
+                # New image uploaded
+                img = Image.open(request.FILES['image'])
                 webp_io = io.BytesIO()
                 img.save(webp_io, format='WEBP', quality=80)
+                webp_filename = f"{slide.image.name.rsplit('.', 1)[0]}.webp" if slide.image.name else f"carousel/{slide.pk}.webp"
                 slide.image_webp.save(
-                    f"{slide.image.name.rsplit('.', 1)[0]}.webp",
+                    webp_filename,
                     ContentFile(webp_io.getvalue()),
                     save=False
                 )
+            elif slide.image:
+                # No new image uploaded, reuse existing Cloudinary image for WebP if needed
+                if not slide.image_webp:
+                    try:
+                        # Fetch image from Cloudinary
+                        image_url = slide.image.url
+                        response = cloudinary.utils.cloudinary_url(slide.image.public_id, format="jpg")[0]
+                        img_data = requests.get(response).content
+                        img = Image.open(io.BytesIO(img_data))
+                        webp_io = io.BytesIO()
+                        img.save(webp_io, format='WEBP', quality=80)
+                        webp_filename = f"{slide.image.public_id}.webp"
+                        slide.image_webp.save(
+                            webp_filename,
+                            ContentFile(webp_io.getvalue()),
+                            save=False
+                        )
+                    except Exception as e:
+                        messages.warning(request, f"Failed to generate WebP image: {str(e)}")
+
             slide.save()
             messages.success(request, 'Carousel slide updated successfully.')
             if request.headers.get('HX-Request'):
@@ -581,7 +650,6 @@ def delete_subscriber(request, pk):
         return redirect(reverse('news:admin_dashboard') + '?section=subscribers')
     return render(request, '404.html', status=405)
 
-# Duplicate admin views removed (add_post, edit_post, delete_post)
 @login_required
 @user_passes_test(is_admin)
 def admin_dashboard(request):
@@ -589,17 +657,27 @@ def admin_dashboard(request):
     query = request.GET.get('q', '')
     category_filter = request.GET.get('category', '')
     
-    # Calculate stats for dashboard
     last_month = timezone.now() - timedelta(days=30)
+    previous_month = last_month - timedelta(days=30)
+    
     total_posts = Post.objects.count()
     post_growth = Post.objects.filter(created_at__gte=last_month).count() / (total_posts or 1) * 100
     active_categories = Category.objects.count()
     new_categories = Category.objects.filter(created_at__gte=last_month).count()
     subscribers = NewsletterSubscriber.objects.filter(is_active=True).count()
     subscriber_growth = NewsletterSubscriber.objects.filter(subscribed_at__gte=last_month, is_active=True).count() / (subscribers or 1) * 100
-    monthly_views = PostView.objects.filter(viewed_at__gte=last_month).aggregate(total=Sum('post__views'))['total'] or 0
-    previous_month_views = PostView.objects.filter(viewed_at__lt=last_month, viewed_at__gte=timezone.now() - timedelta(days=60)).aggregate(total=Sum('post__views'))['total'] or 1
-    view_change = ((monthly_views - previous_month_views) / previous_month_views) * 100
+    total_slides = CarouselSlide.objects.count()
+    slide_growth = CarouselSlide.objects.filter(created_at__gte=last_month).count() / (total_slides or 1) * 100
+    
+    # Aggregate views
+    monthly_post_views = PostView.objects.filter(viewed_at__gte=last_month).count()
+    previous_post_views = PostView.objects.filter(viewed_at__gte=previous_month, viewed_at__lt=last_month).count()
+    monthly_slide_views = SlideView.objects.filter(viewed_at__gte=last_month).count()
+    previous_slide_views = SlideView.objects.filter(viewed_at__gte=previous_month, viewed_at__lt=last_month).count()
+    
+    monthly_views = monthly_post_views + monthly_slide_views
+    previous_views = (previous_post_views + previous_slide_views) or 1
+    view_change = ((monthly_views - previous_views) / previous_views) * 100
 
     context = {
         'user': request.user,
@@ -615,7 +693,11 @@ def admin_dashboard(request):
             'new_categories': new_categories,
             'subscribers': subscribers,
             'subscriber_growth': round(subscriber_growth, 1),
+            'total_slides': total_slides,
+            'slide_growth': round(slide_growth, 1),
             'monthly_views': monthly_views,
+            'monthly_post_views': monthly_post_views,
+            'monthly_slide_views': monthly_slide_views,
             'view_change': round(view_change, 1),
         },
     }
@@ -653,7 +735,11 @@ def tag_detail(request, slug):
         tags__slug=slug, status=Post.PostStatus.PUBLISHED
     ).select_related('category', 'author')
     categories = Category.objects.all()
-    carousel_slides = CarouselSlide.get_active_slides()[:5]
+    carousel_slides = CarouselSlide.get_active_slides().select_related('author')[:5]
+    trending_posts = Post.get_trending_posts(limit=3)
+    popular_posts = Post.objects.filter(
+        status=Post.PostStatus.PUBLISHED
+    ).select_related('category', 'author').order_by('-views')[:3]
     paginator = Paginator(posts, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -662,5 +748,24 @@ def tag_detail(request, slug):
         'posts': page_obj,
         'categories': categories,
         'carousel_slides': carousel_slides,
+        'trending_posts': trending_posts,
+        'popular_posts': popular_posts,
+        'current_year': datetime.now().year,
+    })
+
+def carousel_slide_detail(request, pk):
+    slide = get_object_or_404(
+        CarouselSlide.objects.select_related('author'),
+        pk=pk, is_active=True
+    )
+    slide.increment_views()
+    categories = Category.objects.all()
+    related_posts = Post.objects.filter(
+        author=slide.author, status=Post.PostStatus.PUBLISHED
+    ).select_related('category', 'author').order_by('-views')[:3]
+    return render(request, 'carousel_slide_detail.html', {
+        'slide': slide,
+        'categories': categories,
+        'related_posts': related_posts,
         'current_year': datetime.now().year,
     })

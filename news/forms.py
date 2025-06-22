@@ -58,6 +58,10 @@ class LoginForm(forms.Form):
 
 
 class PostForm(forms.ModelForm):
+    featured_image = forms.FileField(
+        help_text="Maximum file size is 10MB. Supported formats: JPEG, PNG.",
+        widget=forms.FileInput(attrs={'class': 'form-group'}),
+    )
     class Meta:
         model = Post
         fields = ['title', 'content', 'status', 'category', 'tags', 'featured_image', 'is_trending']
@@ -67,8 +71,11 @@ class PostForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-group'}),
             'category': forms.Select(attrs={'class': 'form-group'}),
             'is_trending': forms.CheckboxInput(attrs={'class': 'form-group'}),
+            'featured_image': forms.FileInput(attrs={'class': 'form-group'}),
         }
-        
+        help_texts = {
+            'featured_image': 'Maximum file size is 10MB. Supported formats: JPEG, PNG.',
+        }
         def clean_featured_image(self):
             featured_image = self.cleaned_data.get('featured_image')
             if featured_image:
@@ -114,4 +121,7 @@ class CarouselSlideForm(forms.ModelForm):
             'image': forms.FileInput(attrs={'class': 'form-group'}),
             'is_active': forms.CheckboxInput(attrs={'class': 'form-group'}),
             'featured_until': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-group'}),
+        }
+        help_texts = {
+            'image': 'Maximum file size is 10MB. Supported formats: JPEG, PNG.',
         }

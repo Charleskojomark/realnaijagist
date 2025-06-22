@@ -78,10 +78,17 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('news:post_detail', kwargs={'slug': self.slug})
 
-    def increment_views(self):
-        """Thread-safe way to increment view count"""
+    def increment_views(self, ip_address=None, user=None, user_agent='', referrer=''):
+        """Thread-safe way to increment view count and record detailed analytics"""
         Post.objects.filter(pk=self.pk).update(views=F('views') + 1)
         self.refresh_from_db(fields=['views'])
+        PostView.objects.create(
+            post=self,
+            ip_address=ip_address or '0.0.0.0',
+            user=user,
+            user_agent=user_agent,
+            referrer=referrer
+        )
 
     def is_published(self):
         return self.status == self.PostStatus.PUBLISHED
@@ -172,11 +179,17 @@ class CarouselSlide(models.Model):
     description = models.TextField(max_length=500, blank=True)
     
     # Images with optimization
-    # image = models.ImageField(upload_to='carousel/')
     image = CloudinaryField('carousel', blank=True, null=True) 
-    
     image_webp = models.ImageField(upload_to='carousel/webp/', blank=True, null=True)
     image_alt_text = models.CharField(max_length=100, blank=True)
+    
+    # Relationships
+    author = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='carousel_slides')
+    
+    # Analytics
+    likes = models.PositiveIntegerField(default=0)
+    views = models.PositiveIntegerField(default=0)
+    shares = models.PositiveIntegerField(default=0)
     
     # Display settings
     is_active = models.BooleanField(default=True)
@@ -191,6 +204,21 @@ class CarouselSlide(models.Model):
 
     def __str__(self):
         return f"{self.title} (Order: {self.order})"
+
+    def get_absolute_url(self):
+        return reverse('news:carousel_slide_detail', kwargs={'pk': self.pk})
+
+    def increment_views(self, ip_address=None, user=None, user_agent='', referrer=''):
+        """Thread-safe way to increment view count and record detailed analytics"""
+        CarouselSlide.objects.filter(pk=self.pk).update(views=F('views') + 1)
+        self.refresh_from_db(fields=['views'])
+        SlideView.objects.create(
+            slide=self,
+            ip_address=ip_address or '0.0.0.0',
+            user=user,
+            user_agent=user_agent,
+            referrer=referrer
+        )
 
     def get_image_url(self, size='original'):
         """Get optimized image URL"""
@@ -242,7 +270,25 @@ class CarouselSlide(models.Model):
         ordering = ['order', '-created_at']
         verbose_name = "Carousel Slide"
         verbose_name_plural = "Carousel Slides"
-        
+
+class SlideView(models.Model):
+    """Track detailed view analytics for carousel slides"""
+    slide = models.ForeignKey(CarouselSlide, on_delete=models.CASCADE, related_name='slide_views')
+    ip_address = models.GenericIPAddressField()
+    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)
+    user_agent = models.TextField(blank=True)
+    referrer = models.URLField(blank=True)
+    viewed_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.slide.title} - {self.viewed_at}'
+
+    class Meta:
+        ordering = ['-viewed_at']
+        indexes = [
+            models.Index(fields=['slide', '-viewed_at']),
+            models.Index(fields=['ip_address', '-viewed_at']),
+        ]        
 
 
 

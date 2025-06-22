@@ -52,7 +52,7 @@
                             Edit</button>
                         <form method="post" action="{% url 'news:delete_carousel_slide' slide.pk %}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this slide?');">
                             {% csrf_token %}
-                            <button type="submit" class="btn-danger small">Delete</button>
+                            <button type="submit" class="btn-danger small" id="btn-delete">Delete</button>
                         </form>
                     </td>
                 </tr>

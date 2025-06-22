@@ -22,31 +22,40 @@
 <section class="hero fade-in">
     <div class="hero-content">
         <div class="hero-main">
-            <div class="carousel">
+            <div class="carousel" role="region" aria-roledescription="carousel">
                 <div class="carousel-slides">
                     {% for slide in carousel_slides %}
                         <div class="carousel-slide {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.counter }}">
-                            <picture>
-                                <source media="(max-width: 480px)" srcset="{{ slide.get_responsive_images.mobile }}">
-                                <source media="(max-width: 768px)" srcset="{{ slide.get_responsive_images.tablet }}">
-                                <source media="(min-width: 769px)" srcset="{{ slide.get_responsive_images.desktop }}">
-                                <img src="{{ slide.get_image_url }}" alt="{{ slide.image_alt_text|default:slide.title }}" class="hero-image" loading="lazy">
-                            </picture>
-                            <div class="hero-overlay">
-                                <h1 class="hero-title">{{ slide.title }}</h1>
-                                <div class="hero-meta">
-                                    <span><i class="fas fa-user"></i> By {{ slide.post.author.username }}</span>
-                                    <span><i class="fas fa-clock"></i> {{ slide.post.created_at|timesince }} ago</span>
-                                    <span><i class="fas fa-eye"></i> {{ slide.post.views }} views</span>
+                            <a href="{{ slide.get_absolute_url }}" aria-label="View details for {{ slide.title }}">
+                                <picture>
+                                    <source media="(max-width: 480px)" srcset="{{ slide.get_responsive_images.mobile }}">
+                                    <source media="(max-width: 768px)" srcset="{{ slide.get_responsive_images.tablet }}">
+                                    <source media="(min-width: 769px)" srcset="{{ slide.get_responsive_images.desktop }}">
+                                    <img src="{{ slide.get_image_url }}" alt="{{ slide.image_alt_text|default:slide.title }}" class="hero-image" loading="lazy">
+                                </picture>
+                                <div class="hero-overlay">
+                                    <h1 class="hero-title">{{ slide.title }}</h1>
+                                    <div class="hero-meta">
+                                        <span><i class="fas fa-eye"></i> {{ slide.views }} views</span>
+                                        <span><i class="fas fa-clock"></i> {{ slide.created_at|timesince }} ago</span>
+                                    </div>
                                 </div>
-                                <a href="{{ slide.post.get_absolute_url }}" class="btn-primary">Read More</a>
-                            </div>
+                            </a>
+                        </div>
+                    {% empty %}
+                        <div class="carousel-slide active">
+                            <a href="#" aria-label="No featured content">
+                                <img src="{% static 'images/placeholder.jpg' %}" alt="No featured content" class="hero-image">
+                                <div class="hero-overlay">
+                                    <h1 class="hero-title">No Featured Content Available</h1>
+                                </div>
+                            </a>
                         </div>
                     {% endfor %}
                 </div>
                 <div class="carousel-nav">
-                    <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
-                    <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+                    <button class="carousel-prev" aria-label="Previous Slide"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-next" aria-label="Next Slide"><i class="fas fa-chevron-right"></i></button>
                 </div>
                 <div class="carousel-dots">
                     {% for slide in carousel_slides %}
@@ -58,13 +67,15 @@
         <div class="trending-sidebar">
             <h3 class="trending-title"><i class="fas fa-fire"></i> Trending Now</h3>
             {% for post in trending_posts %}
-                <div class="trending-item">
+                <a href="{{ post.get_absolute_url }}" class="trending-item" aria-label="View {{ post.title }}">
                     <img src="{{ post.get_responsive_images.thumbnail }}" alt="{{ post.image_alt_text|default:post.title }}" class="trending-image" loading="lazy">
                     <div class="trending-content">
                         <h4>{{ post.title|truncatechars:50 }}</h4>
                         <span>{{ post.created_at|timesince }} ago</span>
                     </div>
-                </div>
+                </a>
+            {% empty %}
+                <p>No trending posts available.</p>
             {% endfor %}
         </div>
     </div>
@@ -83,7 +94,7 @@
                         <p class="post-excerpt">{{ post.excerpt|truncatechars:100 }}</p>
                         <div class="post-meta">
                             <div class="author">
-                                <span>{{ post.author.username }}</span>
+                                <span>{{ post.author.username|title }}</span>
                             </div>
                             <span>{{ post.created_at|timesince }} ago</span>
                         </div>
@@ -115,14 +126,16 @@
     <aside class="sidebar">
         <div class="widget">
             <h3 class="widget-title">Popular Posts</h3>
-            {% for post in posts|slice:":3" %}
-                <div class="popular-post">
+            {% for post in popular_posts %}
+                <a href="{{ post.get_absolute_url }}" class="popular-post" aria-label="View {{ post.title }}">
                     <img src="{{ post.get_responsive_images.thumbnail }}" alt="{{ post.image_alt_text|default:post.title }}" class="popular-image" loading="lazy">
                     <div class="popular-content">
                         <h4>{{ post.title|truncatechars:50 }}</h4>
                         <span>{{ post.created_at|timesince }} ago • {{ post.views }} views</span>
                     </div>
-                </div>
+                </a>
+            {% empty %}
+                <p>No popular posts available.</p>
             {% endfor %}
         </div>
     </aside>

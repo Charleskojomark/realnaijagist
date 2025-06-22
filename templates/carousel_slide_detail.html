@@ -1,0 +1,573 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ slide.title }} - RealNaijaGist{% endblock %}
+
+{% block extra_css %}
+<style>
+:root {
+    /* Color palette */
+    --primary-green: #2B8F47;
+    --accent-red: #E53935;
+    --golden-yellow: #FFB300;
+    --dark-gray: #1a1a1a;
+    --light-gray: #f5f5f5;
+    --white: #ffffff;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --border-color: #e0e0e0;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Modern additions */
+    --slide-gradient-primary: linear-gradient(135deg, #2B8F47 0%, #1E7836 100%);
+    --slide-gradient-accent: linear-gradient(135deg, #E53935 0%, #C62828 100%);
+    --slide-gradient-golden: linear-gradient(135deg, #FFB300 0%, #FF8F00 100%);
+    --slide-glass-bg: rgba(255, 255, 255, 0.25);
+    --slide-glass-border: rgba(255, 255, 255, 0.18);
+    --slide-shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --slide-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+    --slide-border-radius: 16px;
+    --slide-border-radius-lg: 24px;
+    --slide-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animations */
+@keyframes slideFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-fade-in {
+    animation: slideFadeIn 0.8s ease-out;
+}
+
+.slide-slide-up {
+    animation: slideSlideUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.slide-slide-up:nth-child(2) { animation-delay: 0.1s; }
+.slide-slide-up:nth-child(3) { animation-delay: 0.2s; }
+.slide-slide-up:nth-child(4) { animation-delay: 0.3s; }
+
+/* Container and Layout */
+.modern-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Slide Detail Container */
+.modern-slide-detail-container {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+    padding: 40px 0;
+}
+
+.modern-slide-detail-container .modern-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Slide Detail Styling */
+.modern-slide-detail {
+    background: var(--white);
+    border-radius: var(--slide-border-radius-lg);
+    box-shadow: var(--slide-shadow-soft);
+    overflow: hidden;
+    transition: var(--slide-transition);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--slide-glass-border);
+}
+
+.modern-slide-detail:hover {
+    box-shadow: var(--slide-shadow-hover);
+    transform: translateY(-2px);
+}
+
+/* Slide Header */
+.modern-slide-header {
+    padding: 40px 40px 20px;
+    background: linear-gradient(135deg, var(--white) 0%, #f8fafc 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.modern-slide-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--slide-gradient-primary);
+}
+
+.modern-slide-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--text-dark) 0%, #4a5568 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.modern-slide-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.modern-slide-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(43, 143, 71, 0.1);
+    border-radius: 12px;
+    transition: var(--slide-transition);
+}
+
+.modern-slide-meta span:hover {
+    background: rgba(43, 143, 71, 0.15);
+    transform: translateY(-1px);
+}
+
+.modern-slide-meta i {
+    color: var(--primary-green);
+    font-size: 0.85rem;
+}
+
+/* Slide Image */
+.modern-slide-image-container {
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+}
+
+.modern-slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--slide-transition);
+}
+
+.modern-slide-image:hover {
+    transform: scale(1.05);
+}
+
+.modern-slide-image-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+    pointer-events: none;
+}
+
+/* Slide Content */
+.modern-slide-content {
+    padding: 40px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+}
+
+.modern-slide-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 24px;
+    color: var(--text-dark);
+    font-weight: 700;
+    border-left: 4px solid var(--primary-green);
+    padding-left: 16px;
+}
+
+.modern-slide-content p {
+    margin-bottom: 24px;
+}
+
+/* Sidebar */
+.modern-sidebar {
+    animation: slideSlideUp 0.8s ease-out 0.2s both;
+}
+
+.modern-widget {
+    background: var(--white);
+    border-radius: var(--slide-border-radius);
+    box-shadow: var(--slide-shadow-soft);
+    padding: 24px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--slide-glass-border);
+    transition: var(--slide-transition);
+}
+
+.modern-widget:hover {
+    box-shadow: var(--slide-shadow-hover);
+    transform: translateY(-2px);
+}
+
+.modern-widget-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary-green);
+    position: relative;
+}
+
+.modern-widget-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: var(--slide-gradient-golden);
+}
+
+.modern-category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modern-category-list li {
+    margin-bottom: 8px;
+}
+
+.modern-category-list a {
+    display: block;
+    padding: 12px 16px;
+    color: var(--text-dark);
+    text-decoration: none;
+    border-radius: var(--slide-border-radius);
+    transition: var(--slide-transition);
+    border: 1px solid transparent;
+}
+
+.modern-category-list a:hover {
+    background: var(--slide-gradient-primary);
+    color: var(--white);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(43, 143, 71, 0.2);
+}
+
+/* Related Posts */
+.modern-related-posts {
+    background: linear-gradient(135deg, var(--white) 0%, #f8fafc 100%);
+    padding: 60px 0;
+    margin-top: 40px;
+}
+
+.modern-section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.modern-section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: var(--slide-gradient-primary);
+    border-radius: 2px;
+}
+
+.modern-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    margin-top: 40px;
+    justify-items: center;
+}
+
+/* Post Cards */
+.modern-post-card {
+    background: var(--white);
+    border-radius: var(--slide-border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--slide-transition);
+    border: 1px solid var(--slide-glass-border);
+    position: relative;
+    max-width: 360px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modern-post-card:hover {
+    box-shadow: var(--slide-shadow-hover);
+    transform: translateY(-8px);
+}
+
+.modern-post-card .modern-post-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: var(--slide-transition);
+}
+
+.modern-post-card:hover .modern-post-image {
+    transform: scale(1.1);
+}
+
+.modern-post-card .modern-post-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.modern-post-card .modern-post-category {
+    display: inline-block;
+    background: var(--slide-gradient-primary);
+    color: var(--white);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    align-self: flex-start;
+}
+
+.modern-post-card .modern-post-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+}
+
+.modern-post-card .modern-post-excerpt {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex-grow: 1;
+}
+
+.modern-post-card .modern-post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.modern-post-card .modern-author {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.modern-btn-primary {
+    display: inline-block;
+    background: var(--slide-gradient-primary);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--slide-transition);
+    box-shadow: 0 4px 12px rgba(43, 143, 71, 0.3);
+    position: relative;
+    overflow: hidden;
+    align-self: center;
+    text-align: center;
+}
+
+.modern-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: var(--slide-transition);
+}
+
+.modern-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(43, 143, 71, 0.4);
+}
+
+.modern-btn-primary:hover::before {
+    left: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modern-slide-detail-container .modern-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .modern-slide-title {
+        font-size: 2rem;
+    }
+    
+    .modern-slide-header,
+    .modern-slide-content {
+        padding: 24px;
+    }
+    
+    .modern-slide-meta {
+        gap: 16px;
+    }
+    
+    .modern-posts-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modern-container {
+        padding: 0 16px;
+    }
+    
+    .modern-slide-detail-container {
+        padding: 20px 0;
+    }
+    
+    .modern-slide-title {
+        font-size: 1.6rem;
+    }
+    
+    .modern-slide-header,
+    .modern-slide-content {
+        padding: 16px;
+    }
+    
+    .modern-slide-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .modern-post-card {
+        max-width: 100%;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+{% include 'partials/messages.html' %}
+
+<section class="modern-slide-detail-container slide-fade-in">
+    <div class="modern-container">
+        <article class="modern-slide-detail">
+            <header class="modern-slide-header">
+                <h1 class="modern-slide-title">{{ slide.title }}</h1>
+                <div class="modern-slide-meta">
+                    {% if slide.author %}
+                        <span><i class="fas fa-user"></i> By {{ slide.author.username }}</span>
+                    {% endif %}
+                    <span><i class="fas fa-eye"></i> {{ slide.views }} views</span>
+                    <span><i class="fas fa-clock"></i> {{ slide.created_at|timesince }} ago</span>
+                </div>
+            </header>
+            {% if slide.image %}
+                <figure class="modern-slide-image-container">
+                    <picture>
+                        <source media="(max-width: 480px)" srcset="{{ slide.get_responsive_images.mobile }}">
+                        <source media="(max-width: 768px)" srcset="{{ slide.get_responsive_images.tablet }}">
+                        <source media="(min-width: 769px)" srcset="{{ slide.get_responsive_images.desktop }}">
+                        <img src="{{ slide.get_image_url }}" alt="{{ slide.image_alt_text|default:slide.title }}" class="modern-slide-image" loading="lazy">
+                    </picture>
+                </figure>
+            {% endif %}
+            <div class="modern-slide-content">
+                {% if slide.subtitle %}
+                    <h2>{{ slide.subtitle }}</h2>
+                {% endif %}
+                {% if slide.description %}
+                    <p>{{ slide.description|safe }}</p>
+                {% endif %}
+            </div>
+        </article>
+
+        <aside class="modern-sidebar">
+            <div class="modern-widget">
+                <h3 class="modern-widget-title">Categories</h3>
+                <ul class="modern-category-list">
+                    {% for category in categories %}
+                        <li><a href="{% url 'news:category_detail' category.slug %}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+    </div>
+</section>
+
+{% if related_posts %}
+    <section class="modern-related-posts">
+        <div class="modern-container">
+            <h2 class="modern-section-title">Related Posts</h2>
+            <div class="modern-posts-grid">
+                {% for related_post in related_posts %}
+                    <article class="modern-post-card slide-slide-up">
+                        <img src="{{ related_post.get_responsive_images.thumbnail }}" alt="{{ related_post.image_alt_text|default:related_post.title }}" class="modern-post-image" loading="lazy">
+                        <div class="modern-post-content">
+                            <span class="modern-post-category">{{ related_post.category.name }}</span>
+                            <h2 class="modern-post-title">{{ related_post.title|truncatechars:50 }}</h2>
+                            <p class="modern-post-excerpt">{{ related_post.excerpt|truncatechars:100 }}</p>
+                            <div class="modern-post-meta">
+                                <div class="modern-author">
+                                    <span>{{ related_post.author.username }}</span>
+                                </div>
+                                <span>{{ related_post.created_at|timesince }} ago</span>
+                            </div>
+                            <a href="{{ related_post.get_absolute_url }}" class="modern-btn-primary">Read More</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% endblock %}

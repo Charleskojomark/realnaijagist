@@ -34,11 +34,12 @@
         display: flex;
         min-height: 100vh;
         background: linear-gradient(135deg, var(--neutral-50) 0%, var(--neutral-100) 100%);
-        margin-top: 50px; /* Match header height */
+        margin-top: 50px;
+        overflow: visible;
     }
 
     /* Sidebar */
-    .sidebar {
+    #sidebar {
         width: 280px;
         background: var(--white);
         border-right: 1px solid var(--neutral-200);
@@ -48,11 +49,12 @@
         top: 0;
         left: 0;
         height: 100vh;
-        z-index: 1001;
+        z-index: 1002;
         box-shadow: var(--shadow-sm);
         box-sizing: border-box;
         overflow-y: auto;
         transition: left var(--transition);
+        visibility: visible;
     }
 
     .sidebar-header {
@@ -117,30 +119,49 @@
     }
 
     /* Content Area */
-    .content-area {
+    #contentArea {
         flex: 1;
         padding: var(--spacing-3) var(--spacing-4);
         margin-left: 280px;
         box-sizing: border-box;
         overflow-y: auto;
         min-height: 100vh;
+        transition: margin-left var(--transition);
+    }
+
+    #contentArea.active {
+        margin-left: 0;
     }
 
     @media (max-width: 768px) {
         .dashboard-container {
             margin-top: 50px;
         }
-        .content-area {
+        #contentArea {
             margin-left: 0;
             padding: var(--spacing-2);
         }
-        .sidebar {
-            left: -280px !important;
-            top: 50px !important; /* Below header */
-            height: calc(100vh - 50px) !important;
+        #sidebar {
+            left: -280px;
+            top: 50px;
+            height: calc(100vh - 50px);
+            z-index: 1003;
+            visibility: visible;
         }
-        .sidebar.active {
-            left: 0 !important;
+        #sidebar.active {
+            left: 0;
+            visibility: visible;
+        }
+        #toggleSidebar {
+            display: flex;
+            z-index: 1004;
+        }
+        /* Override base.html nav-menu styles */
+        .nav-menu.active {
+            z-index: 1001;
+        }
+        .nav-overlay.active {
+            z-index: 1002;
         }
     }
 
@@ -164,8 +185,7 @@
         margin: 0;
     }
 
-    .toggle-sidebar-btn {
-        display: none;
+    #toggleSidebar {
         background: var(--white);
         color: var(--text-light);
         border: 1px solid var(--neutral-200);
@@ -180,12 +200,25 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        display: none;
     }
 
-    .toggle-sidebar-btn:hover {
+    #toggleSidebar:hover {
         background: var(--neutral-50);
         color: var(--primary-green);
         box-shadow: var(--shadow);
+    }
+
+    /* Override base.html btn-secondary */
+    .btn-secondary {
+        background: var(--neutral-200);
+        color: var(--text-dark);
+        border: 1px solid var(--neutral-200);
+    }
+
+    .btn-secondary:hover {
+        background: var(--neutral-300);
+        color: var(--text-dark);
     }
 
     /* Flash Messages */
@@ -193,7 +226,7 @@
         position: fixed;
         top: var(--spacing-4);
         right: var(--spacing-4);
-        z-index: 1004;
+        z-index: 1005;
         max-width: 300px;
     }
 
@@ -535,7 +568,7 @@
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.6);
-        z-index: 1002;
+        z-index: 1004;
         align-items: center;
         justify-content: center;
         backdrop-filter: blur(5px);
@@ -694,7 +727,7 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-        .content-area {
+        #contentArea {
             padding: var(--spacing-2);
         }
         .modal-content {
@@ -738,7 +771,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1003;
+    z-index: 1004;
     height: 50px;
     display: flex;
     align-items: center;
@@ -764,10 +797,9 @@
 }
 .dashboard-header-content .welcome-text {
     font-size: 0.875rem;
-    font-weight: 700; /* Bolder text */
+    font-weight: 700;
     color: var(--white);
     order: 3;
-    /* flex: 1; */
     text-align: center;
 }
 .dashboard-header-content .btn-secondary {
@@ -775,13 +807,13 @@
     padding: var(--spacing-1) var(--spacing-2);
     font-size: 0.875rem;
 }
-.toggle-sidebar-btn {
+#toggleSidebar {
     order: 1;
     display: none;
 }
 @media (min-width: 769px) {
     .dashboard-header-content {
-        padding-left: 280px; /* Shift for sidebar */
+        padding-left: 280px;
     }
     .dashboard-header-content .logo {
         font-size: 1.5rem;
@@ -796,9 +828,9 @@
         padding: 0 var(--spacing-2);
         gap: var(--spacing-1);
     }
-    .toggle-sidebar-btn {
-        display: flex !important;
-        z-index: 1003 !important;
+    #toggleSidebar {
+        display: flex;
+        z-index: 1005;
     }
     .dashboard-header-content .logo {
         font-size: 1rem;
@@ -816,19 +848,6 @@
         order: 4;
     }
 }
-.btn-secondary {
-    background: var(--neutral-200);
-    color: var(--text-dark);
-    padding: var(--spacing-1) var(--spacing-2);
-    border-radius: var(--radius-lg);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-1);
-}
-.btn-secondary:hover {
-    background: var(--neutral-300);
-}
 </style>
 {% endblock %}
 
@@ -842,7 +861,6 @@
     <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <h2>Admin Dashboard</h2>
-            <!-- Removed: <p>Welcome, {{ user.username|title }}!</p> -->
         </div>
         <nav class="sidebar-nav">
             <a href="{% url 'news:admin_dashboard' %}?section=posts" class="{% if section == 'posts' %}active{% endif %}"><i class="fas fa-newspaper"></i> Posts</a>
@@ -872,6 +890,14 @@
             </div>
             <div class="stat-card">
                 <div class="stat-card-header">
+                    <div class="stat-card-title">Total Slides</div>
+                    <div class="stat-card-icon golden"><i class="fas fa-images"></i></div>
+                </div>
+                <div class="stat-card-value">{{ stats.total_slides|default:0 }}</div>
+                <div class="stat-card-change positive"><i class="fas fa-arrow-up"></i> +{{ stats.slide_growth|default:0 }}% this month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
                     <div class="stat-card-title">Active Categories</div>
                     <div class="stat-card-icon golden"><i class="fas fa-tags"></i></div>
                 </div>
@@ -888,13 +914,21 @@
             </div>
             <div class="stat-card">
                 <div class="stat-card-header">
-                    <div class="stat-card-title">Monthly Views</div>
+                    <div class="stat-card-title">Total Views</div>
                     <div class="stat-card-icon danger"><i class="fas fa-eye"></i></div>
                 </div>
                 <div class="stat-card-value">{{ stats.monthly_views|default:0 }}</div>
                 <div class="stat-card-change {% if stats.view_change|default:0 < 0 %}negative{% else %}positive{% endif %}">
                     <i class="fas fa-arrow-{% if stats.view_change|default:0 < 0 %}down{% else %}up{% endif %}"></i> {{ stats.view_change|default:0 }}% this month
                 </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <div class="stat-card-title">Slide Views</div>
+                    <div class="stat-card-icon primary"><i class="fas fa-eye"></i></div>
+                </div>
+                <div class="stat-card-value">{{ stats.monthly_slide_views|default:0 }}</div>
+                <div class="stat-card-change positive"><i class="fas fa-arrow-up"></i> Monthly slide views</div>
             </div>
         </div>
         <!-- Sections -->
@@ -977,63 +1011,139 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Sidebar Toggle
-        const toggleSidebar = document.getElementById('toggleSidebar');
-        const sidebar = document.getElementById('sidebar');
-        const contentArea = document.getElementById('contentArea');
-        if (toggleSidebar && sidebar && contentArea) {
-            console.log('Dashboard sidebar elements found:', { toggleSidebar, sidebar, contentArea });
-            toggleSidebar.addEventListener('click', () => {
-                console.log('Dashboard sidebar toggle clicked, active:', !sidebar.classList.contains('active'));
-                const isActive = sidebar.classList.toggle('active');
-                contentArea.classList.toggle('active', isActive);
-                document.body.style.overflow = isActive ? 'hidden' : '';
-                toggleSidebar.innerHTML = isActive ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-            });
-        } else {
-            console.error('Dashboard sidebar elements missing:', { toggleSidebar, sidebar, contentArea });
-        }
+        // Only run sidebar toggle logic on dashboard page
+        if (window.location.pathname.includes('/superuser/dashboard/')) {
+            const toggleSidebar = document.getElementById('toggleSidebar');
+            const sidebar = document.getElementById('sidebar');
+            const contentArea = document.getElementById('contentArea');
+            const navOverlay = document.getElementById('navOverlay');
+            const mobileToggle = document.getElementById('mobileToggle');
+            const navMenu = document.getElementById('navMenu');
+            let isToggling = false;
 
-        // HTMX and Modal Handling
-        if (typeof htmx !== 'undefined') {
-            document.body.addEventListener('htmx:afterSwap', (e) => {
-                if (e.detail.target.id === 'modal-content') {
-                    const modal = document.getElementById('modal');
-                    if (modal) {
-                        modal.classList.add('active');
-                    }
-                }
-            });
-            document.addEventListener('click', (e) => {
-                if (e.target.id === 'modal' || e.target.classList.contains('modal-close') || e.target.classList.contains('btn-secondary')) {
-                    const modal = document.getElementById('modal');
-                    if (modal) {
-                        modal.classList.remove('active');
-                    }
-                }
-            });
-        } else {
-            console.warn('HTMX not loaded');
-        }
+            if (toggleSidebar && sidebar && contentArea && navOverlay) {
+                console.log('Dashboard sidebar elements found:', {
+                    toggleSidebar: !!toggleSidebar,
+                    sidebar: !!sidebar,
+                    contentArea: !!contentArea,
+                    navOverlay: !!navOverlay
+                });
 
-        // Auto-dismiss Flash Messages
-        const alerts = document.querySelectorAll('.alert-dismissible');
-        alerts.forEach(alert => {
-            if (!alert.dataset.dismissBound) {
-                alert.dataset.dismissBound = true;
-                setTimeout(() => {
-                    alert.style.animation = 'slideOut 0.5s ease forwards';
-                    setTimeout(() => alert.remove(), 500);
-                }, 8000);
-                const closeBtn = alert.querySelector('.close');
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', () => {
+                const toggleSidebarFunc = (e) => {
+                    e.stopPropagation();
+                    if (isToggling) {
+                        console.log('Toggle debounced, skipping');
+                        return;
+                    }
+                    isToggling = true;
+                    setTimeout(() => { isToggling = false; }, 300);
+
+                    console.log('Sidebar toggle clicked, current state:', {
+                        isSidebarActive: sidebar.classList.contains('active'),
+                        isContentActive: contentArea.classList.contains('active'),
+                        computedLeft: window.getComputedStyle(sidebar).left
+                    });
+
+                    const isActive = !sidebar.classList.contains('active');
+                    sidebar.classList.toggle('active', isActive);
+                    contentArea.classList.toggle('active', isActive);
+                    navOverlay.classList.toggle('active', isActive);
+                    document.body.style.overflow = isActive ? 'hidden' : '';
+                    toggleSidebar.innerHTML = isActive ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+
+                    // Ensure mobile menu is closed when sidebar is opened
+                    if (isActive && navMenu && navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                        console.log('Closed mobile menu to avoid conflict');
+                    }
+
+                    console.log('Sidebar toggle applied, new state:', {
+                        isSidebarActive: sidebar.classList.contains('active'),
+                        isContentActive: contentArea.classList.contains('active'),
+                        computedLeft: window.getComputedStyle(sidebar).left,
+                        bodyOverflow: document.body.style.overflow
+                    });
+                };
+
+                // Remove any existing listeners to prevent duplicates
+                toggleSidebar.removeEventListener('click', toggleSidebarFunc);
+                toggleSidebar.addEventListener('click', toggleSidebarFunc);
+                navOverlay.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (sidebar.classList.contains('active')) {
+                        toggleSidebarFunc(e);
+                    }
+                });
+
+                // Monitor for unexpected .active removal
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                            console.log('Sidebar class changed:', {
+                                currentClasses: sidebar.classList.toString(),
+                                computedLeft: window.getComputedStyle(sidebar).left
+                            });
+                        }
+                    });
+                });
+                observer.observe(sidebar, { attributes: true });
+            } else {
+                console.error('Dashboard sidebar elements missing:', {
+                    toggleSidebar: !!toggleSidebar,
+                    sidebar: !!sidebar,
+                    contentArea: !!contentArea,
+                    navOverlay: !!navOverlay
+                });
+            }
+
+            // HTMX and Modal Handling
+            if (typeof htmx !== 'undefined') {
+                document.body.addEventListener('htmx:afterSwap', (e) => {
+                    if (e.detail.target.id === 'modal-content') {
+                        const modal = document.getElementById('modal');
+                        if (modal) {
+                            modal.classList.add('active');
+                            console.log('HTMX: Modal opened');
+                        } else {
+                            console.error('HTMX: Modal element not found');
+                        }
+                    }
+                });
+                document.addEventListener('click', (e) => {
+                    if (e.target.id === 'modal' || e.target.classList.contains('modal-close') || e.target.classList.contains('btn-secondary')) {
+                        const modal = document.getElementById('modal');
+                        if (modal) {
+                            modal.classList.remove('active');
+                            console.log('HTMX: Modal closed');
+                        }
+                    }
+                });
+            } else {
+                console.warn('HTMX not loaded');
+            }
+
+            // Auto-dismiss Flash Messages
+            const alerts = document.querySelectorAll('.alert-dismissible');
+            alerts.forEach(alert => {
+                if (!alert.dataset.dismissBound) {
+                    alert.dataset.dismissBound = true;
+                    setTimeout(() => {
                         alert.style.animation = 'slideOut 0.5s ease forwards';
                         setTimeout(() => alert.remove(), 500);
-                    });
+                        console.log('Flash message dismissed:', alert.textContent);
+                    }, 8000);
+                    const closeBtn = alert.querySelector('.close');
+                    if (closeBtn) {
+                        closeBtn.addEventListener('click', () => {
+                            alert.style.animation = 'slideOut 0.5s ease forwards';
+                            setTimeout(() => alert.remove(), 500);
+                            console.log('Flash message closed manually:', alert.textContent);
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 </script>
 {% endblock %}

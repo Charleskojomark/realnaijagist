@@ -78,26 +78,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Newsletter Form Submission
-    const newsletterForm = document.getElementById('newsletterForm');
-    const newsletterSuccess = document.getElementById('newsletterSuccess');
-    if (newsletterForm && newsletterSuccess) {
-        newsletterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const emailInput = newsletterForm.querySelector('.newsletter-input');
-            if (emailInput && emailInput.value.trim() && /\S+@\S+\.\S+/.test(emailInput.value)) {
-                newsletterSuccess.classList.add('visible');
-                emailInput.value = '';
-                setTimeout(() => {
-                    newsletterSuccess.classList.remove('visible');
-                }, 3000);
-            } else if (emailInput) {
-                emailInput.classList.add('error');
-                setTimeout(() => {
-                    emailInput.classList.remove('error');
-                }, 2000);
-            }
-        });
-    }
+    // const newsletterForm = document.getElementById('newsletterForm');
+    // const newsletterSuccess = document.getElementById('newsletterSuccess');
+    // if (newsletterForm && newsletterSuccess) {
+    //     newsletterForm.addEventListener('submit', (e) => {
+    //         e.preventDefault();
+    //         const emailInput = newsletterForm.querySelector('.newsletter-input');
+    //         if (emailInput && emailInput.value.trim() && /\S+@\S+\.\S+/.test(emailInput.value)) {
+    //             newsletterSuccess.classList.add('visible');
+    //             emailInput.value = '';
+    //             setTimeout(() => {
+    //                 newsletterSuccess.classList.remove('visible');
+    //             }, 3000);
+    //         } else if (emailInput) {
+    //             emailInput.classList.add('error');
+    //             setTimeout(() => {
+    //                 emailInput.classList.remove('error');
+    //             }, 2000);
+    //         }
+    //     });
+    // }
 
     // Auto-generate slug from title
     const titleInput = document.querySelector('#id_title');
