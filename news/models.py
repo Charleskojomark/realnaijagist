@@ -172,7 +172,9 @@ class CarouselSlide(models.Model):
     description = models.TextField(max_length=500, blank=True)
     
     # Images with optimization
-    image = models.ImageField(upload_to='carousel/')
+    # image = models.ImageField(upload_to='carousel/')
+    image = CloudinaryField('carousel', blank=True, null=True) 
+    
     image_webp = models.ImageField(upload_to='carousel/webp/', blank=True, null=True)
     image_alt_text = models.CharField(max_length=100, blank=True)
     

@@ -18,6 +18,8 @@ urlpatterns = [
     path('terms/', views.terms, name='terms'),
     path('advertise/', views.advertise, name='advertise'),
     path('write/', views.write, name='write'),
+    
+    path('tag/<slug:slug>/', views.tag_detail, name='tag_detail'),
     # Admin endpoints
     path('superuser/posts/', views.post_list, name='post_list'),
     path('superuser/posts/add/', views.post_create, name='post_create'),

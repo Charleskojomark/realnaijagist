@@ -18,6 +18,8 @@ from django.core.files.base import ContentFile
 from django.db.models import Max, Sum, Q
 from cloudinary.exceptions import BadRequest
 from django.db import IntegrityError
+from taggit.models import Tag
+
 
 def global_context(request):
     return {
@@ -644,3 +646,21 @@ def admin_dashboard(request):
         context['page_obj'] = page_obj
 
     return render(request, 'admin_dashboard.html', context)
+
+def tag_detail(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    posts = Post.objects.filter(
+        tags__slug=slug, status=Post.PostStatus.PUBLISHED
+    ).select_related('category', 'author')
+    categories = Category.objects.all()
+    carousel_slides = CarouselSlide.get_active_slides()[:5]
+    paginator = Paginator(posts, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'tag_detail.html', {
+        'tag': tag,
+        'posts': page_obj,
+        'categories': categories,
+        'carousel_slides': carousel_slides,
+        'current_year': datetime.now().year,
+    })
