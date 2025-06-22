@@ -1,0 +1,66 @@
+:root {
+    --text-dark: #333333;
+    --text-light: #666666;
+    --primary-green: #2B8F47;
+    --golden-yellow: #FFB300;
+}
+
+.ck-content {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    font-size: 16px;
+}
+
+.ck-content p {
+    margin-bottom: 1rem;
+}
+
+.ck-content h1 {
+    font-size: 1.8rem;
+    color: var(--primary-green);
+    margin: 1.5rem 0 1rem;
+    border-bottom: 2px solid var(--golden-yellow);
+    padding-bottom: 0.25rem;
+}
+
+.ck-content h2 {
+    font-size: 1.5rem;
+    color: var(--primary-green);
+    margin: 1.25rem 0 0.75rem;
+}
+
+.ck-content h3 {
+    font-size: 1.2rem;
+    color: var(--primary-green);
+    margin: 1rem 0 0.5rem;
+}
+
+.ck-content ul, .ck-content ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.ck-content li {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.ck-content a {
+    color: var(--primary-green);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.ck-content a:hover {
+    color: var(--golden-yellow);
+    text-decoration: underline;
+}
+
+.ck-content blockquote {
+    border-left: 4px solid var(--golden-yellow);
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: var(--text-light);
+    font-style: italic;
+}
