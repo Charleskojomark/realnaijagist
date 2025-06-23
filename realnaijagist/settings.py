@@ -28,9 +28,9 @@ pymysql.install_as_MySQLdb()
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['realnaijagist.com', 'www.realnaijagist.com']
+ALLOWED_HOSTS = ['realnaijagist.com', 'www.realnaijagist.com','localhost']
 
 
 # Application definition

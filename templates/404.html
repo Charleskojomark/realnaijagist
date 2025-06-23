@@ -1,0 +1,306 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Page Not Found - RealNaijaGist{% endblock %}
+
+{% block extra_css %}
+<style>
+    .error-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .error-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(43, 143, 71, 0.05) 0%, transparent 70%);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .error-content {
+        text-align: center;
+        max-width: 600px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .error-number {
+        font-size: clamp(8rem, 15vw, 12rem);
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary-green), var(--golden-yellow));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 0.8;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+
+    .error-number::after {
+        content: '404';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, var(--accent-red), var(--golden-yellow));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        opacity: 0;
+        animation: glitch 2s infinite;
+    }
+
+    .error-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        position: relative;
+    }
+
+    .error-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-light);
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .error-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 3rem;
+    }
+
+    .error-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .btn-primary-error {
+        background: linear-gradient(135deg, var(--primary-green), #359954);
+        color: var(--white);
+        box-shadow: var(--shadow);
+    }
+
+    .btn-primary-error:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(43, 143, 71, 0.3);
+    }
+
+    .btn-secondary-error {
+        background: var(--white);
+        color: var(--text-dark);
+        border: 2px solid var(--border-color);
+    }
+
+    .btn-secondary-error:hover {
+        border-color: var(--primary-green);
+        color: var(--primary-green);
+        transform: translateY(-2px);
+    }
+
+    .helpful-links {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        margin-top: 2rem;
+    }
+
+    .helpful-links h3 {
+        color: var(--text-dark);
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+    }
+
+    .links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .link-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        background: var(--light-gray);
+        border-radius: 12px;
+        text-decoration: none;
+        color: var(--text-dark);
+        transition: var(--transition);
+    }
+
+    .link-item:hover {
+        background: var(--primary-green);
+        color: var(--white);
+        transform: translateY(-2px);
+    }
+
+    .link-item i {
+        font-size: 1.2rem;
+        width: 20px;
+        text-align: center;
+    }
+
+    .floating-shapes {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .shape {
+        position: absolute;
+        opacity: 0.1;
+    }
+
+    .shape-1 {
+        top: 10%;
+        left: 10%;
+        width: 60px;
+        height: 60px;
+        background: var(--accent-red);
+        border-radius: 50%;
+        animation: float 4s ease-in-out infinite;
+    }
+
+    .shape-2 {
+        top: 20%;
+        right: 15%;
+        width: 40px;
+        height: 40px;
+        background: var(--golden-yellow);
+        transform: rotate(45deg);
+        animation: float 5s ease-in-out infinite reverse;
+    }
+
+    .shape-3 {
+        bottom: 15%;
+        left: 20%;
+        width: 80px;
+        height: 80px;
+        background: var(--primary-green);
+        border-radius: 20px;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    @keyframes glitch {
+        0%, 90%, 100% { opacity: 0; }
+        95% { opacity: 0.8; transform: translateX(2px); }
+    }
+
+    @media (max-width: 768px) {
+        .error-container {
+            padding: 1rem;
+            min-height: 70vh;
+        }
+
+        .error-title {
+            font-size: 2rem;
+        }
+
+        .error-subtitle {
+            font-size: 1rem;
+        }
+
+        .error-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .error-btn {
+            width: 100%;
+            max-width: 280px;
+            justify-content: center;
+        }
+
+        .helpful-links {
+            padding: 1.5rem;
+        }
+
+        .links-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+    
+    <div class="error-content">
+        <div class="error-number">404</div>
+        <h1 class="error-title">Oops! Page Not Found</h1>
+        <p class="error-subtitle">
+            The page you're looking for seems to have gone on a little adventure. 
+            Don't worry though, let's get you back on track with some fresh Nigerian gist!
+        </p>
+        
+        <div class="error-actions">
+            <a href="{% url 'news:home' %}" class="error-btn btn-primary-error">
+                <i class="fas fa-home"></i>
+                Back to Home
+            </a>
+            <button onclick="history.back()" class="error-btn btn-secondary-error">
+                <i class="fas fa-arrow-left"></i>
+                Go Back
+            </button>
+        </div>
+
+        <div class="helpful-links">
+            <h3><i class="fas fa-compass"></i> Popular Destinations</h3>
+            <div class="links-grid">
+                {% for category in categories|slice:":4" %}
+                <a href="{% url 'news:category_detail' category.slug %}" class="link-item">
+                    <i class="fas fa-tag"></i>
+                    <span>{{ category.name }}</span>
+                </a>
+                {% endfor %}
+                <a href="{% url 'news:about' %}" class="link-item">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About Us</span>
+                </a>
+                <a href="{% url 'news:contact' %}" class="link-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

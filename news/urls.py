@@ -34,4 +34,7 @@ urlpatterns = [
     path('superuser/carousel/edit/<int:pk>/', views.edit_carousel_slide, name='edit_carousel_slide'),
     path('superuser/carousel/delete/<int:pk>/', views.delete_carousel_slide, name='delete_carousel_slide'),
     path('superuser/subscriber/delete/<int:pk>/', views.delete_subscriber, name='delete_subscriber'),
+    
+    # test server error
+    path('test-500/', views.test_500, name='test_500'),
 ]
