@@ -777,5 +777,5 @@ def handler404(request, exception):
 def handler500(request):
     return render(request, '500.html', {'current_year': datetime.now().year}, status=500)
 
-def test_500(request):
-    raise Exception("Test 500 error")
+# def test_500(request):
+#     raise Exception("Test 500 error")

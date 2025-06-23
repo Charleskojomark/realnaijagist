@@ -36,5 +36,5 @@ urlpatterns = [
     path('superuser/subscriber/delete/<int:pk>/', views.delete_subscriber, name='delete_subscriber'),
     
     # test server error
-    path('test-500/', views.test_500, name='test_500'),
+    # path('test-500/', views.test_500, name='test_500'),
 ]
