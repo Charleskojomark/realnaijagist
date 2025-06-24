@@ -100,7 +100,8 @@ DATABASES = {
         'HOST': config('DB_HOST', default='localhost'),
         'PORT': config('DB_PORT', default='3306'),
         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES',character_set_connection=utf8mb4,collation_connection=utf8mb4_unicode_ci",
         },
     }
 }
