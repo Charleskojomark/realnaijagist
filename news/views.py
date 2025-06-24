@@ -271,7 +271,7 @@ def post_create(request):
                 post.slug = generate_unique_slug(post.title, Post)
                 post.excerpt = post.content[:150] if post.content else ''
                 post.meta_description = post.excerpt or post.content[:160]
-                post.image_alt_text = post.title
+                post.image_alt_text = post.title[:90]
                 if post.featured_image:
                     img = Image.open(post.featured_image)
                     webp_io = io.BytesIO()
