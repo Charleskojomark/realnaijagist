@@ -1,12 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_head %}
+<script>
+    window.CSRF_TOKEN = '{{ csrf_token }}';
+</script>
+<meta property="og:title" content="{{ post.title }}">
+<meta property="og:description" content="{{ post.excerpt|truncatechars:160|striptags }}">
+<meta property="og:image" content="{{ request.build_absolute_uri|add:post.get_image_url|default:'https://realnaijagist.com/static/images/default-og-image.jpg' }}">
+<meta property="og:image:alt" content="{{ post.image_alt_text|default:post.title }}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="RealNaijaGist">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ post.title }}">
+<meta name="twitter:description" content="{{ post.excerpt|truncatechars:160|striptags }}">
+<meta name="twitter:image" content="{{ request.build_absolute_uri|add:post.get_image_url|default:'https://realnaijagist.com/static/images/default-og-image.jpg' }}">
+<meta name="twitter:image:alt" content="{{ post.image_alt_text|default:post.title }}">
+{% endblock %}
+
 {% block title %}{{ post.title }} - RealNaijaGist{% endblock %}
 
 {% block extra_css %}
 <style>
+/* Color Palette and Variables */
 :root {
-    /* Color palette */
     --primary-green: #2B8F47;
     --accent-red: #E53935;
     --golden-yellow: #FFB300;
@@ -18,8 +36,6 @@
     --border-color: #e0e0e0;
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    /* Modern additions - avoid conflicts */
     --post-gradient-primary: linear-gradient(135deg, #2B8F47 0%, #1E7836 100%);
     --post-gradient-accent: linear-gradient(135deg, #E53935 0%, #C62828 100%);
     --post-gradient-golden: linear-gradient(135deg, #FFB300 0%, #FF8F00 100%);
@@ -29,50 +45,27 @@
     --post-shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
     --post-border-radius: 16px;
     --post-border-radius-lg: 24px;
-    --post-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --post-transition: all 0.3s ease;
 }
 
-/* Modern Post Animations */
+/* Animations */
 @keyframes postFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes postSlideUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes postShimmer {
-    0% {
-        background-position: -200% 0;
-    }
-    100% {
-        background-position: 200% 0;
-    }
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
 }
 
-.post-fade-in {
-    animation: postFadeIn 0.8s ease-out;
-}
-
-.post-slide-up {
-    animation: postSlideUp 0.6s ease-out;
-    animation-fill-mode: both;
-}
-
+.postFadeIn { animation: postFadeIn 0.8s ease-out; }
+.post-slide-up { animation: postSlideUp 0.6s ease-out; animation-fill-mode: both; }
 .post-slide-up:nth-child(2) { animation-delay: 0.1s; }
 .post-slide-up:nth-child(3) { animation-delay: 0.2s; }
 .post-slide-up:nth-child(4) { animation-delay: 0.3s; }
@@ -84,7 +77,7 @@
     padding: 0 20px;
 }
 
-/* Modern Post Detail Container */
+/* Post Detail Container */
 .modern-post-detail-container {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     min-height: 100vh;
@@ -98,7 +91,7 @@
     align-items: start;
 }
 
-/* Modern Post Detail Styling */
+/* Post Detail Styling */
 .modern-post-detail {
     background: var(--white);
     border-radius: var(--post-border-radius-lg);
@@ -114,7 +107,7 @@
     transform: translateY(-2px);
 }
 
-/* Modern Post Header */
+/* Post Header */
 .modern-post-header {
     padding: 40px 40px 20px;
     background: linear-gradient(135deg, var(--white) 0%, #f8fafc 100%);
@@ -193,7 +186,7 @@
     font-size: 0.85rem;
 }
 
-/* Modern Post Image */
+/* Post Image */
 .modern-post-image-container {
     margin: 0;
     position: relative;
@@ -223,7 +216,7 @@
     pointer-events: none;
 }
 
-/* Modern Post Content */
+/* Post Content */
 .modern-post-content {
     padding: 40px;
     font-size: 1.1rem;
@@ -269,7 +262,7 @@
     opacity: 0.3;
 }
 
-/* Modern Post Tags */
+/* Post Tags */
 .modern-post-tags {
     padding: 0 40px 40px;
     display: flex;
@@ -296,9 +289,306 @@
     box-shadow: 0 4px 12px rgba(43, 143, 71, 0.3);
 }
 
-/* Modern Sidebar */
+/* Like and Share Buttons */
+.modern-post-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 20px 32px;
+    border-top: 1px solid var(--border-color);
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.modern-action-btn,
+.modern-share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    background: var(--light-gray);
+    color: var(--text-dark);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    transition: var(--post-transition);
+    cursor: pointer;
+    min-height: 40px;
+    touch-action: manipulation;
+    position: relative;
+    overflow: hidden;
+}
+
+.modern-action-btn:hover,
+.modern-share-btn:hover {
+    background: var(--post-gradient-primary);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(43, 143, 71, 0.3);
+}
+
+.modern-action-btn.liked {
+    background: var(--post-gradient-primary);
+    color: var(--white);
+}
+
+.modern-action-btn i,
+.modern-share-btn i {
+    font-size: 1rem;
+    transition: var(--post-transition);
+}
+
+.modern-action-btn:hover i,
+.modern-share-btn:hover i {
+    transform: scale(1.1);
+}
+
+/* Share Modal */
+.modern-share-menu {
+    position: relative;
+}
+
+.modern-share-btn {
+    min-width: 100px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: var(--white);
+    border-radius: var(--post-border-radius);
+    box-shadow: var(--post-shadow-soft);
+    padding: 24px;
+    width: 90%;
+    max-width: 360px;
+    text-align: center;
+    animation: postFadeIn 0.3s ease-out;
+}
+
+.modal-content h3 {
+    margin-bottom: 20px;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-dark);
+    transition: var(--post-transition);
+}
+
+.close:hover {
+    color: var(--primary-green);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modern-share-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-dark);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    transition: var(--post-transition);
+    margin: 8px 0;
+}
+
+.modern-share-option:hover {
+    background: var(--post-gradient-primary);
+    color: var(--white);
+    transform: translateX(5px);
+}
+
+.modern-share-option i {
+    font-size: 1.2rem;
+}
+
+.modern-share-option.twitter:hover { background: linear-gradient(135deg, #1DA1F2 0%, #0A74DA 100%); }
+.modern-share-option.facebook:hover { background: linear-gradient(135deg, #3B5998 0%, #2A4373 100%); }
+.modern-share-option.linkedin:hover { background: linear-gradient(135deg, #0077B5 0%, #005983 100%); }
+.modern-share-option.whatsapp:hover { background: linear-gradient(135deg, #25D366 0%, #1DA851 100%); }
+.modern-share-option.copy-link:hover { background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%); }
+
+/* Comments Section */
+.modern-comments-section {
+    padding: 32px;
+    background: var(--white);
+    border-radius: var(--post-border-radius);
+    margin: 32px 0;
+    box-shadow: var(--post-shadow-soft);
+    transition: var(--post-transition);
+}
+
+.modern-comments-section:hover {
+    box-shadow: var(--post-shadow-hover);
+}
+
+.modern-comments-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 24px;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.modern-comments-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--post-gradient-primary);
+    border-radius: 2px;
+}
+
+.modern-comment-form {
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.comment-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+    background: var(--light-gray);
+    resize: vertical;
+    min-height: 120px;
+    transition: var(--post-transition);
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(43, 143, 71, 0.2);
+    background: var(--white);
+}
+
+.modern-comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modern-comment-item {
+    background: var(--light-gray);
+    padding: 20px;
+    border-radius: var(--post-border-radius);
+    margin-bottom: 16px;
+    border: 1px solid var(--post-glass-border);
+    transition: var(--post-transition);
+    position: relative;
+    animation: postFadeIn 0.5s ease-out;
+}
+
+.modern-comment-item:hover {
+    background: var(--white);
+    box-shadow: var(--post-shadow-hover);
+    transform: translateY(-2px);
+}
+
+.modern-comment-author {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modern-comment-author::before {
+    content: '\f007'; /* FontAwesome user icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: var(--primary-green);
+    font-size: 0.9rem;
+}
+
+.modern-comment-date {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modern-comment-date::before {
+    content: '\f017'; /* FontAwesome clock icon */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: var(--primary-green);
+    font-size: 0.85rem;
+}
+
+.modern-comment-content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+    padding: 12px 0;
+    border-left: 3px solid var(--primary-green);
+    padding-left: 16px;
+}
+
+.modern-login-prompt {
+    padding: 16px;
+    background: rgba(229, 57, 53, 0.1);
+    border-radius: var(--post-border-radius);
+    margin-bottom: 24px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    border: 1px solid var(--accent-red);
+}
+
+.modern-login-prompt a {
+    color: var(--accent-red);
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--post-transition);
+}
+
+.modern-login-prompt a:hover {
+    color: var(--text-dark);
+    text-decoration: underline;
+}
+
+/* Sidebar */
 .modern-sidebar {
-    animation: postSlideUp 0.8s ease-out 0.2s both;
+    animation: postSlideUp 0.25s ease-in-out;
 }
 
 .modern-widget {
@@ -327,16 +617,6 @@
     position: relative;
 }
 
-.modern-widget-title::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 30px;
-    height: 2px;
-    background: var(--post-gradient-golden);
-}
-
 .modern-category-list {
     list-style: none;
     padding: 0;
@@ -361,11 +641,11 @@
 .modern-category-list a.active {
     background: var(--post-gradient-primary);
     color: var(--white);
-    transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(43, 143, 71, 0.2);
+    transform: translateX(25px);
+    box-shadow: 0 4px 15px rgba(43, 143, 71, 0.15);
 }
 
-/* Modern Related Posts */
+/* Related Posts */
 .modern-related-posts {
     background: linear-gradient(135deg, var(--white) 0%, #f8fafc 100%);
     padding: 60px 0;
@@ -374,7 +654,7 @@
 
 .modern-section-title {
     text-align: center;
-    font-size: 2.2rem;
+    font-size: 2.25rem;
     font-weight: 800;
     color: var(--text-dark);
     margin-bottom: 40px;
@@ -387,7 +667,7 @@
     bottom: -8px;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
+    width: 100px;
     height: 4px;
     background: var(--post-gradient-primary);
     border-radius: 2px;
@@ -397,11 +677,11 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 32px;
-    margin-top: 40px;
+    margin-top: 20px;
     justify-items: center;
 }
 
-/* Modern Post Cards */
+/* Post Cards */
 .modern-post-card {
     background: var(--white);
     border-radius: var(--post-border-radius);
@@ -423,7 +703,7 @@
 
 .modern-post-card .modern-post-image {
     width: 100%;
-    height: 180px;
+    height: 200px;
     object-fit: cover;
     transition: var(--post-transition);
 }
@@ -498,6 +778,9 @@
     overflow: hidden;
     align-self: center;
     text-align: center;
+    min-height: 44px;
+    min-width: 120px;
+    touch-action: manipulation;
 }
 
 .modern-btn-primary::before {
@@ -520,30 +803,71 @@
     left: 100%;
 }
 
+/* Alert Messages */
+.alert {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 8px;
+    background: rgba(229, 57, 53, 0.1);
+    color: var(--text-dark);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .modern-post-detail-container .modern-container {
         grid-template-columns: 1fr;
         gap: 24px;
     }
-    
+
     .modern-post-title {
         font-size: 2rem;
     }
-    
+
     .modern-post-header,
     .modern-post-content,
-    .modern-post-tags {
+    .modern-post-tags,
+    .modern-post-actions,
+    .modern-comments-section {
         padding: 24px;
     }
-    
+
     .modern-post-meta {
         gap: 16px;
     }
-    
+
     .modern-posts-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+    }
+
+    .modern-post-actions {
+        flex-direction: row;
+        gap: 12px;
+        justify-content: space-between;
+    }
+
+    .modern-action-btn,
+    .modern-share-btn {
+        flex: 1;
+        min-width: 100px;
+        text-align: center;
+        padding: 10px 12px;
+    }
+
+    .modern-comments-section {
+        padding: 24px;
+    }
+
+    .modern-comments-title {
+        font-size: 1.4rem;
+    }
+
+    .comment-input {
+        min-height: 100px;
     }
 }
 
@@ -551,29 +875,87 @@
     .modern-container {
         padding: 0 16px;
     }
-    
+
     .modern-post-detail-container {
         padding: 20px 0;
     }
-    
+
     .modern-post-title {
         font-size: 1.6rem;
     }
-    
+
     .modern-post-header,
     .modern-post-content,
-    .modern-post-tags {
+    .modern-post-tags,
+    .modern-post-actions {
         padding: 16px;
     }
-    
+
     .modern-post-meta {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
     }
-    
+
+    .modern-post-actions {
+        flex-direction: row;
+        gap: 8px;
+        justify-content: space-between;
+        padding: 16px;
+    }
+
+    .modern-action-btn,
+    .modern-share-btn {
+        flex: 1;
+        min-width: 80px;
+        font-size: 0.85rem;
+        padding: 8px 10px;
+    }
+
+    .modern-action-btn i,
+    .modern-share-btn i {
+        font-size: 0.9rem;
+    }
+
+    .modern-comments-section {
+        padding: 16px;
+    }
+
+    .modern-comment-item {
+        padding: 16px;
+    }
+
+    .modern-comment-author,
+    .modern-comment-content {
+        font-size: 0.9rem;
+    }
+
+    .modern-comment-date {
+        font-size: 0.8rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        max-width: 300px;
+        padding: 16px;
+    }
+
+    .modal-content h3 {
+        font-size: 1rem;
+    }
+
+    .modern-share-option {
+        font-size: 0.85rem;
+        padding: 10px 12px;
+    }
+
     .modern-post-card {
         max-width: 100%;
+    }
+
+    .alert {
+        font-size: 0.85rem;
+        padding: 12px;
     }
 }
 </style>
@@ -582,7 +964,7 @@
 {% block content %}
 {% include 'partials/messages.html' %}
 
-<section class="modern-post-detail-container post-fade-in">
+<section class="modern-post-detail-container postFadeIn">
     <div class="modern-container">
         <article class="modern-post-detail">
             <header class="modern-post-header">
@@ -596,9 +978,9 @@
             </header>
             <figure class="modern-post-image-container">
                 <picture>
-                    <source media="(max-width: 480px)" srcset="{{ post.get_responsive_images.mobile }}">
-                    <source media="(max-width: 768px)" srcset="{{ post.get_responsive_images.tablet }}">
-                    <source media="(min-width: 769px)" srcset="{{ post.get_responsive_images.desktop }}">
+                    <source media="(max-width: 480px)" srcset="{{ post.get_responsive_images.mobile|default:post.get_image_url }}">
+                    <source media="(max-width: 768px)" srcset="{{ post.get_responsive_images.tablet|default:post.get_image_url }}">
+                    <source media="(min-width: 769px)" srcset="{{ post.get_responsive_images.desktop|default:post.get_image_url }}">
                     <img src="{{ post.get_image_url }}" alt="{{ post.image_alt_text|default:post.title }}" class="modern-post-image" loading="lazy">
                 </picture>
             </figure>
@@ -609,6 +991,86 @@
                 {% for tag in post.tags.all %}
                     <a href="{% url 'news:tag_detail' tag.slug %}" class="modern-tag">{{ tag.name }}</a>
                 {% endfor %}
+            </div>
+            <div class="modern-post-actions">
+                <button class="modern-action-btn like-btn {% if has_liked %}liked{% endif %}" 
+                        data-slug="{{ post.slug }}"
+                        {% if not user.is_authenticated %}disabled title="Please login to like"{% endif %}
+                        hx-post="{% url 'news:like_post' post.slug %}"
+                        hx-target="#like-count"
+                        hx-swap="innerHTML"
+                        hx-indicator="#like-indicator">
+                    <i class="fas fa-heart"></i> <span id="like-count">{{ post.likes }}</span> Like
+                </button>
+                <div class="modern-share-menu">
+                    <button id="share-btn" class="modern-share-btn" {% if not user.is_authenticated %}disabled title="Please login to share"{% endif %}>
+                        <i class="fas fa-share"></i> <span id="share-count">{{ post.shares }}</span> Share
+                    </button>
+                    <div id="shareModal" class="modal" role="dialog" aria-labelledby="shareModalTitle" aria-hidden="true">
+                        <div class="modal-content">
+                            <span class="close" aria-label="Close" onclick="closeShareModal()">×</span>
+                            <h3 id="shareModalTitle">Share This Post</h3>
+                            <a href="#" class="modern-share-option twitter" 
+                               data-platform="twitter"
+                               data-slug="{{ post.slug }}"
+                               data-url="{{ post.get_absolute_url|urlencode }}"
+                               data-text="{{ post.title|urlencode }}"
+                               {% if user.is_authenticated %}
+                               hx-post="{% url 'news:share_post' post.slug %}"
+                               hx-target="#share-count"
+                               hx-swap="innerHTML"
+                               hx-indicator="#share-indicator"
+                               {% endif %}>
+                                <i class="fab fa-twitter"></i> Twitter
+                            </a>
+                            <a href="#" class="modern-share-option facebook"
+                               data-platform="facebook"
+                               data-slug="{{ post.slug }}"
+                               data-url="{{ post.get_absolute_url|urlencode }}"
+                               {% if user.is_authenticated %}
+                               hx-post="{% url 'news:share_post' post.slug %}"
+                               hx-target="#share-count"
+                               hx-swap="innerHTML"
+                               hx-indicator="#share-indicator"
+                               {% endif %}>
+                                <i class="fab fa-facebook"></i> Facebook
+                            </a>
+                            <a href="#" class="modern-share-option linkedin"
+                               data-platform="linkedin"
+                               data-slug="{{ post.slug }}"
+                               data-url="{{ post.get_absolute_url|urlencode }}"
+                               data-title="{{ post.title|urlencode }}"
+                               {% if user.is_authenticated %}
+                               hx-post="{% url 'news:share_post' post.slug %}"
+                               hx-target="#share-count"
+                               hx-swap="innerHTML"
+                               hx-indicator="#share-indicator"
+                               {% endif %}>
+                                <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                            <a href="#" class="modern-share-option whatsapp"
+                               data-platform="whatsapp"
+                               data-slug="{{ post.slug }}"
+                               data-url="{{ post.get_absolute_url|urlencode }}"
+                               data-text="{{ post.title|urlencode }}"
+                               {% if user.is_authenticated %}
+                               hx-post="{% url 'news:share_post' post.slug %}"
+                               hx-target="#share-count"
+                               hx-swap="innerHTML"
+                               hx-indicator="#share-indicator"
+                               {% endif %}>
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="#" class="modern-share-option copy-link"
+                               data-platform="copy-link"
+                               data-url="{{ post.get_absolute_url }}">
+                                <i class="fas fa-link"></i> Copy Link
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <span class="htmx-indicator" id="like-indicator"><i class="fas fa-spinner fa-spin"></i></span>
+                <span class="htmx-indicator" id="share-indicator"><i class="fas fa-spinner fa-spin"></i></span>
             </div>
         </article>
 
@@ -625,6 +1087,34 @@
     </div>
 </section>
 
+<section class="modern-comments-section">
+    <div class="modern-container">
+        <h2 class="modern-comments-title">Comments</h2>
+        {% if user.is_authenticated %}
+            <form class="modern-comment-form" method="post" action="{% url 'news:post_detail' post.slug %}">
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type="submit" class="modern-btn-primary">Submit Comment</button>
+            </form>
+        {% else %}
+            <div class="modern-login-prompt">
+                <p>Please <a href="{% url 'news:login' %}?next={{ request.path }}">login</a> to leave a comment.</p>
+            </div>
+        {% endif %}
+        <ul class="modern-comment-list">
+            {% for comment in comments %}
+                <li class="modern-comment-item post-slide-up">
+                    <div class="modern-comment-author">{{ comment.author.username }}</div>
+                    <div class="modern-comment-date">{{ comment.created_at|timesince }} ago</div>
+                    <div class="modern-comment-content">{{ comment.content }}</div>
+                </li>
+            {% empty %}
+                <li>No approved comments yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
 {% if related_posts %}
 <section class="modern-related-posts">
     <div class="modern-container">
@@ -632,11 +1122,11 @@
         <div class="modern-posts-grid">
             {% for related_post in related_posts %}
                 <article class="modern-post-card post-slide-up">
-                    <img src="{{ related_post.get_responsive_images.thumbnail }}" alt="{{ related_post.image_alt_text|default:related_post.title }}" class="modern-post-image" loading="lazy">
+                    <img src="{{ related_post.get_responsive_images.thumbnail|default:related_post.get_image_url }}" alt="{{ related_post.image_alt_text|default:related_post.title }}" class="modern-post-image" loading="lazy">
                     <div class="modern-post-content">
                         <span class="modern-post-category">{{ related_post.category.name }}</span>
                         <h2 class="modern-post-title">{{ related_post.title|truncatechars:50 }}</h2>
-                        <p class="modern-post-excerpt">{{ related_post.excerpt|truncatechars:100 }}</p>
+                        <p class="modern-post-excerpt">{{ related_post.excerpt|truncatechars:80 }}</p>
                         <div class="modern-post-meta">
                             <div class="modern-author">
                                 <span>{{ related_post.author.username }}</span>
@@ -651,4 +1141,336 @@
     </div>
 </section>
 {% endif %}
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+// Get CSRF token from cookie or meta tag
+function getCSRFToken() {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith('csrftoken=')) {
+                cookieValue = decodeURIComponent(cookie.substring(10));
+                break;
+            }
+        }
+    }
+    
+    if (!cookieValue) {
+        const metaTag = document.querySelector('meta[name=csrf-token]');
+        if (metaTag) {
+            cookieValue = metaTag.getAttribute('content');
+        } else {
+            const hiddenInput = document.querySelector('[name=csrfmiddlewaretoken]');
+            if (hiddenInput) {
+                cookieValue = hiddenInput.value;
+            }
+        }
+    }
+    
+    return cookieValue;
+}
+
+// Toast notification function
+function showToast(message, type = 'info') {
+    const existingToasts = document.querySelectorAll('.toast-notification');
+    existingToasts.forEach(toast => toast.remove());
+    
+    const toast = document.createElement('div');
+    toast.className = `toast-notification toast-${type}`;
+    toast.innerHTML = `
+        <div class="toast-content">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#10b981' : '#ef4444'};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        max-width: 300px;
+        animation: slideInRight 0.3s ease-out;
+    `;
+    
+    if (!document.querySelector('#toast-styles')) {
+        const style = document.createElement('style');
+        style.id = 'toast-styles';
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.animation = 'slideOutRight 0.3s ease-in';
+        setTimeout(() => toast.parentNode && toast.remove(), 300);
+    }, 3000);
+}
+
+// Modal functions
+function openShareModal() {
+    const modal = document.getElementById('shareModal');
+    if (modal) {
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+}
+
+function closeShareModal() {
+    const modal = document.getElementById('shareModal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+}
+
+// Helper functions
+function handleLikeResponse(response, eventDetail) {
+    const likeButtons = document.querySelectorAll('.like-btn');
+    let targetButton = null;
+    const targetElement = eventDetail.target;
+    
+    likeButtons.forEach(btn => {
+        const slug = btn.getAttribute('data-slug');
+        if (eventDetail.requestConfig?.path.includes(slug)) {
+            targetButton = btn;
+        }
+    });
+    
+    if (targetButton && targetElement) {
+        if (response.status === 'liked' || response.status === 'unliked') {
+            // Update the count in the DOM
+            targetElement.textContent = response.likes_count || 0;
+            // Update button state
+            targetButton.classList.toggle('liked', response.status === 'liked');
+            showToast(response.message || (response.status === 'liked' ? 'Post liked!' : 'Post unliked'), 'success');
+        }
+    } else {
+        console.error('Could not find like button or target element for slug:', eventDetail.requestConfig?.parameters.slug);
+    }
+}
+
+function handleShareResponse(response, eventDetail) {
+    const targetElement = eventDetail.target;
+    if (targetElement) {
+        // Update the share count in the DOM
+        targetElement.textContent = response.shares_count || 0;
+        closeShareModal();
+        showToast(response.message || 'Post shared successfully!', 'success');
+    }
+}
+
+function handleCopyLink(element, url) {
+    let fullUrl = decodeURIComponent(url);
+    if (!fullUrl.startsWith('http')) {
+        fullUrl = window.location.origin + fullUrl;
+    }
+    
+    navigator.clipboard.writeText(fullUrl).then(() => {
+        const originalContent = element.innerHTML;
+        element.innerHTML = '<i class="fas fa-check"></i> Link Copied!';
+        element.style.backgroundColor = '#10b981';
+        element.style.color = 'white';
+        showToast('Link copied to clipboard!', 'success');
+        
+        setTimeout(() => {
+            element.innerHTML = originalContent;
+            element.style.backgroundColor = '';
+            element.style.color = '';
+            closeShareModal();
+        }, 2000);
+    }).catch(err => {
+        console.error('Failed to copy link:', err);
+        const originalContent = element.innerHTML;
+        element.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Copy Failed';
+        element.style.backgroundColor = '#ef4444';
+        element.style.color = 'white';
+        showToast('Failed to copy link. Please try again.', 'error');
+        
+        setTimeout(() => {
+            element.innerHTML = originalContent;
+            element.style.backgroundColor = '';
+            element.style.color = '';
+        }, 2000);
+    });
+}
+
+function buildShareUrl(platform, url, text, title) {
+    // Ensure absolute URL
+    let fullUrl = decodeURIComponent(url);
+    if (!fullUrl.startsWith('http')) {
+        fullUrl = window.location.origin + fullUrl;
+    }
+
+    switch (platform) {
+        case 'twitter':
+            return `https://twitter.com/intent/tweet?url=${encodeURIComponent(fullUrl)}`;
+        case 'facebook':
+            return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullUrl)}`;
+        case 'linkedin':
+            return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(fullUrl)}&title=${encodeURIComponent(title)}`;
+        case 'whatsapp':
+            return `https://api.whatsapp.com/send?text=${encodeURIComponent(fullUrl)}`;
+        default:
+            return null;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Configure HTMX to include CSRF token
+    document.body.addEventListener('htmx:configRequest', function(event) {
+        const csrfToken = getCSRFToken();
+        if (csrfToken) {
+            event.detail.headers['X-CSRFToken'] = csrfToken;
+        } else {
+            console.error('CSRF token not found');
+        }
+    });
+
+    // Prevent HTMX from swapping raw JSON into the DOM
+    document.body.addEventListener('htmx:beforeSwap', function(event) {
+        if (event.detail.target.id === 'like-count' || event.detail.target.id === 'share-count') {
+            if (event.detail.xhr.getResponseHeader('Content-Type')?.includes('application/json')) {
+                // Prevent default swap behavior for JSON responses
+                event.detail.shouldSwap = false;
+            }
+        }
+    });
+
+    // Handle HTMX errors
+    document.body.addEventListener('htmx:responseError', function(event) {
+        console.error('HTMX Error:', event.detail);
+        showToast('An error occurred. Please try again.', 'error');
+    });
+
+    // Handle HTMX after request
+    document.body.addEventListener('htmx:afterRequest', function(event) {
+        const { target, xhr, requestConfig } = event.detail;
+        
+        if (target.id === 'like-count' || target.id === 'share-count') {
+            if (xhr.status === 403) {
+                show
+
+Toast('Please log in to perform this action.', 'error');
+                closeShareModal();
+            } else if (xhr.status === 200) {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    if (target.id === 'like-count') {
+                        handleLikeResponse(response, event.detail);
+                    } else if (target.id === 'share-count') {
+                        handleShareResponse(response, event.detail);
+                    }
+                } catch (e) {
+                    console.error('Error parsing response:', e, 'Response text:', xhr.responseText);
+                    showToast('Unexpected response format', 'error');
+                }
+            } else if (xhr.status === 500) {
+                console.error('Server error:', xhr.responseText);
+                showToast('Server error. Please try again later.', 'error');
+                closeShareModal();
+            } else {
+                console.error('Request failed with status:', xhr.status);
+                showToast(`Request failed (${xhr.status})`, 'error');
+                closeShareModal();
+            }
+        }
+    });
+
+    // Share button click handler
+    const shareButton = document.getElementById('share-btn');
+    if (shareButton) {
+        shareButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!this.hasAttribute('disabled')) {
+                openShareModal();
+            }
+        });
+    }
+
+    // Close modal on click outside
+    const shareModal = document.getElementById('shareModal');
+    if (shareModal) {
+        shareModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeShareModal();
+            }
+        });
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeShareModal();
+        }
+    });
+
+    // Handle share options
+    document.querySelectorAll('.modern-share-option').forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            const platform = this.getAttribute('data-platform');
+            const url = this.getAttribute('data-url');
+            const text = this.getAttribute('data-text') || '';
+            const title = this.getAttribute('data-title') || text;
+
+            if (platform === 'copy-link') {
+                handleCopyLink(this, url);
+                return;
+            }
+
+            const shareUrl = buildShareUrl(platform, url, text, title);
+            if (!shareUrl) {
+                showToast('Unsupported sharing platform', 'error');
+                return;
+            }
+
+            if (this.hasAttribute('hx-post')) {
+                document.body.addEventListener('htmx:afterRequest', function handler(event) {
+                    if (event.detail.xhr.status === 200 && event.detail.target.id === 'share-count') {
+                        window.open(shareUrl, '_blank', 'width=600,height=400');
+                        document.body.removeEventListener('htmx:afterRequest', handler);
+                    }
+                }, { once: true });
+
+                try {
+                    htmx.trigger(this, 'htmx:trigger');
+                } catch (error) {
+                    console.error('Error triggering HTMX:', error);
+                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                    closeShareModal();
+                }
+            } else {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+                closeShareModal();
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

@@ -1,3 +1,4 @@
+import logging
 from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -8,8 +9,8 @@ from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.conf import settings
 from django.urls import reverse
-from .models import Post, Category, CarouselSlide, NewsletterSubscriber, PostView, SlideView
-from .forms import CustomUserCreationForm, LoginForm, PostForm, CategoryForm, CarouselSlideForm
+from .models import Post, Category, CarouselSlide, NewsletterSubscriber, PostView, SlideView, Comment, Like
+from .forms import CustomUserCreationForm, LoginForm, PostForm, CategoryForm, CarouselSlideForm, CommentForm
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.utils.text import slugify
@@ -22,6 +23,10 @@ from django.db import IntegrityError
 from taggit.models import Tag
 import cloudinary
 import requests
+from django.views.decorators.http import require_POST
+from django.db.models import F
+
+logger = logging.getLogger(__name__)
 
 def global_context(request):
     return {
@@ -111,22 +116,22 @@ def category_filter(request, slug):
         'current_year': datetime.now().year,
     })
 
-def post_detail(request, slug):
-    post = get_object_or_404(
-        Post.objects.select_related('category', 'author').prefetch_related('tags'),
-        slug=slug, status=Post.PostStatus.PUBLISHED
-    )
-    post.increment_views()
-    categories = Category.objects.all()
-    related_posts = Post.objects.filter(
-        category=post.category, status=Post.PostStatus.PUBLISHED
-    ).exclude(pk=post.pk).select_related('category')[:3]
-    return render(request, 'post_detail.html', {
-        'post': post,
-        'categories': categories,
-        'related_posts': related_posts,
-        'current_year': datetime.now().year,
-    })
+# def post_detail(request, slug):
+#     post = get_object_or_404(
+#         Post.objects.select_related('category', 'author').prefetch_related('tags'),
+#         slug=slug, status=Post.PostStatus.PUBLISHED
+#     )
+#     post.increment_views()
+#     categories = Category.objects.all()
+#     related_posts = Post.objects.filter(
+#         category=post.category, status=Post.PostStatus.PUBLISHED
+#     ).exclude(pk=post.pk).select_related('category')[:3]
+#     return render(request, 'post_detail.html', {
+#         'post': post,
+#         'categories': categories,
+#         'related_posts': related_posts,
+#         'current_year': datetime.now().year,
+#     })
 
 def newsletter_subscribe(request):
     if request.method == 'POST':
@@ -779,3 +784,128 @@ def handler500(request):
 
 # def test_500(request):
 #     raise Exception("Test 500 error")
+
+
+# Set up logging
+logger = logging.getLogger(__name__)
+
+def post_detail(request, slug):
+    post = get_object_or_404(
+        Post.objects.select_related('category', 'author').prefetch_related('tags', 'comments', 'post_likes'),
+        slug=slug, status=Post.PostStatus.PUBLISHED
+    )
+    
+    # Safely increment views
+    try:
+        post.increment_views(
+            ip_address=request.META.get('REMOTE_ADDR'),
+            user=request.user if request.user.is_authenticated else None,
+            user_agent=request.META.get('HTTP_USER_AGENT', ''),
+            referrer=request.META.get('HTTP_REFERER', '')
+        )
+    except Exception as e:
+        logger.error(f"Error incrementing views for post {slug}: {str(e)}")
+    
+    # Handle comment submission
+    comment_form = CommentForm()
+    if request.method == 'POST' and request.user.is_authenticated:
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.is_approved = True
+            comment.save()
+            messages.success(request, 'Comment submitted successfully! Awaiting approval.')
+            return redirect(request.get_full_path())
+        else:
+            messages.error(request, 'Please correct the errors in your comment.')
+    
+    categories = Category.objects.all()
+    related_posts = Post.objects.filter(
+        category=post.category, status=Post.PostStatus.PUBLISHED
+    ).exclude(pk=post.pk).select_related('author', 'category')[:3]
+    
+    # Filter active comments
+    active_comments = post.comments.filter(is_approved=True)
+    
+    # Check if the user has liked the post
+    has_liked = False
+    if request.user.is_authenticated:
+        has_liked = Like.objects.filter(post=post, user=request.user).exists()
+    
+    return render(request, 'post_detail.html', {
+        'post': post,
+        'comment_form': comment_form,
+        'categories': categories,
+        'related_posts': related_posts,
+        'has_liked': has_liked,
+        'comments': active_comments,
+        'current_year': datetime.now().year,
+    })
+
+@login_required
+@require_POST
+def like_post(request, slug):
+    try:
+        post = get_object_or_404(Post, slug=slug, status=Post.PostStatus.PUBLISHED)
+        user = request.user
+        
+        like, created = Like.objects.get_or_create(post=post, user=user)
+        if created:
+            # Increment likes count
+            Post.objects.filter(pk=post.pk).update(likes=F('likes') + 1)
+            post.refresh_from_db(fields=['likes'])
+            return JsonResponse({
+                'status': 'liked',
+                'likes_count': post.likes,
+                'message': 'Post liked successfully'
+            })
+        else:
+            # Unlike: remove like and decrement count
+            like.delete()
+            Post.objects.filter(pk=post.pk).update(likes=F('likes') - 1)
+            post.refresh_from_db(fields=['likes'])
+            return JsonResponse({
+                'status': 'unliked',
+                'likes_count': post.likes,
+                'message': 'Post unliked successfully'
+            })
+    except Post.DoesNotExist:
+        logger.error(f"Post with slug '{slug}' not found")
+        return JsonResponse({'error': 'Post not found'}, status=404)
+    except Exception as e:
+        logger.error(f"Error in like_post for slug '{slug}': {str(e)}")
+        return JsonResponse({'error': 'An error occurred while processing your request'}, status=500)
+
+@login_required
+@require_POST
+def share_post(request, slug):
+    try:
+        post = get_object_or_404(Post, slug=slug, status=Post.PostStatus.PUBLISHED)
+        
+        # Check if post has shares field and handle gracefully
+        if hasattr(post, 'shares'):
+            # Increment shares count using F() expression
+            Post.objects.filter(pk=post.pk).update(shares=F('shares') + 1)
+            post.refresh_from_db(fields=['shares'])
+            shares_count = post.shares
+        else:
+            # If shares field doesn't exist, create it or handle differently
+            logger.warning(f"Post model doesn't have 'shares' field for post {slug}")
+            shares_count = 0
+        
+        return JsonResponse({
+            'status': 'shared',
+            'shares_count': shares_count,
+            'message': 'Post shared successfully'
+        })
+        
+    except Post.DoesNotExist:
+        logger.error(f"Post with slug '{slug}' not found")
+        return JsonResponse({'error': 'Post not found'}, status=404)
+    except Exception as e:
+        logger.error(f"Error in share_post for slug '{slug}': {str(e)}")
+        logger.exception("Full traceback:")  # This will log the full stack trace
+        return JsonResponse({'error': f'An error occurred: {str(e)}'}, status=500)
+

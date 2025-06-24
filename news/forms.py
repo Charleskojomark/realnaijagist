@@ -2,7 +2,7 @@ from django import forms
 from django_ckeditor_5.widgets import CKEditor5Widget
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Post, Category, CarouselSlide
+from .models import Post, Category, CarouselSlide, Comment, Like
 from taggit.forms import TagWidget
 
     
@@ -124,4 +124,16 @@ class CarouselSlideForm(forms.ModelForm):
         }
         help_texts = {
             'image': 'Maximum file size is 10MB. Supported formats: JPEG, PNG.',
+        }
+        
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'comment-input',
+                'placeholder': 'Write your comment...',
+                'rows': 4,
+            }),
         }

@@ -293,21 +293,29 @@ class SlideView(models.Model):
 
 
 class Comment(models.Model):
-    """Comments system for posts"""
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author_name = models.CharField(max_length=100)
-    author_email = models.EmailField()
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='comments')  # Changed to ForeignKey to require authenticated user
     content = models.TextField(max_length=1000)
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Comment by {self.author_name} on {self.post.title}'
+        return f'Comment by {self.author.username} on {self.post.title}'
 
     class Meta:
         ordering = ['-created_at']
 
+class Like(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_likes')
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='user_likes')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['post', 'user']  # Ensure a user can like a post only once
+        indexes = [
+            models.Index(fields=['post', 'user']),
+        ]
 
 class NewsletterSubscriber(models.Model):
     email = models.EmailField(unique=True)

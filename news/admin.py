@@ -118,9 +118,9 @@ class CarouselSlideAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('author_name', 'post', 'is_approved', 'created_at')
+    list_display = ('author', 'post', 'is_approved', 'created_at')
     list_filter = ('is_approved', 'created_at', 'post')
-    search_fields = ('author_name', 'author_email', 'content', 'post__title')
+    search_fields = ('author', 'content', 'post__title')
     list_editable = ('is_approved',)
     date_hierarchy = 'created_at'
 
