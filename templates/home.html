@@ -98,7 +98,14 @@
                             </div>
                             <span>{{ post.created_at|timesince }} ago</span>
                         </div>
-                        <a href="{{ post.get_absolute_url }}" class="btn-primary">Read More</a>
+                        <a href="{{ post.get_absolute_url }}" 
+   class="btn-primary" 
+   onmouseover="this.style.color='white'" 
+   onmouseout="this.style.color=''" >
+   Read More
+</a>
+
+
                     </div>
                 </article>
             {% empty %}
