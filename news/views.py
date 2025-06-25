@@ -25,6 +25,7 @@ import cloudinary
 import requests
 from django.views.decorators.http import require_POST
 from django.db.models import F
+from cloudinary.exceptions import Error as CloudinaryError
 
 logger = logging.getLogger(__name__)
 
