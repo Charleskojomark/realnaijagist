@@ -3,6 +3,18 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from news import views
+from django.contrib.sitemaps.views import sitemap, sitemap_index
+from django.views.decorators.cache import cache_page
+from django.views.static import serve
+from news.sitemaps import PostSitemap, CategorySitemap, CarouselSlideSitemap, NewsSitemap, NewsSitemapIndex
+import os
+
+sitemaps = {
+    'posts': PostSitemap,
+    'categories': CategorySitemap,
+    'carousel_slides': CarouselSlideSitemap,
+    'news': NewsSitemap,
+}
 
 admin.site.site_header = "RealNaijaGist Admin"
 admin.site.site_title = "RealNaijaGist Admin"
@@ -13,6 +25,9 @@ handler500 = views.handler500
 
 urlpatterns = [
     path('secure-admin/', admin.site.urls),
+    path('sitemap.xml', cache_page(60 * 60)(sitemap_index), {'sitemaps': sitemaps}, name='sitemap_index'),
+    path('sitemap-<section>.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', serve, {'document_root': os.path.join(settings.BASE_DIR, 'static'), 'path': 'robots.txt'}),
     path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('', include('news.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
