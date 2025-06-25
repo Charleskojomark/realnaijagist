@@ -18,7 +18,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('category_detail', kwargs={'slug': self.slug})
+        return reverse('new:category_detail', kwargs={'slug': self.slug})
 
     class Meta:
         ordering = ['name']
