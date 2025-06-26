@@ -224,11 +224,15 @@ LOGIN_REDIRECT_URL = 'news:home'
 LOGOUT_REDIRECT_URL = 'news:home'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Example: Gmail SMTP
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@gmail.com'
-EMAIL_HOST_PASSWORD = 'your-app-password'
-DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
-CONTACT_EMAIL = 'admin@realnaijagist.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'realnaijagist123@gmail.com'
+EMAIL_HOST_PASSWORD = 'jnwn lgsy iszu zylp'
+DEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'
+CONTACT_EMAIL = 'realnaijagist123@gmail.com'
+
 CURRENT_YEAR = 2025
+
+# jnwn lgsy iszu zylp

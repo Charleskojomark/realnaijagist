@@ -199,16 +199,23 @@ def contact(request):
         email = request.POST.get('email')
         message = request.POST.get('message')
         if name and email and message:
-            send_mail(
-                subject=f'Contact Form Submission from {name}',
-                message=f'From: {name}\nEmail: {email}\n\n{message}',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.CONTACT_EMAIL],
-                fail_silently=False,
-            )
-            messages.success(request, 'Thank you for your message! We will get back to you soon.')
-            return redirect('news:contact')
+            try:
+                logger.info(f"Attempting to send email from {email} to {settings.CONTACT_EMAIL}")
+                send_mail(
+                    subject=f'Contact Form Submission from {name}',
+                    message=f'From: {name}\nEmail: {email}\n\n{message}',
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.CONTACT_EMAIL],
+                    fail_silently=False,
+                )
+                logger.info(f"Email sent successfully from {email}")
+                messages.success(request, 'Thank you for your message! We will get back to you soon.')
+                return redirect('news:contact')
+            except Exception as e:
+                logger.error(f"Failed to send email from {email}: {str(e)}")
+                messages.error(request, 'There was an error sending your message. Please try again later.')
         else:
+            logger.warning(f"Incomplete form submission: name={name}, email={email}, message={message}")
             messages.error(request, 'Please fill out all fields.')
     return render(request, 'contact.html', {'current_year': datetime.now().year})
 

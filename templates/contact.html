@@ -5,11 +5,9 @@
 <div class="container">
     <main class="main-content">
         <h1 class="category-title">Contact Us</h1>
-        {% if messages %}
-            {% for message in messages %}
-                <p class="{% if message.tags == 'success' %}newsletter-success{% else %}newsletter-error{% endif %}">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
+        <div id="messages-container">
+        {% include 'partials/messages.html' %}
+        </div>
         <p>We'd love to hear from you! Fill out the form below to get in touch.</p>
         <form class="newsletter-form" method="post">
             {% csrf_token %}
