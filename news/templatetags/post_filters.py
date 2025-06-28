@@ -16,7 +16,7 @@ def add_paragraphs(value):
     Handle single-block content by wrapping it in a <p> tag.
     """
     # Debug: Log raw input safely
-    logger.debug(f"Raw input content: {repr(value.encode('utf-8', 'replace').decode('utf-8'))}")
+    # logger.debug(f"Raw input content: {repr(value.encode('utf-8', 'replace').decode('utf-8'))}")
     
     # Check if content already contains <p> tags
     if '<p>' in value:
@@ -34,10 +34,10 @@ def add_paragraphs(value):
     if not paragraphs:
         paragraphs = [value] if value else []
     
-    logger.debug(f"Paragraphs after split: {repr([p.encode('utf-8', 'replace').decode('utf-8') for p in paragraphs])}")
+    # logger.debug(f"Paragraphs after split: {repr([p.encode('utf-8', 'replace').decode('utf-8') for p in paragraphs])}")
     
     # Wrap each paragraph in <p> tags, preserving internal <br> tags and whitespace
     paragraphs = [f'<p>{p}</p>' for p in paragraphs]
     result = ''.join(paragraphs)
-    logger.debug(f"Output content: {repr(result.encode('utf-8', 'replace').decode('utf-8'))}")
+    # logger.debug(f"Output content: {repr(result.encode('utf-8', 'replace').decode('utf-8'))}")
     return mark_safe(result)
