@@ -30,7 +30,7 @@ urlpatterns = [
     path('sitemap.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='sitemap'),
     path('sitemap-<section>.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     
-    path('robots.txt', serve, {'document_root': os.path.join(settings.BASE_DIR, 'static'), 'path': 'robots.txt'}),
+    path('robots.txt', serve, {'document_root': settings.BASE_DIR, 'path': 'robots.txt'}),
     path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('', include('news.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
