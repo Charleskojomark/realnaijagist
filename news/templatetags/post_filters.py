@@ -1,8 +1,12 @@
 from django import template
 from django.utils.safestring import mark_safe
 import re
-
+import sys
+import logging
 register = template.Library()
+
+# Set up logging
+logger = logging.getLogger(__name__)
 
 @register.filter
 def add_paragraphs(value):
@@ -11,11 +15,12 @@ def add_paragraphs(value):
     preserving existing <p> tags, single <br> tags, and all whitespace within paragraphs.
     Handle single-block content by wrapping it in a <p> tag.
     """
-    print(f"Raw input content: {value!r}")  # Debug: Log raw input
-
+    # Debug: Log raw input safely
+    logger.debug(f"Raw input content: {repr(value.encode('utf-8', 'replace').decode('utf-8'))}")
+    
     # Check if content already contains <p> tags
     if '<p>' in value:
-        print("Found existing <p> tags, returning unchanged")
+        logger.debug("Found existing <p> tags, returning unchanged")
         return mark_safe(value)
 
     # Normalize double <br> tags to \n\n
@@ -29,10 +34,10 @@ def add_paragraphs(value):
     if not paragraphs:
         paragraphs = [value] if value else []
     
-    print(f"Paragraphs after split: {paragraphs!r}")  # Debug: Log split paragraphs
-
+    logger.debug(f"Paragraphs after split: {repr([p.encode('utf-8', 'replace').decode('utf-8') for p in paragraphs])}")
+    
     # Wrap each paragraph in <p> tags, preserving internal <br> tags and whitespace
     paragraphs = [f'<p>{p}</p>' for p in paragraphs]
     result = ''.join(paragraphs)
-    print(f"Output content: {result!r}")  # Debug: Log final output
+    logger.debug(f"Output content: {repr(result.encode('utf-8', 'replace').decode('utf-8'))}")
     return mark_safe(result)
