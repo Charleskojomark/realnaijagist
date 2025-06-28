@@ -27,7 +27,7 @@ pymysql.install_as_MySQLdb()
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['realnaijagist.com', 'www.realnaijagist.com','localhost']
 
@@ -192,9 +192,26 @@ customColorPalette = [
     {'color': 'hsl(207, 90%, 54%)', 'label': 'Blue'},
 ]
 
+# CKEDITOR_5_CONFIGS = {
+#     'default': {
+#         'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+#         'heading': {
+#             'options': [
+#                 {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
+#                 {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
+#                 {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'},
+#                 {'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3'}
+#             ]
+#         },
+#         'language': 'en',
+#     },
+# }
+
+# ... other Django settings ...
+
 CKEDITOR_5_CONFIGS = {
     'default': {
-        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote', 'insertTable', 'imageUpload', 'undo', 'redo'],
         'heading': {
             'options': [
                 {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
@@ -204,10 +221,28 @@ CKEDITOR_5_CONFIGS = {
             ]
         },
         'language': 'en',
-    },
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', 'heading3', '|',
+            'bulletedList', 'numberedList', 'blockQuote'
+        ],
+        'htmlSupport': {
+            'allow': [
+                {
+                    'name': 'p|div|h[1-6]|ul|ol|li|blockquote|br',  # Removed slashes
+                    'attributes': True,
+                    'classes': True,
+                    'styles': True
+                }
+            ],
+            'disallow': []  # Ensure no tags are stripped
+        },
+        'enterMode': 'p',  # Enter key creates <p> tags
+        'shiftEnterMode': 'br',  # Shift+Enter creates <br> tags
+        'preserveWhitespace': True,  # Preserve spaces and newlines
+        'removePlugins': ['HtmlWriter'],  # Prevent HTML reformatting
+        'htmlEncodeOutput': False  # Prevent escaping HTML tags
+    }
 }
-
-
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',

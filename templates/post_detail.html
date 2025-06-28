@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load post_filters %}
 
 {% block meta_description %}{{ post.excerpt|truncatechars:160|striptags }}{% endblock %}
 {% block meta_keywords %}{{ post.tags.all|join:", " }}, {{ post.category.name }}, Nigerian news, entertainment{% endblock %}
@@ -1020,7 +1021,8 @@
                 </picture>
             </figure>
             <div class="modern-post-content">
-                {{ post.content|safe }}
+                <!-- {{ post.content|safe }} -->
+                {{ post.content|add_paragraphs|safe }}
             </div>
             <div class="modern-post-tags">
                 {% for tag in post.tags.all %}
