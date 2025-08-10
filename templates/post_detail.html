@@ -1007,7 +1007,14 @@
                 <span class="modern-post-category">{{ post.category.name }}</span>
                 <h1 class="modern-post-title">{{ post.title }}</h1>
                 <div class="modern-post-meta">
-                    <span><i class="fas fa-user"></i> By {{ post.author.username }}</span>
+                    <span>
+                        <i class="fas fa-user"></i> By 
+                        {% if post.author.first_name and post.author.last_name %}
+                            {{ post.author.first_name }} {{ post.author.last_name }}
+                        {% else %}
+                            {{ post.author.username }}
+                        {% endif %}
+                    </span>
                     <span><i class="fas fa-clock"></i> {{ post.created_at|timesince }} ago</span>
                     <span><i class="fas fa-eye"></i> {{ post.views }} views</span>
                 </div>
@@ -1143,7 +1150,13 @@
         <ul class="modern-comment-list">
             {% for comment in comments %}
                 <li class="modern-comment-item post-slide-up">
-                    <div class="modern-comment-author">{{ comment.author.username }}</div>
+                    <div class="modern-comment-author">
+                        {% if comment.author.first_name and comment.author.last_name %}
+                            {{ comment.author.first_name }} {{ comment.author.last_name }}
+                        {% else %}
+                            {{ comment.author.username|title }}
+                        {% endif %}
+                    </div>
                     <div class="modern-comment-date">{{ comment.created_at|timesince }} ago</div>
                     <div class="modern-comment-content">{{ comment.content }}</div>
                 </li>
@@ -1168,7 +1181,13 @@
                         <p class="modern-post-excerpt">{{ related_post.excerpt|truncatechars:80 }}</p>
                         <div class="modern-post-meta">
                             <div class="modern-author">
-                                <span>{{ related_post.author.username }}</span>
+                                <span>
+                                    {% if related_post.author.first_name and related_post.author.last_name %}
+                                        {{ related_post.author.first_name }} {{ related_post.author.last_name }}
+                                    {% else %}
+                                        {{ related_post.author.username }}
+                                    {% endif %}
+                                </span>
                             </div>
                             <span>{{ related_post.created_at|timesince }} ago</span>
                         </div>

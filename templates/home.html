@@ -94,7 +94,13 @@
                         <p class="post-excerpt">{{ post.excerpt|truncatechars:100 }}</p>
                         <div class="post-meta">
                             <div class="author">
-                                <span>{{ post.author.username|title }}</span>
+                                <span>
+                                    {% if post.author.first_name and post.author.last_name %}
+                                        {{ post.author.first_name }} {{ post.author.last_name }}
+                                    {% else %}
+                                        {{ post.author.username|title }}
+                                    {% endif %}
+                                </span>
                             </div>
                             <span>{{ post.created_at|timesince }} ago</span>
                         </div>
