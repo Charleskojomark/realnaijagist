@@ -1,0 +1,320 @@
+{% load static %}
+
+<div class="video-player-container" data-video-type="{% if post.featured_video %}cloudinary{% elif post.video_embed_url %}external{% endif %}">
+    {% if post.featured_video %}
+        <!-- Cloudinary Video Player -->
+        <div class="cloudinary-video-player">
+            <video 
+                class="video-player" 
+                controls 
+                preload="metadata"
+                poster="{{ post.get_video_thumbnail_url }}"
+                data-video-id="{{ post.featured_video.public_id }}"
+                data-video-duration="{{ post.video_duration|default:0 }}"
+            >
+                <source src="{{ post.featured_video.url }}" type="video/mp4">
+                <source src="{{ post.featured_video.url|add:'?f=webm' }}" type="video/webm">
+                Your browser does not support the video tag.
+            </video>
+            
+            {% if post.video_duration %}
+                <div class="video-duration-badge">
+                    <i class="fas fa-clock"></i>
+                    <span>{{ post.get_video_duration_formatted }}</span>
+                </div>
+            {% endif %}
+        </div>
+        
+    {% elif post.video_embed_url %}
+        <!-- External Video Embed (YouTube/Vimeo) -->
+        <div class="external-video-embed">
+            <div class="video-embed-container">
+                {% if 'youtube.com' in post.video_embed_url or 'youtu.be' in post.video_embed_url %}
+                    <!-- YouTube Embed -->
+                    <iframe 
+                        src="{{ post.video_embed_url }}" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        class="video-iframe"
+                        title="{{ post.title }}"
+                    ></iframe>
+                {% elif 'vimeo.com' in post.video_embed_url %}
+                    <!-- Vimeo Embed -->
+                    <iframe 
+                        src="{{ post.video_embed_url }}" 
+                        frameborder="0" 
+                        allow="autoplay; fullscreen; picture-in-picture" 
+                        allowfullscreen
+                        class="video-iframe"
+                        title="{{ post.title }}"
+                    ></iframe>
+                {% else %}
+                    <!-- Generic iframe embed -->
+                    <iframe 
+                        src="{{ post.video_embed_url }}" 
+                        frameborder="0" 
+                        allowfullscreen
+                        class="video-iframe"
+                        title="{{ post.title }}"
+                    ></iframe>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if post.is_video_post %}
+        <div class="video-post-indicator">
+            <i class="fas fa-video"></i>
+            <span>Video Post</span>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.video-player-container {
+    position: relative;
+    margin: 2rem 0;
+    border-radius: var(--post-border-radius);
+    overflow: hidden;
+    box-shadow: var(--post-shadow-soft);
+    background: var(--white);
+}
+
+.cloudinary-video-player {
+    position: relative;
+    width: 100%;
+}
+
+.video-player {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    display: block;
+    border-radius: var(--post-border-radius);
+}
+
+.video-duration-badge {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+}
+
+.video-duration-badge i {
+    margin-right: 0.5rem;
+    color: var(--golden-yellow);
+}
+
+.external-video-embed {
+    position: relative;
+    width: 100%;
+}
+
+.video-embed-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--post-border-radius);
+}
+
+.video-post-indicator {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--post-gradient-primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--post-shadow-soft);
+}
+
+.video-post-indicator i {
+    margin-right: 0.5rem;
+    color: var(--golden-yellow);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .video-player-container {
+        margin: 1rem 0;
+        border-radius: 12px;
+    }
+    
+    .video-player {
+        max-height: 50vh;
+    }
+    
+    .video-duration-badge {
+        bottom: 0.75rem;
+        right: 0.75rem;
+        padding: 0.375rem 0.625rem;
+        font-size: 0.75rem;
+    }
+    
+    .video-post-indicator {
+        top: 0.75rem;
+        left: 0.75rem;
+        padding: 0.375rem 0.875rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* Video Player Enhancements */
+.video-player::-webkit-media-controls {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 0 0 var(--post-border-radius) var(--post-border-radius);
+}
+
+.video-player::-webkit-media-controls-panel {
+    padding: 0.5rem;
+}
+
+/* Loading State */
+.video-player-container.loading::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--border-color);
+    border-top: 3px solid var(--primary-green);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 10;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Video Thumbnail Hover Effect */
+.video-player-container:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--post-shadow-hover);
+    transition: var(--post-transition);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize video players
+    const videoPlayers = document.querySelectorAll('.video-player-container');
+    
+    videoPlayers.forEach(container => {
+        const video = container.querySelector('.video-player');
+        const iframe = container.querySelector('.video-iframe');
+        
+        if (video) {
+            // Cloudinary video player
+            initializeCloudinaryVideo(video, container);
+        } else if (iframe) {
+            // External video embed
+            initializeExternalVideo(iframe, container);
+        }
+    });
+});
+
+function initializeCloudinaryVideo(video, container) {
+    // Add loading state
+    container.classList.add('loading');
+    
+    video.addEventListener('loadedmetadata', function() {
+        container.classList.remove('loading');
+        
+        // Auto-update duration if not set
+        if (!video.dataset.videoDuration || video.dataset.videoDuration === '0') {
+            const duration = Math.round(video.duration);
+            if (duration > 0) {
+                updateVideoDuration(container, duration);
+            }
+        }
+    });
+    
+    // Error handling
+    video.addEventListener('error', function() {
+        container.classList.remove('loading');
+        showVideoError(container, 'Failed to load video');
+    });
+    
+    // Play/pause analytics (optional)
+    video.addEventListener('play', function() {
+        trackVideoEvent('play', video.dataset.videoId);
+    });
+    
+    video.addEventListener('pause', function() {
+        trackVideoEvent('pause', video.dataset.videoId);
+    });
+}
+
+function initializeExternalVideo(iframe, container) {
+    // Remove loading state for external videos
+    container.classList.remove('loading');
+    
+    // Handle iframe load
+    iframe.addEventListener('load', function() {
+        container.classList.remove('loading');
+    });
+    
+    // Error handling for iframes
+    iframe.addEventListener('error', function() {
+        showVideoError(container, 'Failed to load external video');
+    });
+}
+
+function updateVideoDuration(container, duration) {
+    const badge = container.querySelector('.video-duration-badge');
+    if (badge) {
+        const minutes = Math.floor(duration / 60);
+        const seconds = duration % 60;
+        const formatted = minutes > 0 ? `${minutes}:${seconds.toString().padStart(2, '0')}` : `${seconds}s`;
+        badge.querySelector('span').textContent = formatted;
+    }
+}
+
+function showVideoError(container, message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'video-error';
+    errorDiv.innerHTML = `
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>${message}</span>
+    `;
+    container.appendChild(errorDiv);
+}
+
+function trackVideoEvent(event, videoId) {
+    // Implement video analytics tracking here
+    console.log(`Video ${event}:`, videoId);
+    
+    // Example: Send to analytics service
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'video_' + event, {
+            'video_id': videoId,
+            'event_category': 'video',
+            'event_label': event
+        });
+    }
+}
+</script>

@@ -5,7 +5,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 from django.core.files.storage import default_storage
 from django.utils import timezone
 from taggit.managers import TaggableManager 
-from cloudinary.models import CloudinaryField 
+# from cloudinary.models import CloudinaryField 
 
 
 class Category(models.Model):
@@ -47,12 +47,19 @@ class Post(models.Model):
     meta_keywords = models.CharField(max_length=255, blank=True)
     
     # Images with CDN support
-    featured_image = CloudinaryField('image', blank=True, null=True) 
+    featured_image = models.ImageField(upload_to='blog/images/', blank=True, null=True) 
     featured_image_webp = models.ImageField(upload_to='blog/images/webp/', blank=True, null=True, help_text="WebP version for faster loading")
     image_alt_text = models.CharField(max_length=100, blank=True)
     
     # Optional: Direct CDN URL override
     cdn_image_url = models.URLField(max_length=500, blank=True, help_text="Direct CDN URL (overrides uploaded image)")
+    
+    # Video support
+    featured_video = models.FileField(upload_to='blog/videos/', blank=True, null=True, help_text="Featured video for the post")
+    video_thumbnail = models.ImageField(upload_to='blog/videos/thumbnails/', blank=True, null=True, help_text="Custom thumbnail for video")
+    video_duration = models.PositiveIntegerField(blank=True, null=True, help_text="Video duration in seconds")
+    video_embed_url = models.URLField(max_length=500, blank=True, help_text="YouTube/Vimeo embed URL")
+    is_video_post = models.BooleanField(default=False, help_text="Mark if this post is primarily a video post")
     
     # Relationships
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='posts')
@@ -117,6 +124,37 @@ class Post(models.Model):
             'large': f"{base_url}?w=1200&h=800&c=fill",
             'original': base_url
         }
+    
+    def get_video_url(self):
+        """Get video URL with fallback to embed URL"""
+        if self.featured_video:
+            return self.featured_video.url
+        elif self.video_embed_url:
+            return self.video_embed_url
+        return None
+    
+    def get_video_thumbnail_url(self):
+        """Get video thumbnail URL with fallback to featured image"""
+        if self.video_thumbnail:
+            return self.video_thumbnail.url
+        elif self.featured_image:
+            return self.get_image_url('medium')
+        return None
+    
+    def has_video_content(self):
+        """Check if post has any video content"""
+        return bool(self.featured_video or self.video_embed_url)
+    
+    def get_video_duration_formatted(self):
+        """Get formatted video duration"""
+        if not self.video_duration:
+            return None
+        
+        minutes = self.video_duration // 60
+        seconds = self.video_duration % 60
+        if minutes > 0:
+            return f"{minutes}:{seconds:02d}"
+        return f"{seconds}s"
         """Return excerpt or truncated content if excerpt is empty"""
         if self.excerpt:
             return self.excerpt
@@ -179,7 +217,7 @@ class CarouselSlide(models.Model):
     description = models.TextField(max_length=500, blank=True)
     
     # Images with optimization
-    image = CloudinaryField('carousel', blank=True, null=True) 
+    image = models.ImageField(upload_to='carousel/', blank=True, null=True) 
     image_webp = models.ImageField(upload_to='carousel/webp/', blank=True, null=True)
     image_alt_text = models.CharField(max_length=100, blank=True)
     
@@ -316,6 +354,64 @@ class Like(models.Model):
         indexes = [
             models.Index(fields=['post', 'user']),
         ]
+
+class Video(models.Model):
+    """Dedicated video model for better video management"""
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    
+    # Video file (Cloudinary)
+    video_file = models.FileField(upload_to='videos/', blank=True, null=True)
+    
+    # Video metadata
+    duration = models.PositiveIntegerField(blank=True, null=True, help_text="Duration in seconds")
+    file_size = models.PositiveIntegerField(blank=True, null=True, help_text="File size in bytes")
+    resolution = models.CharField(max_length=20, blank=True, help_text="e.g., 1920x1080")
+    format = models.CharField(max_length=10, blank=True, help_text="e.g., MP4, WebM")
+    
+    # Thumbnail
+    thumbnail = models.ImageField(upload_to='videos/thumbnails/', blank=True, null=True)
+    
+    # External video support
+    external_url = models.URLField(blank=True, help_text="YouTube/Vimeo URL")
+    embed_code = models.TextField(blank=True, help_text="HTML embed code")
+    
+    # Post relationship
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='videos', blank=True, null=True)
+    
+    # Metadata
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.title
+    
+    def get_video_url(self):
+        """Get video URL with fallback to external URL"""
+        if self.video_file:
+            return self.video_file.url
+        elif self.external_url:
+            return self.external_url
+        return None
+    
+    def get_duration_formatted(self):
+        """Get formatted duration"""
+        if not self.duration:
+            return None
+        
+        minutes = self.duration // 60
+        seconds = self.duration % 60
+        if minutes > 0:
+            return f"{minutes}:{seconds:02d}"
+        return f"{seconds}s"
+    
+    def is_external(self):
+        """Check if video is external (YouTube/Vimeo)"""
+        return bool(self.external_url or self.embed_code)
+    
+    class Meta:
+        ordering = ['-created_at']
+
 
 class NewsletterSubscriber(models.Model):
     email = models.EmailField(unique=True)

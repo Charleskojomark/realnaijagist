@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Category, Post, CarouselSlide, Comment, NewsletterSubscriber, PostView
+from .models import Category, Post, CarouselSlide, Comment, NewsletterSubscriber, PostView, Video
 
 
 @admin.register(Category)
@@ -58,11 +58,14 @@ class PostAdmin(admin.ModelAdmin):
         ('Images', {
             'fields': ('featured_image', 'featured_image_webp', 'cdn_image_url', 'image_alt_text', 'responsive_images')
         }),
+        ('Video', {
+            'fields': ('featured_video', 'video_thumbnail', 'video_duration', 'video_embed_url', 'is_video_post', 'video_info')
+        }),
         ('Analytics', {
             'fields': ('views', 'likes', 'shares', 'is_trending')
         }),
     )
-    readonly_fields = ('responsive_images',)
+    readonly_fields = ('responsive_images', 'video_info')
 
     def responsive_images(self, obj):
         """Display responsive image URLs in admin"""
@@ -74,6 +77,24 @@ class PostAdmin(admin.ModelAdmin):
             html += f"<p><strong>{size.title()}:</strong> <a href='{url}' target='_blank'>{url}</a></p>"
         return format_html(html)
     responsive_images.short_description = "Responsive Images"
+    
+    def video_info(self, obj):
+        """Display video information in admin"""
+        if not obj.has_video_content():
+            return "No video content"
+        
+        html = ""
+        if obj.featured_video:
+            html += f"<p><strong>Video:</strong> <a href='{obj.featured_video.url}' target='_blank'>View Video</a></p>"
+        if obj.video_embed_url:
+            html += f"<p><strong>Embed URL:</strong> <a href='{obj.video_embed_url}' target='_blank'>{obj.video_embed_url}</a></p>"
+        if obj.video_duration:
+            html += f"<p><strong>Duration:</strong> {obj.get_video_duration_formatted()}</p>"
+        if obj.is_video_post:
+            html += "<p><strong>Type:</strong> <span style='color: green;'>Video Post</span></p>"
+        
+        return format_html(html)
+    video_info.short_description = "Video Information"
 
     def make_published(self, request, queryset):
         queryset.update(status=Post.PostStatus.PUBLISHED)
@@ -84,6 +105,32 @@ class PostAdmin(admin.ModelAdmin):
         queryset.update(status=Post.PostStatus.DRAFT)
         self.message_user(request, "Selected posts have been set to draft.")
     make_draft.short_description = "Mark selected posts as draft"
+
+
+@admin.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ('title', 'post', 'duration', 'format', 'is_external', 'created_at')
+    list_filter = ('format', 'created_at')
+    search_fields = ('title', 'description', 'post__title')
+    date_hierarchy = 'created_at'
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'description', 'post')
+        }),
+        ('Video File', {
+            'fields': ('video_file', 'thumbnail', 'duration', 'file_size', 'resolution', 'format')
+        }),
+        ('External Video', {
+            'fields': ('external_url', 'embed_code'),
+            'description': 'Use these fields for YouTube/Vimeo videos'
+        }),
+    )
+    readonly_fields = ('is_external',)
+    
+    def is_external(self, obj):
+        return obj.is_external()
+    is_external.boolean = True
+    is_external.short_description = 'External Video'
 
 
 @admin.register(CarouselSlide)

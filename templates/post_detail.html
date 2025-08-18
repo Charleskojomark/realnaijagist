@@ -82,6 +82,28 @@
     --post-border-radius: 16px;
     --post-border-radius-lg: 24px;
     --post-transition: all 0.3s ease;
+    
+    /* Mobile-friendly font sizes */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+    
+    /* Mobile-friendly spacing */
+    --spacing-1: 0.25rem;
+    --spacing-2: 0.5rem;
+    --spacing-3: 0.75rem;
+    --spacing-4: 1rem;
+    --spacing-5: 1.25rem;
+    --spacing-6: 1.5rem;
+    --spacing-8: 2rem;
+    --spacing-10: 2.5rem;
+    --spacing-12: 3rem;
 }
 
 /* Animations */
@@ -110,21 +132,54 @@
 .modern-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 var(--spacing-5);
 }
 
 /* Post Detail Container */
 .modern-post-detail-container {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     min-height: 100vh;
-    padding: 40px 0;
+    padding: var(--spacing-10) 0;
 }
 
 .modern-post-detail-container .modern-container {
     display: grid;
     grid-template-columns: 1fr 300px;
-    gap: 40px;
+    gap: var(--spacing-10);
     align-items: start;
+}
+
+/* Mobile-first responsive grid */
+@media (max-width: 1024px) {
+    .modern-post-detail-container .modern-container {
+        grid-template-columns: 1fr 250px;
+        gap: var(--spacing-6);
+    }
+}
+
+@media (max-width: 768px) {
+    .modern-post-detail-container .modern-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-6);
+    }
+    
+    .modern-container {
+        padding: 0 var(--spacing-4);
+    }
+    
+    .modern-post-detail-container {
+        padding: var(--spacing-6) 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .modern-container {
+        padding: 0 var(--spacing-3);
+    }
+    
+    .modern-post-detail-container {
+        padding: var(--spacing-4) 0;
+    }
 }
 
 /* Post Detail Styling */
@@ -145,7 +200,7 @@
 
 /* Post Header */
 .modern-post-header {
-    padding: 40px 40px 20px;
+    padding: var(--spacing-10) var(--spacing-10) var(--spacing-5);
     background: linear-gradient(135deg, var(--white) 0%, #f8fafc 100%);
     position: relative;
     overflow: hidden;
@@ -165,13 +220,13 @@
     display: inline-block;
     background: var(--post-gradient-primary);
     color: var(--white);
-    padding: 8px 16px;
+    padding: var(--spacing-2) var(--spacing-4);
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 16px;
+    margin-bottom: var(--spacing-4);
     box-shadow: 0 4px 12px rgba(43, 143, 71, 0.3);
     transition: var(--post-transition);
 }
@@ -182,11 +237,11 @@
 }
 
 .modern-post-title {
-    font-size: 2.5rem;
+    font-size: var(--font-size-5xl);
     font-weight: 800;
     line-height: 1.2;
     color: var(--text-dark);
-    margin-bottom: 20px;
+    margin-bottom: var(--spacing-5);
     background: linear-gradient(135deg, var(--text-dark) 0%, #4a5568 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -195,18 +250,18 @@
 
 .modern-post-meta {
     display: flex;
-    gap: 24px;
+    gap: var(--spacing-6);
     flex-wrap: wrap;
     align-items: center;
     color: var(--text-light);
-    font-size: 0.9rem;
+    font-size: var(--font-size-sm);
 }
 
 .modern-post-meta span {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 12px;
+    gap: var(--spacing-2);
+    padding: var(--spacing-1.5) var(--spacing-3);
     background: rgba(43, 143, 71, 0.1);
     border-radius: 12px;
     transition: var(--post-transition);
@@ -219,7 +274,50 @@
 
 .modern-post-meta i {
     color: var(--primary-green);
-    font-size: 0.85rem;
+    font-size: var(--font-size-sm);
+}
+
+/* Mobile responsive header */
+@media (max-width: 768px) {
+    .modern-post-header {
+        padding: var(--spacing-6) var(--spacing-6) var(--spacing-4);
+    }
+    
+    .modern-post-title {
+        font-size: var(--font-size-4xl);
+        line-height: 1.3;
+    }
+    
+    .modern-post-meta {
+        gap: var(--spacing-3);
+        font-size: var(--font-size-xs);
+    }
+    
+    .modern-post-meta span {
+        padding: var(--spacing-1) var(--spacing-2);
+    }
+}
+
+@media (max-width: 480px) {
+    .modern-post-header {
+        padding: var(--spacing-4) var(--spacing-4) var(--spacing-3);
+    }
+    
+    .modern-post-title {
+        font-size: var(--font-size-3xl);
+        line-height: 1.4;
+    }
+    
+    .modern-post-category {
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-1) var(--spacing-2);
+    }
+    
+    .modern-post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-2);
+    }
 }
 
 /* Post Image */
@@ -254,35 +352,43 @@
 
 /* Post Content */
 .modern-post-content {
-    padding: 40px;
-    font-size: 1.1rem;
+    padding: var(--spacing-10);
+    font-size: var(--font-size-lg);
     line-height: 1.8;
     color: var(--text-dark);
 }
 
 .modern-post-content p {
-    margin-bottom: 24px;
+    margin-bottom: var(--spacing-6);
 }
 
 .modern-post-content h2,
 .modern-post-content h3,
 .modern-post-content h4 {
-    margin: 32px 0 16px;
+    margin: var(--spacing-8) 0 var(--spacing-4);
     color: var(--text-dark);
     font-weight: 700;
 }
 
 .modern-post-content h2 {
-    font-size: 1.8rem;
+    font-size: var(--font-size-3xl);
     border-left: 4px solid var(--primary-green);
-    padding-left: 16px;
+    padding-left: var(--spacing-4);
+}
+
+.modern-post-content h3 {
+    font-size: var(--font-size-2xl);
+}
+
+.modern-post-content h4 {
+    font-size: var(--font-size-xl);
 }
 
 .modern-post-content blockquote {
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     border-left: 4px solid var(--primary-green);
-    padding: 20px 24px;
-    margin: 24px 0;
+    padding: var(--spacing-5) var(--spacing-6);
+    margin: var(--spacing-6) 0;
     border-radius: 0 var(--post-border-radius) var(--post-border-radius) 0;
     font-style: italic;
     position: relative;
@@ -290,12 +396,77 @@
 
 .modern-post-content blockquote::before {
     content: '"';
-    font-size: 4rem;
+    font-size: var(--font-size-5xl);
     color: var(--primary-green);
     position: absolute;
     top: -10px;
     left: 10px;
     opacity: 0.3;
+}
+
+/* Mobile responsive content */
+@media (max-width: 768px) {
+    .modern-post-content {
+        padding: var(--spacing-6);
+        font-size: var(--font-size-base);
+        line-height: 1.7;
+    }
+    
+    .modern-post-content h2 {
+        font-size: var(--font-size-2xl);
+        margin: var(--spacing-6) 0 var(--spacing-3);
+    }
+    
+    .modern-post-content h3 {
+        font-size: var(--font-size-xl);
+    }
+    
+    .modern-post-content h4 {
+        font-size: var(--font-size-lg);
+    }
+    
+    .modern-post-content blockquote {
+        padding: var(--spacing-4) var(--spacing-5);
+        margin: var(--spacing-4) 0;
+    }
+    
+    .modern-post-content blockquote::before {
+        font-size: var(--font-size-4xl);
+    }
+}
+
+@media (max-width: 480px) {
+    .modern-post-content {
+        padding: var(--spacing-4);
+        font-size: var(--font-size-sm);
+        line-height: 1.6;
+    }
+    
+    .modern-post-content h2 {
+        font-size: var(--font-size-xl);
+        margin: var(--spacing-4) 0 var(--spacing-2);
+    }
+    
+    .modern-post-content h3 {
+        font-size: var(--font-size-lg);
+    }
+    
+    .modern-post-content h4 {
+        font-size: var(--font-size-base);
+    }
+    
+    .modern-post-content p {
+        margin-bottom: var(--spacing-4);
+    }
+    
+    .modern-post-content blockquote {
+        padding: var(--spacing-3) var(--spacing-4);
+        margin: var(--spacing-3) 0;
+    }
+    
+    .modern-post-content blockquote::before {
+        font-size: var(--font-size-3xl);
+    }
 }
 
 /* Post Tags */
@@ -1019,6 +1190,7 @@
                     <span><i class="fas fa-eye"></i> {{ post.views }} views</span>
                 </div>
             </header>
+            {% if post.featured_image %}
             <figure class="modern-post-image-container">
                 <picture>
                     <source media="(max-width: 480px)" srcset="{{ post.get_responsive_images.mobile|default:post.get_image_url }}">
@@ -1027,6 +1199,14 @@
                     <img src="{{ post.get_image_url }}" alt="{{ post.image_alt_text|default:post.title }}" class="modern-post-image" loading="lazy">
                 </picture>
             </figure>
+            {% endif %}
+            
+            {% if post.has_video_content %}
+            <div class="video-section">
+                {% include 'partials/video_player.html' %}
+            </div>
+            {% endif %}
+            
             <div class="modern-post-content">
                 <!-- {{ post.content|safe }} -->
                 {{ post.content|add_paragraphs|safe }}
@@ -1041,15 +1221,23 @@
             <div class="modern-post-actions">
                 <button class="modern-action-btn like-btn {% if has_liked %}liked{% endif %}" 
                         data-slug="{{ post.slug }}"
-                        {% if not user.is_authenticated %}disabled title="Please login to like"{% endif %}
+                        {% if not user.is_authenticated %}
+                        onclick="showLoginMessage('like')"
+                        title="Please login to like"
+                        {% else %}
                         hx-post="{% url 'news:like_post' post.slug %}"
                         hx-target="#like-count"
                         hx-swap="innerHTML"
-                        hx-indicator="#like-indicator">
+                        hx-indicator="#like-indicator"
+                        {% endif %}>
                     <i class="fas fa-heart"></i> <span id="like-count">{{ post.likes }}</span> Like
                 </button>
                 <div class="modern-share-menu">
-                    <button id="share-btn" class="modern-share-btn" {% if not user.is_authenticated %}disabled title="Please login to share"{% endif %}>
+                    <button id="share-btn" class="modern-share-btn" 
+                            {% if not user.is_authenticated %}
+                            onclick="showLoginMessage('share')"
+                            title="Please login to share"
+                            {% endif %}>
                         <i class="fas fa-share"></i> <span id="share-count">{{ post.shares }}</span> Share
                     </button>
                     <div id="shareModal" class="modal" role="dialog" aria-labelledby="shareModalTitle" aria-hidden="true">
@@ -1529,6 +1717,221 @@ Toast('Please log in to perform this action.', 'error');
             }
         });
     });
+    
+    // Login message function for unauthenticated users
+    window.showLoginMessage = function(action) {
+        const message = `Please <a href="{% url 'news:login' %}?next={{ request.path }}" class="login-link">login</a> to ${action} this post.`;
+        
+        // Create a custom message element
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'toast-message toast-error toast-alert-dismissible';
+        messageDiv.innerHTML = `
+            <div class="toast-message-icon">
+                <svg class="toast-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="toast-message-content">
+                ${message}
+            </div>
+            <button class="toast-close" type="button" aria-label="Dismiss notification">
+                <svg class="toast-close-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+            <div class="toast-message-progress"></div>
+            <div class="toast-pulse-ring"></div>
+        `;
+        
+        // Add to toast messages container
+        const toastContainer = document.querySelector('.toast-messages');
+        if (toastContainer) {
+            toastContainer.appendChild(messageDiv);
+            
+            // Auto-dismiss after 5 seconds
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.style.animation = 'toastSlideOut 0.5s ease forwards';
+                    setTimeout(() => messageDiv.remove(), 500);
+                }
+            }, 5000);
+            
+            // Add click handler for close button
+            const closeBtn = messageDiv.querySelector('.toast-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    messageDiv.style.animation = 'toastSlideOut 0.5s ease forwards';
+                    setTimeout(() => messageDiv.remove(), 500);
+                });
+            }
+        }
+    };
+    
+    // Mobile-specific improvements
+    function initMobileImprovements() {
+        // Touch-friendly button sizing
+        const actionButtons = document.querySelectorAll('.modern-action-btn, .modern-share-btn');
+        actionButtons.forEach(btn => {
+            btn.style.minHeight = '44px'; // iOS recommended touch target size
+            btn.style.minWidth = '44px';
+        });
+        
+        // Improve mobile scrolling
+        const postContent = document.querySelector('.modern-post-content');
+        if (postContent) {
+            postContent.style.webkitOverflowScrolling = 'touch';
+        }
+        
+        // Mobile-friendly image handling
+        const images = document.querySelectorAll('.modern-post-image');
+        images.forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.maxWidth = '100%';
+                this.style.height = 'auto';
+            });
+        });
+    }
+    
+    // Initialize mobile improvements
+    if (window.innerWidth <= 768) {
+        initMobileImprovements();
+    }
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 768) {
+            initMobileImprovements();
+        }
+    });
 });
 </script>
+
+<style>
+/* Additional mobile-friendly styles */
+@media (max-width: 768px) {
+    .modern-post-actions {
+        flex-direction: column;
+        gap: var(--spacing-3);
+        align-items: stretch;
+    }
+    
+    .modern-action-btn,
+    .modern-share-btn {
+        width: 100%;
+        justify-content: center;
+        padding: var(--spacing-3) var(--spacing-4);
+        font-size: var(--font-size-base);
+    }
+    
+    .modern-post-tags {
+        flex-wrap: wrap;
+        gap: var(--spacing-2);
+    }
+    
+    .modern-tag {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-1) var(--spacing-2);
+    }
+    
+    .modern-sidebar {
+        margin-top: var(--spacing-6);
+    }
+    
+    .modern-widget {
+        padding: var(--spacing-4);
+    }
+    
+    .modern-widget-title {
+        font-size: var(--font-size-lg);
+    }
+    
+    .modern-category-list a {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-2) var(--spacing-3);
+    }
+}
+
+@media (max-width: 480px) {
+    .modern-post-actions {
+        gap: var(--spacing-2);
+    }
+    
+    .modern-action-btn,
+    .modern-share-btn {
+        padding: var(--spacing-2) var(--spacing-3);
+        font-size: var(--font-size-sm);
+    }
+    
+    .modern-post-tags {
+        gap: var(--spacing-1);
+    }
+    
+    .modern-tag {
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-1) var(--spacing-2);
+    }
+    
+    .modern-widget {
+        padding: var(--spacing-3);
+    }
+    
+    .modern-widget-title {
+        font-size: var(--font-size-base);
+    }
+    
+    .modern-category-list a {
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-1.5) var(--spacing-2);
+    }
+}
+
+/* Login link styling in toast messages */
+.login-link {
+    color: var(--white);
+    text-decoration: underline;
+    font-weight: 600;
+    transition: var(--post-transition);
+}
+
+.login-link:hover {
+    color: var(--golden-yellow);
+    text-decoration: none;
+}
+
+/* Improved mobile modal */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-width: none;
+        margin: 20px auto;
+        padding: var(--spacing-4);
+    }
+    
+    .modal-content h3 {
+        font-size: var(--font-size-lg);
+    }
+    
+    .modern-share-option {
+        padding: var(--spacing-3) var(--spacing-4);
+        font-size: var(--font-size-base);
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 98%;
+        margin: 10px auto;
+        padding: var(--spacing-3);
+    }
+    
+    .modal-content h3 {
+        font-size: var(--font-size-base);
+    }
+    
+    .modern-share-option {
+        padding: var(--spacing-2) var(--spacing-3);
+        font-size: var(--font-size-sm);
+    }
+}
+</style>
 {% endblock %}

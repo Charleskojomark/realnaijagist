@@ -85,26 +85,26 @@ WSGI_APPLICATION = 'realnaijagist.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='3306'),
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES',character_set_connection=utf8mb4,collation_connection=utf8mb4_unicode_ci",
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST': config('DB_HOST', default='localhost'),
+#         'PORT': config('DB_PORT', default='3306'),
+#         'OPTIONS': {
+#             'charset': 'utf8mb4',
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES',character_set_connection=utf8mb4,collation_connection=utf8mb4_unicode_ci",
+#         },
+#     }
+# }
 
 
 # Password validation
@@ -150,31 +150,31 @@ STATICFILES_FINDERS = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-if config('USE_CLOUDINARY', default=False, cast=bool):
-    import cloudinary
-    import cloudinary.uploader
-    import cloudinary.api
+# if config('USE_CLOUDINARY', default=False, cast=bool):
+#     import cloudinary
+#     import cloudinary.uploader
+#     import cloudinary.api
     
-    # Cloudinary configuration
-    CLOUDINARY_STORAGE = {
-        'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-        'API_KEY': config('CLOUDINARY_API_KEY'),
-        'API_SECRET': config('CLOUDINARY_API_SECRET'),
-    }
+#     # Cloudinary configuration
+#     CLOUDINARY_STORAGE = {
+#         'CLOUDINARY_CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+#         'API_KEY': config('CLOUDINARY_API_KEY'),
+#         'API_SECRET': config('CLOUDINARY_API_SECRET'),
+#     }
     
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+#     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     
-    cloudinary.config(
-        cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
-        api_key=CLOUDINARY_STORAGE['API_KEY'],
-        api_secret=CLOUDINARY_STORAGE['API_SECRET'],
-        secure=True
-    )
+#     cloudinary.config(
+#         cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
+#         api_key=CLOUDINARY_STORAGE['API_KEY'],
+#         api_secret=CLOUDINARY_STORAGE['API_SECRET'],
+#         secure=True
+#     )
 
 # Option 3: Local with optimization (Development/Small sites)
-else:
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# else:
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 
@@ -211,7 +211,7 @@ customColorPalette = [
 
 CKEDITOR_5_CONFIGS = {
     'default': {
-        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote', 'insertTable', 'imageUpload', 'undo', 'redo'],
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote', 'insertTable', 'imageUpload', 'mediaEmbed', 'undo', 'redo'],
         'heading': {
             'options': [
                 {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
@@ -228,13 +228,33 @@ CKEDITOR_5_CONFIGS = {
         'htmlSupport': {
             'allow': [
                 {
-                    'name': 'p|div|h[1-6]|ul|ol|li|blockquote|br',  # Removed slashes
+                    'name': 'p|div|h[1-6]|ul|ol|li|blockquote|br|iframe|video|source',  # Added video support
                     'attributes': True,
                     'classes': True,
                     'styles': True
                 }
             ],
             'disallow': []  # Ensure no tags are stripped
+        },
+        'mediaEmbed': {
+            'previewsInData': True,
+            'providers': [
+                {
+                    'name': 'youtube',
+                    'url': [
+                        '^(?:m\\.)?youtube\\.com/watch\\?v=([\\w-]+)',
+                        '^(?:m\\.)?youtube\\.com/v/([\\w-]+)',
+                        '^youtube\\.com/embed/([\\w-]+)',
+                        '^youtu\\.be/([\\w-]+)'
+                    ],
+                    'html': '<iframe src="https://www.youtube.com/embed/{id}" width="480" height="270" frameborder="0" allowfullscreen></iframe>'
+                },
+                {
+                    'name': 'vimeo',
+                    'url': '^vimeo\\.com/([0-9]+)',
+                    'html': '<iframe src="https://player.vimeo.com/video/{id}" width="480" height="270" frameborder="0" allowfullscreen></iframe>'
+                }
+            ]
         },
         'enterMode': 'p',  # Enter key creates <p> tags
         'shiftEnterMode': 'br',  # Shift+Enter creates <br> tags

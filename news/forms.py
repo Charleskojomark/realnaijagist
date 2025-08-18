@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Post, Category, CarouselSlide, Comment, Like
 from taggit.forms import TagWidget
+import os
 
     
 class CustomUserCreationForm(UserCreationForm):
@@ -61,20 +62,34 @@ class PostForm(forms.ModelForm):
     featured_image = forms.FileField(
         help_text="Maximum file size is 10MB. Supported formats: JPEG, PNG.",
         widget=forms.FileInput(attrs={'class': 'form-group'}),
+        required=False
     )
+    
+    featured_video = forms.FileField(
+        help_text="Maximum file size is 100MB. Supported formats: MP4, WebM, MOV.",
+        widget=forms.FileInput(attrs={'class': 'form-group'}),
+        required=False
+    )
+    
     class Meta:
         model = Post
-        fields = ['title', 'content', 'status', 'category', 'tags', 'featured_image', 'is_trending']
+        fields = ['title', 'content', 'status', 'category', 'tags', 'featured_image', 'featured_video', 'video_embed_url', 'is_video_post', 'is_trending']
         widgets = {
             'content': forms.Textarea(attrs={'class': 'ck-editor__editable'}),
             'tags': TagWidget(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-group'}),
             'category': forms.Select(attrs={'class': 'form-group'}),
             'is_trending': forms.CheckboxInput(attrs={'class': 'form-group'}),
+            'is_video_post': forms.CheckboxInput(attrs={'class': 'form-group'}),
             'featured_image': forms.FileInput(attrs={'class': 'form-group'}),
+            'featured_video': forms.FileInput(attrs={'class': 'form-group'}),
+            'video_embed_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://www.youtube.com/embed/...'}),
         }
         help_texts = {
             'featured_image': 'Maximum file size is 10MB. Supported formats: JPEG, PNG.',
+            'featured_video': 'Maximum file size is 100MB. Supported formats: MP4, WebM, MOV.',
+            'video_embed_url': 'YouTube or Vimeo embed URL for external videos.',
+            'is_video_post': 'Mark if this post is primarily a video post.',
         }
         def clean_featured_image(self):
             featured_image = self.cleaned_data.get('featured_image')
@@ -87,6 +102,26 @@ class PostForm(forms.ModelForm):
                         f"Uploaded file is {featured_image.size / (1024 * 1024):.2f} MB."
                     )
             return featured_image
+        
+        def clean_featured_video(self):
+            featured_video = self.cleaned_data.get('featured_video')
+            if featured_video:
+                # Check file size (100 MB = 104,857,600 bytes)
+                max_size = 100 * 1024 * 1024  # 100 MB
+                if featured_video.size > max_size:
+                    raise forms.ValidationError(
+                        f"Video file size too large. Maximum is {max_size / (1024 * 1024)} MB. "
+                        f"Uploaded file is {featured_video.size / (1024 * 1024):.2f} MB."
+                    )
+                
+                # Check file extension
+                allowed_extensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv']
+                file_extension = os.path.splitext(featured_video.name)[1].lower()
+                if file_extension not in allowed_extensions:
+                    raise forms.ValidationError(
+                        f"Unsupported video format. Allowed formats: {', '.join(allowed_extensions)}"
+                    )
+            return featured_video
         
         def clean(self):
             cleaned_data = super().clean()
