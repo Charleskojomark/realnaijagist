@@ -5,7 +5,6 @@ from . import views
 app_name = 'news'
 urlpatterns = [
     path('', views.home, name='home'),
-    path('health/', views.health_check, name='health_check'),
     path('search/', views.search, name='search'),
     path('category/<slug:slug>/', views.category_filter, name='category_detail'),
     path('post/<slug:slug>/', views.post_detail, name='post_detail'),

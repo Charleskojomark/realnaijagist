@@ -35,25 +35,6 @@ def global_context(request):
         'current_year': datetime.now().year,
     }
 
-def health_check(request):
-    """Simple health check endpoint for monitoring"""
-    from django.db import connection
-    from django.db.utils import OperationalError
-    
-    try:
-        # Test database connection
-        connection.ensure_connection()
-        db_status = "healthy"
-    except OperationalError:
-        db_status = "unhealthy"
-    
-    return JsonResponse({
-        'status': 'ok',
-        'timestamp': timezone.now().isoformat(),
-        'database': db_status,
-        'version': '1.0.0'
-    })
-
 def generate_unique_slug(title, model_class, instance=None):
     """Generate a unique slug by appending a number if needed."""
     base_slug = slugify(title)
