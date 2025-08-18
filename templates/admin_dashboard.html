@@ -5,6 +5,200 @@
 
 {% block extra_css %}
 <style>
+    /* Upload Progress Styles for Post Forms */
+    .upload-progress-container {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border: 2px solid #dee2e6;
+        border-radius: 12px;
+        padding: 2rem;
+        margin: 2rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .upload-progress-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .upload-progress-header h4 {
+        color: #495057;
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+    }
+
+    .upload-status {
+        color: #6c757d;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    /* Progress Bar */
+    .progress-bar-container {
+        position: relative;
+        margin: 2rem 0;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 12px;
+        background-color: #e9ecef;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+        border-radius: 6px;
+        transition: width 0.3s ease;
+        position: relative;
+    }
+
+    .progress-fill::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+        animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    .progress-text {
+        position: absolute;
+        top: -30px;
+        right: 0;
+        background: #007bff;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    /* Upload Steps */
+    .upload-steps {
+        display: flex;
+        justify-content: space-between;
+        margin: 2rem 0;
+        position: relative;
+    }
+
+    .upload-steps::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #e9ecef;
+        z-index: 1;
+    }
+
+    .upload-steps .step {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        flex: 1;
+        padding: 0 1rem;
+    }
+
+    .upload-steps .step i {
+        display: block;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        background: white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        margin: 0 auto 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .upload-steps .step span {
+        display: block;
+        font-size: 0.875rem;
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .upload-steps .step.active i {
+        color: #007bff;
+        transform: scale(1.1);
+    }
+
+    .upload-steps .step.completed i {
+        color: #28a745;
+    }
+
+    .upload-steps .step.completed span {
+        color: #28a745;
+        font-weight: 600;
+    }
+
+    /* Upload Tips */
+    .upload-tips {
+        background: #e3f2fd;
+        border: 1px solid #bbdefb;
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    .upload-tips p {
+        margin: 0.5rem 0;
+        color: #1976d2;
+        font-size: 0.875rem;
+    }
+
+    .upload-tips i {
+        margin-right: 0.5rem;
+    }
+
+    /* Success and Error States */
+    .upload-success,
+    .upload-error {
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .upload-success h4,
+    .upload-error h4 {
+        margin: 1rem 0;
+        color: #495057;
+    }
+
+    .upload-success p,
+    .upload-error p {
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Button Loading States */
+    .submit-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    .btn-loading {
+        display: none;
+    }
+
+    .submit-btn:disabled .btn-loading {
+        display: inline;
+    }
+
+    .submit-btn:disabled .btn-text {
+        display: none;
+    }
     :root {
         --neutral-50: #f8fafc;
         --neutral-100: #f1f5f9;
