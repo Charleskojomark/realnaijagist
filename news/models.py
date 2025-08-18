@@ -55,8 +55,8 @@ class Post(models.Model):
     cdn_image_url = models.URLField(max_length=500, blank=True, help_text="Direct CDN URL (overrides uploaded image)")
     
     # Video support
-    featured_video = CloudinaryField('video', blank=True, null=True, help_text="Featured video for the post")
-    video_thumbnail = CloudinaryField('image', blank=True, null=True, help_text="Custom thumbnail for video")
+    featured_video = models.FileField(upload_to='blog/videos/', blank=True, null=True, help_text="Featured video for the post")
+    video_thumbnail = models.ImageField(upload_to='blog/videos/thumbnails/', blank=True, null=True, help_text="Custom thumbnail for video")
     video_duration = models.PositiveIntegerField(blank=True, null=True, help_text="Video duration in seconds")
     video_embed_url = models.URLField(max_length=500, blank=True, help_text="YouTube/Vimeo embed URL")
     is_video_post = models.BooleanField(default=False, help_text="Mark if this post is primarily a video post")
@@ -360,8 +360,8 @@ class Video(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     
-    # Video file (Cloudinary)
-    video_file = CloudinaryField('video', blank=True, null=True)
+    # Video file (Local storage)
+    video_file = models.FileField(upload_to='videos/', blank=True, null=True)
     
     # Video metadata
     duration = models.PositiveIntegerField(blank=True, null=True, help_text="Duration in seconds")
@@ -370,7 +370,7 @@ class Video(models.Model):
     format = models.CharField(max_length=10, blank=True, help_text="e.g., MP4, WebM")
     
     # Thumbnail
-    thumbnail = CloudinaryField('image', blank=True, null=True)
+    thumbnail = models.ImageField(upload_to='videos/thumbnails/', blank=True, null=True)
     
     # External video support
     external_url = models.URLField(blank=True, help_text="YouTube/Vimeo URL")

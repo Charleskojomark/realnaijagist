@@ -1,19 +1,18 @@
 {% load static %}
 
-<div class="video-player-container" data-video-type="{% if post.featured_video %}cloudinary{% elif post.video_embed_url %}external{% endif %}">
+<div class="video-player-container" data-video-type="{% if post.featured_video %}local{% elif post.video_embed_url %}external{% endif %}">
     {% if post.featured_video %}
-        <!-- Cloudinary Video Player -->
-        <div class="cloudinary-video-player">
+        <!-- Local Video Player -->
+        <div class="local-video-player">
             <video 
                 class="video-player" 
                 controls 
                 preload="metadata"
                 poster="{{ post.get_video_thumbnail_url }}"
-                data-video-id="{{ post.featured_video.public_id }}"
                 data-video-duration="{{ post.video_duration|default:0 }}"
             >
                 <source src="{{ post.featured_video.url }}" type="video/mp4">
-                <source src="{{ post.featured_video.url|add:'?f=webm' }}" type="video/webm">
+                <source src="{{ post.featured_video.url }}" type="video/webm">
                 Your browser does not support the video tag.
             </video>
             
@@ -81,7 +80,7 @@
     background: var(--white);
 }
 
-.cloudinary-video-player {
+.local-video-player {
     position: relative;
     width: 100%;
 }
@@ -228,8 +227,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const iframe = container.querySelector('.video-iframe');
         
         if (video) {
-            // Cloudinary video player
-            initializeCloudinaryVideo(video, container);
+            // Local video player
+            initializeLocalVideo(video, container);
         } else if (iframe) {
             // External video embed
             initializeExternalVideo(iframe, container);
@@ -237,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function initializeCloudinaryVideo(video, container) {
+function initializeLocalVideo(video, container) {
     // Add loading state
     container.classList.add('loading');
     
@@ -261,11 +260,11 @@ function initializeCloudinaryVideo(video, container) {
     
     // Play/pause analytics (optional)
     video.addEventListener('play', function() {
-        trackVideoEvent('play', video.dataset.videoId);
+        trackVideoEvent('play', video.src);
     });
     
     video.addEventListener('pause', function() {
-        trackVideoEvent('pause', video.dataset.videoId);
+        trackVideoEvent('pause', video.src);
     });
 }
 
@@ -304,14 +303,17 @@ function showVideoError(container, message) {
     container.appendChild(errorDiv);
 }
 
-function trackVideoEvent(event, videoId) {
+function trackVideoEvent(event, videoSrc) {
     // Implement video analytics tracking here
-    console.log(`Video ${event}:`, videoId);
+    console.log(`Video ${event}:`, videoSrc);
+    
+    // Extract filename from path for analytics
+    const videoName = videoSrc.split('/').pop().split('?')[0];
     
     // Example: Send to analytics service
     if (typeof gtag !== 'undefined') {
         gtag('event', 'video_' + event, {
-            'video_id': videoId,
+            'video_name': videoName,
             'event_category': 'video',
             'event_label': event
         });
