@@ -108,7 +108,12 @@ class Post(models.Model):
         if size == 'webp' and self.featured_image_webp:
             return self.featured_image_webp.url
         elif self.featured_image:
-            return self.featured_image.url
+            try:
+                return self.featured_image.url
+            except Exception as e:
+                # Fallback for when Cloudinary is not configured
+                print(f"Error getting image URL: {e}")
+                return None
         return None
 
     def get_responsive_images(self):

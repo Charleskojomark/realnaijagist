@@ -1191,6 +1191,11 @@
                 </div>
             </header>
             {% if post.featured_image %}
+            <!-- Debug info -->
+            <!-- Image field: {{ post.featured_image }} -->
+            <!-- Image URL: {{ post.get_image_url }} -->
+            <!-- Responsive images: {{ post.get_responsive_images }} -->
+            
             <figure class="modern-post-image-container">
                 <picture>
                     <source media="(max-width: 480px)" srcset="{{ post.get_responsive_images.mobile|default:post.get_image_url }}">
@@ -1199,6 +1204,9 @@
                     <img src="{{ post.get_image_url }}" alt="{{ post.image_alt_text|default:post.title }}" class="modern-post-image" loading="lazy">
                 </picture>
             </figure>
+            {% else %}
+            <!-- No featured image found -->
+            <!-- Post has image: {{ post.featured_image|yesno:"Yes,No" }} -->
             {% endif %}
             
             {% if post.has_video_content %}
