@@ -5,7 +5,7 @@ from django_ckeditor_5.fields import CKEditor5Field
 from django.core.files.storage import default_storage
 from django.utils import timezone
 from taggit.managers import TaggableManager 
-# from cloudinary.models import CloudinaryField 
+from cloudinary.models import CloudinaryField 
 
 
 class Category(models.Model):
@@ -47,7 +47,7 @@ class Post(models.Model):
     meta_keywords = models.CharField(max_length=255, blank=True)
     
     # Images with CDN support
-    featured_image = models.ImageField(upload_to='blog/images/', blank=True, null=True) 
+    featured_image = CloudinaryField('image', blank=True, null=True) 
     featured_image_webp = models.ImageField(upload_to='blog/images/webp/', blank=True, null=True, help_text="WebP version for faster loading")
     image_alt_text = models.CharField(max_length=100, blank=True)
     
@@ -55,8 +55,8 @@ class Post(models.Model):
     cdn_image_url = models.URLField(max_length=500, blank=True, help_text="Direct CDN URL (overrides uploaded image)")
     
     # Video support
-    featured_video = models.FileField(upload_to='blog/videos/', blank=True, null=True, help_text="Featured video for the post")
-    video_thumbnail = models.ImageField(upload_to='blog/videos/thumbnails/', blank=True, null=True, help_text="Custom thumbnail for video")
+    featured_video = CloudinaryField('video', blank=True, null=True, help_text="Featured video for the post")
+    video_thumbnail = CloudinaryField('image', blank=True, null=True, help_text="Custom thumbnail for video")
     video_duration = models.PositiveIntegerField(blank=True, null=True, help_text="Video duration in seconds")
     video_embed_url = models.URLField(max_length=500, blank=True, help_text="YouTube/Vimeo embed URL")
     is_video_post = models.BooleanField(default=False, help_text="Mark if this post is primarily a video post")
@@ -217,7 +217,7 @@ class CarouselSlide(models.Model):
     description = models.TextField(max_length=500, blank=True)
     
     # Images with optimization
-    image = models.ImageField(upload_to='carousel/', blank=True, null=True) 
+    image = CloudinaryField('carousel', blank=True, null=True) 
     image_webp = models.ImageField(upload_to='carousel/webp/', blank=True, null=True)
     image_alt_text = models.CharField(max_length=100, blank=True)
     
@@ -361,7 +361,7 @@ class Video(models.Model):
     description = models.TextField(blank=True)
     
     # Video file (Cloudinary)
-    video_file = models.FileField(upload_to='videos/', blank=True, null=True)
+    video_file = CloudinaryField('video', blank=True, null=True)
     
     # Video metadata
     duration = models.PositiveIntegerField(blank=True, null=True, help_text="Duration in seconds")
@@ -370,7 +370,7 @@ class Video(models.Model):
     format = models.CharField(max_length=10, blank=True, help_text="e.g., MP4, WebM")
     
     # Thumbnail
-    thumbnail = models.ImageField(upload_to='videos/thumbnails/', blank=True, null=True)
+    thumbnail = CloudinaryField('image', blank=True, null=True)
     
     # External video support
     external_url = models.URLField(blank=True, help_text="YouTube/Vimeo URL")

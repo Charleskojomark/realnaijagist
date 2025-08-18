@@ -150,31 +150,31 @@ STATICFILES_FINDERS = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# if config('USE_CLOUDINARY', default=False, cast=bool):
-#     import cloudinary
-#     import cloudinary.uploader
-#     import cloudinary.api
+if config('USE_CLOUDINARY', default=False, cast=bool):
+    import cloudinary
+    import cloudinary.uploader
+    import cloudinary.api
     
-#     # Cloudinary configuration
-#     CLOUDINARY_STORAGE = {
-#         'CLOUDINARY_CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-#         'API_KEY': config('CLOUDINARY_API_KEY'),
-#         'API_SECRET': config('CLOUDINARY_API_SECRET'),
-#     }
+    # Cloudinary configuration
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+        'API_KEY': config('CLOUDINARY_API_KEY'),
+        'API_SECRET': config('CLOUDINARY_API_SECRET'),
+    }
     
-#     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     
-#     cloudinary.config(
-#         cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
-#         api_key=CLOUDINARY_STORAGE['API_KEY'],
-#         api_secret=CLOUDINARY_STORAGE['API_SECRET'],
-#         secure=True
-#     )
+    cloudinary.config(
+        cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
+        api_key=CLOUDINARY_STORAGE['API_KEY'],
+        api_secret=CLOUDINARY_STORAGE['API_SECRET'],
+        secure=True
+    )
 
 # Option 3: Local with optimization (Development/Small sites)
-# else:
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 
