@@ -91,51 +91,52 @@ class PostForm(forms.ModelForm):
             'video_embed_url': 'YouTube or Vimeo embed URL for external videos.',
             'is_video_post': 'Mark if this post is primarily a video post.',
         }
-        def clean_featured_image(self):
-            featured_image = self.cleaned_data.get('featured_image')
-            if featured_image:
-                # Check file size (10 MB = 10,485,760 bytes)
-                max_size = 10 * 1024 * 1024  # 10 MB
-                if featured_image.size > max_size:
-                    raise forms.ValidationError(
-                        f"File size too large. Maximum is {max_size / (1024 * 1024)} MB. "
-                        f"Uploaded file is {featured_image.size / (1024 * 1024):.2f} MB."
-                    )
-            return featured_image
-        
-        def clean_featured_video(self):
-            featured_video = self.cleaned_data.get('featured_video')
-            if featured_video:
-                # Check file size (100 MB = 104,857,600 bytes)
-                max_size = 100 * 1024 * 1024  # 100 MB
-                if featured_video.size > max_size:
-                    raise forms.ValidationError(
-                        f"Video file size too large. Maximum is {max_size / (1024 * 1024)} MB. "
-                        f"Uploaded file is {featured_video.size / (1024 * 1024):.2f} MB."
-                    )
-                
-                # Check file extension
-                allowed_extensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv']
-                file_extension = os.path.splitext(featured_video.name)[1].lower()
-                if file_extension not in allowed_extensions:
-                    raise forms.ValidationError(
-                        f"Unsupported video format. Allowed formats: {', '.join(allowed_extensions)}"
-                    )
-            return featured_video
-        
-        def clean(self):
-            cleaned_data = super().clean()
-            # Ensure file size is checked even if CloudinaryField bypasses clean_featured_image
-            featured_image = self.files.get('featured_image')
-            if featured_image:
-                max_size = 10 * 1024 * 1024
-                if featured_image.size > max_size:
-                    self.add_error(
-                        'featured_image',
-                        f"File size too large. Please reduce to less than 10 MB. "
-                        f"Uploaded file is {featured_image.size / (1024 * 1024):.2f} MB."
-                    )
-            return cleaned_data
+    
+    def clean_featured_image(self):
+        featured_image = self.cleaned_data.get('featured_image')
+        if featured_image:
+            # Check file size (10 MB = 10,485,760 bytes)
+            max_size = 10 * 1024 * 1024  # 10 MB
+            if featured_image.size > max_size:
+                raise forms.ValidationError(
+                    f"File size too large. Maximum is {max_size / (1024 * 1024)} MB. "
+                    f"Uploaded file is {featured_image.size / (1024 * 1024):.2f} MB."
+                )
+        return featured_image
+    
+    def clean_featured_video(self):
+        featured_video = self.cleaned_data.get('featured_video')
+        if featured_video:
+            # Check file size (100 MB = 100,857,600 bytes)
+            max_size = 100 * 1024 * 1024  # 100 MB
+            if featured_video.size > max_size:
+                raise forms.ValidationError(
+                    f"Video file size too large. Maximum is {max_size / (1024 * 1024)} MB. "
+                    f"Uploaded file is {featured_video.size / (1024 * 1024):.2f} MB."
+                )
+            
+            # Check file extension
+            allowed_extensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv']
+            file_extension = os.path.splitext(featured_video.name)[1].lower()
+            if file_extension not in allowed_extensions:
+                raise forms.ValidationError(
+                    f"Unsupported video format. Allowed formats: {', '.join(allowed_extensions)}"
+                )
+        return featured_video
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        # Ensure file size is checked even if CloudinaryField bypasses clean_featured_image
+        featured_image = self.files.get('featured_image')
+        if featured_image:
+            max_size = 10 * 1024 * 1024
+            if featured_image.size > max_size:
+                self.add_error(
+                    'featured_image',
+                    f"File size too large. Please reduce to less than 10 MB. "
+                    f"Uploaded file is {featured_image.size / (1024 * 1024):.2f} MB."
+                )
+        return cleaned_data
 
 class CategoryForm(forms.ModelForm):
     class Meta:
