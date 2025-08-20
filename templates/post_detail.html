@@ -1839,7 +1839,7 @@ function handleShareResponse(response, eventDetail) {
     if (targetElement) {
         // Update the share count in the DOM
         targetElement.textContent = response.shares_count || 0;
-        closeShareModal();
+        closeShareDropdown();
         showToast(response.message || 'Post shared successfully!', 'success');
     }
 }
@@ -1852,8 +1852,8 @@ function handleShareClick(element) {
     
     console.log('Share click:', { platform, url, text, title }); // Debug log
     
-    // Handle HTMX requests for authenticated users
-    if (element.hasAttribute('data-hx-post')) {
+    // Handle HTMX requests for authenticated users (if needed)
+    if (element.hasAttribute('data-hx-post') && element.hasAttribute('data-hx-target')) {
         const hxPost = element.getAttribute('data-hx-post');
         const hxTarget = element.getAttribute('data-hx-target');
         
@@ -1871,16 +1871,16 @@ function handleShareClick(element) {
         return;
     }
     
-    // Handle external sharing for unauthenticated users
+    // Handle platform sharing for all users
     const shareUrl = buildShareUrl(platform, url, text, title);
     if (shareUrl) {
-        if (platform === 'copy-link') {
-            handleCopyLink(element, url);
-        } else {
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-            showToast(`Opening ${platform}...`, 'info');
-            closeShareDropdown();
-        }
+        // Open platform in new window/tab
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+        showToast(`Opening ${platform}...`, 'info');
+        closeShareDropdown();
+    } else {
+        console.error('Failed to build share URL for platform:', platform);
+        showToast('Failed to open sharing platform. Please try again.', 'error');
     }
 }
 
@@ -1911,7 +1911,7 @@ function handleCopyLink(element, url) {
             element.innerHTML = originalContent;
             element.style.backgroundColor = '';
             element.style.color = '';
-            closeShareModal();
+            closeShareDropdown();
         }, 2000);
     }).catch(err => {
         console.error('Failed to copy link:', err);
@@ -1943,16 +1943,22 @@ function buildShareUrl(platform, url, text, title) {
         fullUrl = window.location.href;
     }
 
+    // Get post title for better sharing
+    const postTitle = title || text || document.title || 'Check out this post';
+    
+    console.log('Building share URL:', { platform, fullUrl, postTitle });
+
     switch (platform) {
         case 'twitter':
-            return `https://twitter.com/intent/tweet?url=${encodeURIComponent(fullUrl)}`;
+            return `https://twitter.com/intent/tweet?text=${encodeURIComponent(postTitle)}&url=${encodeURIComponent(fullUrl)}`;
         case 'facebook':
-            return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullUrl)}`;
+            return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullUrl)}&quote=${encodeURIComponent(postTitle)}`;
         case 'linkedin':
-            return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(fullUrl)}&title=${encodeURIComponent(title)}`;
+            return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(fullUrl)}&title=${encodeURIComponent(postTitle)}`;
         case 'whatsapp':
-            return `https://api.whatsapp.com/send?text=${encodeURIComponent(fullUrl)}`;
+            return `https://api.whatsapp.com/send?text=${encodeURIComponent(postTitle + ' ' + fullUrl)}`;
         default:
+            console.error('Unknown platform:', platform);
             return null;
     }
 }
@@ -2009,42 +2015,15 @@ Toast('Please log in to perform this action.', 'error');
             } else if (xhr.status === 500) {
                 console.error('Server error:', xhr.responseText);
                 showToast('Server error. Please try again later.', 'error');
-                closeShareModal();
             } else {
                 console.error('Request failed with status:', xhr.status);
                 showToast(`Request failed (${xhr.status})`, 'error');
-                closeShareModal();
             }
         }
     });
 
-    // Share button click handler
-    const shareButton = document.getElementById('share-btn');
-    if (shareButton) {
-        shareButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (!this.hasAttribute('disabled')) {
-                openShareModal();
-            }
-        });
-    }
-
-    // Close modal on click outside
-    const shareModal = document.getElementById('shareModal');
-    if (shareModal) {
-        shareModal.addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeShareModal();
-            }
-        });
-    }
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            closeShareModal();
-        }
-    });
+    // Share functionality is now handled by onclick handlers in the HTML
+    // This provides better mobile experience and cleaner code
 
     // Share options are now handled by onclick handlers in the HTML
     // This provides better mobile experience and cleaner code
