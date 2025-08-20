@@ -607,131 +607,199 @@
     font-weight: 600;
 }
 
+/* Share Modal Styles - COMPLETELY REWRITTEN FOR BULLETPROOF MOBILE DESIGN */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modal.active {
-    display: flex;
-    opacity: 1;
-    visibility: visible;
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-content {
     background: var(--white);
-    border-radius: var(--post-border-radius);
-    box-shadow: var(--post-shadow-soft);
-    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+    padding: 32px;
     width: 90%;
-    max-width: 400px;
+    max-width: 480px;
     text-align: center;
-    animation: modalSlideUp 0.3s ease-out;
+    animation: modalSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     margin: 20px;
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--gray-200);
+    transform: translateY(0);
 }
 
 .modal-content h3 {
-    margin-bottom: 20px;
-    color: var(--text-dark);
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    padding-right: 30px; /* Space for close button */
+    margin: 0 0 28px 0;
+    color: var(--text-primary);
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    padding-right: 40px;
 }
 
 .close {
     position: absolute;
-    top: 16px;
+    top: 20px;
     right: 20px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-dark);
-    transition: var(--post-transition);
-    background: none;
-    border: none;
-    width: 32px;
-    height: 32px;
+    font-size: 18px;
+    font-weight: 600;
+    background: var(--gray-100);
+    border: 2px solid var(--gray-200);
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     line-height: 1;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+    z-index: 10000;
 }
 
 .close:hover {
-    color: var(--primary-green);
-    background: rgba(43, 143, 71, 0.1);
+    background: var(--gray-200);
+    color: var(--text-primary);
+    border-color: var(--gray-300);
+    transform: scale(1.1);
+}
+
+.share-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
 }
 
 .modern-share-option {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
-    color: var(--text-dark);
-    text-decoration: none;
-    font-size: var(--font-size-base);
-    border-radius: 12px;
-    transition: var(--post-transition);
-    margin: 12px 0;
-    border: 1px solid var(--border-color);
-    background: var(--light-gray);
+    gap: 18px;
+    padding: 22px;
+    font-size: var(--font-size-lg);
+    border-radius: 14px;
+    margin: 0;
+    border: 2px solid var(--gray-200);
+    background: var(--white);
     cursor: pointer;
-    min-height: 56px; /* Touch-friendly height */
+    min-height: 68px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
 }
 
-.modern-share-option:hover,
+.modern-share-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.modern-share-option:hover::before {
+    left: 100%;
+}
+
+.modern-share-option:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    border-color: var(--primary-color);
+}
+
 .modern-share-option:active {
-    background: var(--post-gradient-primary);
-    color: var(--white);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(43, 143, 71, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .modern-share-option i {
-    font-size: 1.3rem;
-    width: 24px;
+    font-size: 26px;
+    width: 30px;
     text-align: center;
-}
-
-.modern-share-option.twitter:hover { background: linear-gradient(135deg, #1DA1F2 0%, #0A74DA 100%); }
-.modern-share-option.facebook:hover { background: linear-gradient(135deg, #3B5998 0%, #2A4373 100%); }
-.modern-share-option.linkedin:hover { background: linear-gradient(135deg, #0077B5 0%, #005983 100%); }
-.modern-share-option.whatsapp:hover { background: linear-gradient(135deg, #25D366 0%, #1DA851 100%); }
-.modern-share-option.copy-link:hover { background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%); }
-
-.share-options-container {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
 }
 
 .modern-share-option span {
-    font-weight: 500;
+    font-weight: 600;
     flex: 1;
     text-align: left;
+    transition: all 0.3s ease;
 }
+
+/* Platform-specific colors with better contrast */
+.modern-share-option.twitter:hover { 
+    background: linear-gradient(135deg, #1DA1F2 0%, #0D8BD9 100%); 
+    color: white !important; 
+    border-color: #1DA1F2;
+}
+.modern-share-option.twitter:hover i { color: white !important; }
+.modern-share-option.twitter:hover span { color: white !important; }
+
+.modern-share-option.facebook:hover { 
+    background: linear-gradient(135deg, #4267B2 0%, #365899 100%); 
+    color: white !important; 
+    border-color: #4267B2;
+}
+.modern-share-option.facebook:hover i { color: white !important; }
+.modern-share-option.facebook:hover span { color: white !important; }
+
+.modern-share-option.linkedin:hover { 
+    background: linear-gradient(135deg, #0077B5 0%, #005885 100%); 
+    color: white !important; 
+    border-color: #0077B5;
+}
+.modern-share-option.linkedin:hover i { color: white !important; }
+.modern-share-option.linkedin:hover span { color: white !important; }
+
+.modern-share-option.whatsapp:hover { 
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); 
+    color: white !important; 
+    border-color: #25D366;
+}
+.modern-share-option.whatsapp:hover i { color: white !important; }
+.modern-share-option.whatsapp:hover span { color: white !important; }
+
+.modern-share-option.copy-link:hover { 
+    background: linear-gradient(135deg, #6B7280 0%, #4B5563 100%); 
+    color: white !important; 
+    border-color: #6B7280;
+}
+.modern-share-option.copy-link:hover i { color: white !important; }
+.modern-share-option.copy-link:hover span { color: white !important; }
 
 /* Mobile-first responsive design */
 @media (max-width: 768px) {
     .modal {
-        align-items: flex-end; /* Bottom alignment on mobile */
+        align-items: flex-end;
         padding: 0;
     }
     
@@ -739,67 +807,129 @@
         width: 100%;
         max-width: none;
         margin: 0;
-        border-radius: var(--post-border-radius) var(--post-border-radius) 0 0;
-        max-height: 70vh;
-        animation: modalSlideUpMobile 0.3s ease-out;
+        border-radius: 24px 24px 0 0;
+        max-height: 75vh;
+        animation: modalSlideUpMobile 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        padding: 32px 24px;
     }
     
     .modal-content h3 {
+        margin: 0 0 24px 0;
         font-size: var(--font-size-xl);
-        margin-bottom: 24px;
-    }
-    
-    .modern-share-option {
-        padding: 18px 20px;
-        font-size: var(--font-size-lg);
-        margin: 16px 0;
-        min-height: 60px;
-    }
-    
-    .modern-share-option i {
-        font-size: 1.4rem;
-        width: 28px;
+        padding-right: 36px;
     }
     
     .close {
-        top: 20px;
-        right: 24px;
+        top: 16px;
+        right: 16px;
         width: 36px;
         height: 36px;
-        font-size: 1.6rem;
+        font-size: 16px;
+    }
+    
+    .modern-share-option {
+        gap: 16px;
+        padding: 20px;
+        font-size: var(--font-size-base);
+        border-radius: 12px;
+        margin: 0;
+        border: 2px solid var(--gray-200);
+        background: var(--white);
+        cursor: pointer;
+        min-height: 64px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    
+    .modern-share-option i {
+        font-size: 24px;
+        width: 28px;
+        text-align: center;
     }
 }
 
 @media (max-width: 480px) {
     .modal-content {
-        padding: 20px;
+        padding: 28px 20px;
         max-height: 80vh;
+        border-radius: 20px 20px 0 0;
     }
     
     .modal-content h3 {
         font-size: var(--font-size-lg);
-        margin-bottom: 20px;
+        margin: 0 0 20px 0;
+        padding-right: 32px;
+    }
+    
+    .close {
+        top: 12px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
     }
     
     .modern-share-option {
-        padding: 16px 18px;
-        font-size: var(--font-size-base);
-        margin: 12px 0;
+        gap: 14px;
+        padding: 18px;
+        font-size: var(--font-size-sm);
+        border-radius: 10px;
+        margin: 0;
+        border: 2px solid var(--gray-200);
+        background: var(--white);
+        cursor: pointer;
+        min-height: 60px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    
+    .modern-share-option i {
+        font-size: 22px;
+        width: 26px;
+        text-align: center;
     }
 }
 
-/* Modal animations */
+/* Enhanced Modal animations */
 @keyframes modalSlideUp {
     from {
         opacity: 0;
-        transform: translateY(30px) scale(0.95);
+        transform: translateY(40px) scale(0.9);
     }
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
     }
+}
+
+@keyframes modalSlideUpMobile {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ensure modal is always visible and accessible */
+.modal.active .modal-content {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+}
+
+/* Focus management for accessibility */
+.modal.active .modern-share-option:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Prevent body scroll without breaking layout */
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
 }
 
 @keyframes modalSlideUpMobile {
@@ -1418,8 +1548,8 @@
                             aria-expanded="false">
                         <i class="fas fa-share"></i> <span id="share-count">{{ post.shares }}</span> Share
                     </button>
-                    <div id="shareModal" class="modal" role="dialog" aria-labelledby="shareModalTitle" aria-hidden="true">
-                        <div class="modal-content">
+                    <div id="shareModal" class="modal" role="dialog" aria-labelledby="shareModalTitle" aria-hidden="true" onclick="handleModalClick(event)">
+                        <div class="modal-content" onclick="event.stopPropagation()">
                             <button type="button" class="close" aria-label="Close" onclick="closeShareModal()">
                                 <i class="fas fa-times"></i>
                             </button>
@@ -1669,14 +1799,13 @@ function showToast(message, type = 'info') {
 function openShareModal() {
     const modal = document.getElementById('shareModal');
     if (modal) {
+        // Force modal to be visible
+        modal.style.display = 'flex';
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
         
-        // Store current scroll position
-        const scrollY = window.scrollY;
-        document.body.style.position = 'fixed';
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.width = '100%';
+        // Add body class for styling
+        document.body.classList.add('modal-open');
         
         // Focus on first share option for accessibility
         setTimeout(() => {
@@ -1684,7 +1813,11 @@ function openShareModal() {
             if (firstOption) {
                 firstOption.focus();
             }
-        }, 100);
+        }, 200);
+        
+        console.log('Modal opened successfully');
+    } else {
+        console.error('Share modal not found!');
     }
 }
 
@@ -1693,23 +1826,37 @@ function closeShareModal() {
     if (modal) {
         modal.classList.remove('active');
         modal.setAttribute('aria-hidden', 'true');
+        modal.style.display = 'none';
         
-        // Restore body scroll position
-        const scrollY = document.body.style.top;
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        if (scrollY) {
-            window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        }
+        // Remove body class
+        document.body.classList.remove('modal-open');
         
         // Return focus to share button
         const shareBtn = document.getElementById('share-btn');
         if (shareBtn) {
             shareBtn.focus();
         }
+        
+        console.log('Modal closed successfully');
     }
 }
+
+function handleModalClick(event) {
+    // Close modal if clicking on backdrop
+    if (event.target.classList.contains('modal')) {
+        closeShareModal();
+    }
+}
+
+// Add keyboard support
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const modal = document.getElementById('shareModal');
+        if (modal && modal.classList.contains('active')) {
+            closeShareModal();
+        }
+    }
+});
 
 // Helper functions
 function handleLikeResponse(response, eventDetail) {
