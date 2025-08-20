@@ -669,6 +669,36 @@
     margin: 0;
 }
 
+.share-login-notice {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.share-login-notice p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+.share-login-notice a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.share-login-notice a:hover {
+    text-decoration: underline;
+}
+
+.share-login-notice i {
+    color: #007bff;
+    margin-right: 6px;
+}
+
 .share-dropdown-close {
     background: none;
     border: none;
@@ -1474,13 +1504,8 @@
                 </button>
                 <div class="modern-share-menu">
                     <button id="share-btn" class="modern-share-btn" 
-                            {% if not user.is_authenticated %}
-                            onclick="showLoginMessage('share')"
-                            title="Please login to share"
-                            {% else %}
                             onclick="openShareDropdown()"
                             title="Share this post"
-                            {% endif %}
                             aria-label="Share post"
                             aria-haspopup="dialog"
                             aria-expanded="false">
@@ -1493,6 +1518,12 @@
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
+                        
+                        {% if not user.is_authenticated %}
+                        <div class="share-login-notice">
+                            <p><i class="fas fa-info-circle"></i> You can share this post on social media. <a href="{% url 'news:login' %}?next={{ request.path }}">Login</a> to also update the share count.</p>
+                        </div>
+                        {% endif %}
                         
                         <div class="share-options-grid">
                             <button type="button" class="share-option twitter" 
