@@ -643,6 +643,7 @@
     margin: 20px;
     max-height: 80vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .modal-content h3 {
@@ -741,6 +742,8 @@
         border-radius: var(--post-border-radius) var(--post-border-radius) 0 0;
         max-height: 70vh;
         animation: modalSlideUpMobile 0.3s ease-out;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .modal-content h3 {
@@ -1478,7 +1481,7 @@
                                 </button>
                                 <button type="button" class="modern-share-option copy-link"
                                        data-platform="copy-link"
-                                       data-url="{{ post.get_absolute_url }}"
+                                       data-url="{{ request.build_absolute_uri }}"
                                        onclick="handleCopyLink(this)">
                                     <i class="fas fa-link"></i>
                                     <span>Copy Link</span>
@@ -1669,8 +1672,11 @@ function openShareModal() {
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
         
-        // Prevent body scroll when modal is open
-        document.body.style.overflow = 'hidden';
+        // Store current scroll position
+        const scrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.width = '100%';
         
         // Focus on first share option for accessibility
         setTimeout(() => {
@@ -1688,8 +1694,14 @@ function closeShareModal() {
         modal.classList.remove('active');
         modal.setAttribute('aria-hidden', 'true');
         
-        // Restore body scroll
-        document.body.style.overflow = '';
+        // Restore body scroll position
+        const scrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        if (scrollY) {
+            window.scrollTo(0, parseInt(scrollY || '0') * -1);
+        }
         
         // Return focus to share button
         const shareBtn = document.getElementById('share-btn');
@@ -1741,6 +1753,8 @@ function handleShareClick(element) {
     const text = element.getAttribute('data-text') || '';
     const title = element.getAttribute('data-title') || '';
     
+    console.log('Share click:', { platform, url, text, title }); // Debug log
+    
     // Handle HTMX requests for authenticated users
     if (element.hasAttribute('data-hx-post')) {
         const hxPost = element.getAttribute('data-hx-post');
@@ -1774,10 +1788,20 @@ function handleShareClick(element) {
 }
 
 function handleCopyLink(element, url) {
-    let fullUrl = decodeURIComponent(url);
-    if (!fullUrl.startsWith('http')) {
-        fullUrl = window.location.origin + fullUrl;
+    // Fix URL construction - handle undefined and malformed URLs
+    let fullUrl = '';
+    
+    if (url && url !== 'undefined') {
+        fullUrl = decodeURIComponent(url);
+        if (!fullUrl.startsWith('http')) {
+            fullUrl = window.location.origin + fullUrl;
+        }
+    } else {
+        // Fallback to current page URL
+        fullUrl = window.location.href;
     }
+    
+    console.log('Copying URL:', fullUrl); // Debug log
     
     navigator.clipboard.writeText(fullUrl).then(() => {
         const originalContent = element.innerHTML;
@@ -1809,10 +1833,17 @@ function handleCopyLink(element, url) {
 }
 
 function buildShareUrl(platform, url, text, title) {
-    // Ensure absolute URL
-    let fullUrl = decodeURIComponent(url);
-    if (!fullUrl.startsWith('http')) {
-        fullUrl = window.location.origin + fullUrl;
+    // Ensure absolute URL - handle undefined and malformed URLs
+    let fullUrl = '';
+    
+    if (url && url !== 'undefined') {
+        fullUrl = decodeURIComponent(url);
+        if (!fullUrl.startsWith('http')) {
+            fullUrl = window.location.origin + fullUrl;
+        }
+    } else {
+        // Fallback to current page URL
+        fullUrl = window.location.href;
     }
 
     switch (platform) {
