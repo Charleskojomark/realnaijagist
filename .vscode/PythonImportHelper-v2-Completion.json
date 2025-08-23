@@ -1,0 +1,2304 @@
+[
+    {
+        "label": "BaseCommand",
+        "importPath": "django.core.management.base",
+        "description": "django.core.management.base",
+        "isExtraImport": true,
+        "detail": "django.core.management.base",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
+        "documentation": {}
+    },
+    {
+        "label": "Post",
+        "importPath": "news.models",
+        "description": "news.models",
+        "isExtraImport": true,
+        "detail": "news.models",
+        "documentation": {}
+    },
+    {
+        "label": "render_to_string",
+        "importPath": "django.template.loader",
+        "description": "django.template.loader",
+        "isExtraImport": true,
+        "detail": "django.template.loader",
+        "documentation": {}
+    },
+    {
+        "label": "render_to_string",
+        "importPath": "django.template.loader",
+        "description": "django.template.loader",
+        "isExtraImport": true,
+        "detail": "django.template.loader",
+        "documentation": {}
+    },
+    {
+        "label": "RequestFactory",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "IntegrityError",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "django.db.models.deletion",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.db.models.deletion",
+        "description": "django.db.models.deletion",
+        "detail": "django.db.models.deletion",
+        "documentation": {}
+    },
+    {
+        "label": "django_ckeditor_5.fields",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django_ckeditor_5.fields",
+        "description": "django_ckeditor_5.fields",
+        "detail": "django_ckeditor_5.fields",
+        "documentation": {}
+    },
+    {
+        "label": "CKEditor5Field",
+        "importPath": "django_ckeditor_5.fields",
+        "description": "django_ckeditor_5.fields",
+        "isExtraImport": true,
+        "detail": "django_ckeditor_5.fields",
+        "documentation": {}
+    },
+    {
+        "label": "taggit.managers",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "taggit.managers",
+        "description": "taggit.managers",
+        "detail": "taggit.managers",
+        "documentation": {}
+    },
+    {
+        "label": "TaggableManager",
+        "importPath": "taggit.managers",
+        "description": "taggit.managers",
+        "isExtraImport": true,
+        "detail": "taggit.managers",
+        "documentation": {}
+    },
+    {
+        "label": "cloudinary.models",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cloudinary.models",
+        "description": "cloudinary.models",
+        "detail": "cloudinary.models",
+        "documentation": {}
+    },
+    {
+        "label": "CloudinaryField",
+        "importPath": "cloudinary.models",
+        "description": "cloudinary.models",
+        "isExtraImport": true,
+        "detail": "cloudinary.models",
+        "documentation": {}
+    },
+    {
+        "label": "template",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "template",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "forms",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "template",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "template",
+        "importPath": "django",
+        "description": "django",
+        "isExtraImport": true,
+        "detail": "django",
+        "documentation": {}
+    },
+    {
+        "label": "mark_safe",
+        "importPath": "django.utils.safestring",
+        "description": "django.utils.safestring",
+        "isExtraImport": true,
+        "detail": "django.utils.safestring",
+        "documentation": {}
+    },
+    {
+        "label": "mark_safe",
+        "importPath": "django.utils.safestring",
+        "description": "django.utils.safestring",
+        "isExtraImport": true,
+        "detail": "django.utils.safestring",
+        "documentation": {}
+    },
+    {
+        "label": "mark_safe",
+        "importPath": "django.utils.safestring",
+        "description": "django.utils.safestring",
+        "isExtraImport": true,
+        "detail": "django.utils.safestring",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "messages",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
+        "documentation": {}
+    },
+    {
+        "label": "format_html",
+        "importPath": "django.utils.html",
+        "description": "django.utils.html",
+        "isExtraImport": true,
+        "detail": "django.utils.html",
+        "documentation": {}
+    },
+    {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "CKEditor5Widget",
+        "importPath": "django_ckeditor_5.widgets",
+        "description": "django_ckeditor_5.widgets",
+        "isExtraImport": true,
+        "detail": "django_ckeditor_5.widgets",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "UserCreationForm",
+        "importPath": "django.contrib.auth.forms",
+        "description": "django.contrib.auth.forms",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.forms",
+        "documentation": {}
+    },
+    {
+        "label": "TagWidget",
+        "importPath": "taggit.forms",
+        "description": "taggit.forms",
+        "isExtraImport": true,
+        "detail": "taggit.forms",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "reverse",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "F",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Max",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Sum",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Q",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "F",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "default_storage",
+        "importPath": "django.core.files.storage",
+        "description": "django.core.files.storage",
+        "isExtraImport": true,
+        "detail": "django.core.files.storage",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
+        "documentation": {}
+    },
+    {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
+        "documentation": {}
+    },
+    {
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "post_save",
+        "importPath": "django.db.models.signals",
+        "description": "django.db.models.signals",
+        "isExtraImport": true,
+        "detail": "django.db.models.signals",
+        "documentation": {}
+    },
+    {
+        "label": "post_delete",
+        "importPath": "django.db.models.signals",
+        "description": "django.db.models.signals",
+        "isExtraImport": true,
+        "detail": "django.db.models.signals",
+        "documentation": {}
+    },
+    {
+        "label": "receiver",
+        "importPath": "django.dispatch",
+        "description": "django.dispatch",
+        "isExtraImport": true,
+        "detail": "django.dispatch",
+        "documentation": {}
+    },
+    {
+        "label": "cache",
+        "importPath": "django.core.cache",
+        "description": "django.core.cache",
+        "isExtraImport": true,
+        "detail": "django.core.cache",
+        "documentation": {}
+    },
+    {
+        "label": "Sitemap",
+        "importPath": "django.contrib.sitemaps",
+        "description": "django.contrib.sitemaps",
+        "isExtraImport": true,
+        "detail": "django.contrib.sitemaps",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "LoginView",
+        "importPath": "django.contrib.auth.views",
+        "description": "django.contrib.auth.views",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.views",
+        "documentation": {}
+    },
+    {
+        "label": "LogoutView",
+        "importPath": "django.contrib.auth.views",
+        "description": "django.contrib.auth.views",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.views",
+        "documentation": {}
+    },
+    {
+        "label": "HttpResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "JsonResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "get_object_or_404",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "login",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate",
+        "importPath": "django.contrib.auth",
+        "description": "django.contrib.auth",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth",
+        "documentation": {}
+    },
+    {
+        "label": "login_required",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "user_passes_test",
+        "importPath": "django.contrib.auth.decorators",
+        "description": "django.contrib.auth.decorators",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.decorators",
+        "documentation": {}
+    },
+    {
+        "label": "Paginator",
+        "importPath": "django.core.paginator",
+        "description": "django.core.paginator",
+        "isExtraImport": true,
+        "detail": "django.core.paginator",
+        "documentation": {}
+    },
+    {
+        "label": "send_mail",
+        "importPath": "django.core.mail",
+        "description": "django.core.mail",
+        "isExtraImport": true,
+        "detail": "django.core.mail",
+        "documentation": {}
+    },
+    {
+        "label": "slugify",
+        "importPath": "django.utils.text",
+        "description": "django.utils.text",
+        "isExtraImport": true,
+        "detail": "django.utils.text",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "io",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "io",
+        "description": "io",
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "ContentFile",
+        "importPath": "django.core.files.base",
+        "description": "django.core.files.base",
+        "isExtraImport": true,
+        "detail": "django.core.files.base",
+        "documentation": {}
+    },
+    {
+        "label": "BadRequest",
+        "importPath": "cloudinary.exceptions",
+        "description": "cloudinary.exceptions",
+        "isExtraImport": true,
+        "detail": "cloudinary.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "Error",
+        "importPath": "cloudinary.exceptions",
+        "description": "cloudinary.exceptions",
+        "isExtraImport": true,
+        "detail": "cloudinary.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "Tag",
+        "importPath": "taggit.models",
+        "description": "taggit.models",
+        "isExtraImport": true,
+        "detail": "taggit.models",
+        "documentation": {}
+    },
+    {
+        "label": "cloudinary",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cloudinary",
+        "description": "cloudinary",
+        "detail": "cloudinary",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "require_POST",
+        "importPath": "django.views.decorators.http",
+        "description": "django.views.decorators.http",
+        "isExtraImport": true,
+        "detail": "django.views.decorators.http",
+        "documentation": {}
+    },
+    {
+        "label": "get_asgi_application",
+        "importPath": "django.core.asgi",
+        "description": "django.core.asgi",
+        "isExtraImport": true,
+        "detail": "django.core.asgi",
+        "documentation": {}
+    },
+    {
+        "label": "pymysql",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pymysql",
+        "description": "pymysql",
+        "detail": "pymysql",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "importPath": "decouple",
+        "description": "decouple",
+        "isExtraImport": true,
+        "detail": "decouple",
+        "documentation": {}
+    },
+    {
+        "label": "static",
+        "importPath": "django.conf.urls.static",
+        "description": "django.conf.urls.static",
+        "isExtraImport": true,
+        "detail": "django.conf.urls.static",
+        "documentation": {}
+    },
+    {
+        "label": "views",
+        "importPath": "news",
+        "description": "news",
+        "isExtraImport": true,
+        "detail": "news",
+        "documentation": {}
+    },
+    {
+        "label": "sitemap",
+        "importPath": "django.contrib.sitemaps.views",
+        "description": "django.contrib.sitemaps.views",
+        "isExtraImport": true,
+        "detail": "django.contrib.sitemaps.views",
+        "documentation": {}
+    },
+    {
+        "label": "cache_page",
+        "importPath": "django.views.decorators.cache",
+        "description": "django.views.decorators.cache",
+        "isExtraImport": true,
+        "detail": "django.views.decorators.cache",
+        "documentation": {}
+    },
+    {
+        "label": "serve",
+        "importPath": "django.views.static",
+        "description": "django.views.static",
+        "isExtraImport": true,
+        "detail": "django.views.static",
+        "documentation": {}
+    },
+    {
+        "label": "PostSitemap",
+        "importPath": "news.sitemaps",
+        "description": "news.sitemaps",
+        "isExtraImport": true,
+        "detail": "news.sitemaps",
+        "documentation": {}
+    },
+    {
+        "label": "CategorySitemap",
+        "importPath": "news.sitemaps",
+        "description": "news.sitemaps",
+        "isExtraImport": true,
+        "detail": "news.sitemaps",
+        "documentation": {}
+    },
+    {
+        "label": "CarouselSlideSitemap",
+        "importPath": "news.sitemaps",
+        "description": "news.sitemaps",
+        "isExtraImport": true,
+        "detail": "news.sitemaps",
+        "documentation": {}
+    },
+    {
+        "label": "NewsSitemap",
+        "importPath": "news.sitemaps",
+        "description": "news.sitemaps",
+        "isExtraImport": true,
+        "detail": "news.sitemaps",
+        "documentation": {}
+    },
+    {
+        "label": "get_wsgi_application",
+        "importPath": "django.core.wsgi",
+        "description": "django.core.wsgi",
+        "isExtraImport": true,
+        "detail": "django.core.wsgi",
+        "documentation": {}
+    },
+    {
+        "label": "Command",
+        "kind": 6,
+        "importPath": "news.management.commands.test_og_images",
+        "description": "news.management.commands.test_og_images",
+        "peekOfCode": "class Command(BaseCommand):\n    help = 'Test Open Graph image URLs for posts'\n    def add_arguments(self, parser):\n        parser.add_argument(\n            '--post-id',\n            type=int,\n            help='Test specific post ID',\n        )\n        parser.add_argument(\n            '--all',",
+        "detail": "news.management.commands.test_og_images",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "news.migrations.0001_initial",
+        "description": "news.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        ('taggit', '0006_rename_taggeditem_content_type_object_id_taggit_tagg_content_8fc721_idx'),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='CarouselSlide',\n            fields=[",
+        "detail": "news.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "news.migrations.0002_alter_post_featured_image",
+        "description": "news.migrations.0002_alter_post_featured_image",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('news', '0001_initial'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='post',\n            name='featured_image',\n            field=cloudinary.models.CloudinaryField(blank=True, max_length=255, null=True, verbose_name='image'),\n        ),",
+        "detail": "news.migrations.0002_alter_post_featured_image",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "news.migrations.0003_alter_carouselslide_image",
+        "description": "news.migrations.0003_alter_carouselslide_image",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('news', '0002_alter_post_featured_image'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='carouselslide',\n            name='image',\n            field=cloudinary.models.CloudinaryField(blank=True, max_length=255, null=True, verbose_name='carousel'),\n        ),",
+        "detail": "news.migrations.0003_alter_carouselslide_image",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "news.migrations.0004_carouselslide_author_carouselslide_likes_and_more",
+        "description": "news.migrations.0004_carouselslide_author_carouselslide_likes_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n        ('news', '0003_alter_carouselslide_image'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='carouselslide',\n            name='author',\n            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='carousel_slides', to=settings.AUTH_USER_MODEL),",
+        "detail": "news.migrations.0004_carouselslide_author_carouselslide_likes_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "news.migrations.0005_slideview",
+        "description": "news.migrations.0005_slideview",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n        ('news', '0004_carouselslide_author_carouselslide_likes_and_more'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='SlideView',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),",
+        "detail": "news.migrations.0005_slideview",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "news.migrations.0006_remove_comment_author_email_and_more",
+        "description": "news.migrations.0006_remove_comment_author_email_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n        ('news', '0005_slideview'),\n    ]\n    operations = [\n        migrations.RemoveField(\n            model_name='comment',\n            name='author_email',\n        ),",
+        "detail": "news.migrations.0006_remove_comment_author_email_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "news.migrations.0007_post_featured_video_post_is_video_post_and_more",
+        "description": "news.migrations.0007_post_featured_video_post_is_video_post_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('news', '0006_remove_comment_author_email_and_more'),\n    ]\n    operations = [\n        migrations.AddField(\n            model_name='post',\n            name='featured_video',\n            field=models.FileField(blank=True, help_text='Featured video for the post', null=True, upload_to='blog/videos/'),\n        ),",
+        "detail": "news.migrations.0007_post_featured_video_post_is_video_post_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "news.migrations.0008_alter_carouselslide_image_alter_post_featured_image",
+        "description": "news.migrations.0008_alter_carouselslide_image_alter_post_featured_image",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('news', '0007_post_featured_video_post_is_video_post_and_more'),\n    ]\n    operations = [\n        migrations.AlterField(\n            model_name='carouselslide',\n            name='image',\n            field=cloudinary.models.CloudinaryField(blank=True, max_length=255, null=True, verbose_name='carousel'),\n        ),",
+        "detail": "news.migrations.0008_alter_carouselslide_image_alter_post_featured_image",
+        "documentation": {}
+    },
+    {
+        "label": "add_class",
+        "kind": 2,
+        "importPath": "news.templatetags.form_tags",
+        "description": "news.templatetags.form_tags",
+        "peekOfCode": "def add_class(field, css_class):\n    \"\"\"Add a CSS class to a form field's widget.\"\"\"\n    if not field:\n        return field\n    widget = field.field.widget\n    existing_classes = widget.attrs.get('class', '')\n    widget.attrs['class'] = f\"{existing_classes} {css_class}\".strip()\n    return field",
+        "detail": "news.templatetags.form_tags",
+        "documentation": {}
+    },
+    {
+        "label": "register",
+        "kind": 5,
+        "importPath": "news.templatetags.form_tags",
+        "description": "news.templatetags.form_tags",
+        "peekOfCode": "register = template.Library()\n@register.filter\ndef add_class(field, css_class):\n    \"\"\"Add a CSS class to a form field's widget.\"\"\"\n    if not field:\n        return field\n    widget = field.field.widget\n    existing_classes = widget.attrs.get('class', '')\n    widget.attrs['class'] = f\"{existing_classes} {css_class}\".strip()\n    return field",
+        "detail": "news.templatetags.form_tags",
+        "documentation": {}
+    },
+    {
+        "label": "add_paragraphs",
+        "kind": 2,
+        "importPath": "news.templatetags.post_filters",
+        "description": "news.templatetags.post_filters",
+        "peekOfCode": "def add_paragraphs(value):\n    \"\"\"\n    Convert double newlines (\\n\\n or \\r\\n\\r\\n) or double <br> tags into paragraphs,\n    preserving existing <p> tags, single <br> tags, and all whitespace within paragraphs.\n    Handle single-block content by wrapping it in a <p> tag.\n    \"\"\"\n    # Debug: Log raw input safely\n    # logger.debug(f\"Raw input content: {repr(value.encode('utf-8', 'replace').decode('utf-8'))}\")\n    # Check if content already contains <p> tags\n    if '<p>' in value:",
+        "detail": "news.templatetags.post_filters",
+        "documentation": {}
+    },
+    {
+        "label": "absolute_url",
+        "kind": 2,
+        "importPath": "news.templatetags.post_filters",
+        "description": "news.templatetags.post_filters",
+        "peekOfCode": "def absolute_url(value, request=None):\n    \"\"\"\n    Convert a relative URL to an absolute URL for Open Graph meta tags.\n    Usage: {{ post.get_image_url|absolute_url:request }}\n    \"\"\"\n    if not value:\n        return ''\n    # If it's already an absolute URL, return as is\n    if value.startswith(('http://', 'https://')):\n        return value",
+        "detail": "news.templatetags.post_filters",
+        "documentation": {}
+    },
+    {
+        "label": "register",
+        "kind": 5,
+        "importPath": "news.templatetags.post_filters",
+        "description": "news.templatetags.post_filters",
+        "peekOfCode": "register = template.Library()\n# Set up logging\n# logger = logging.getLogger(__name__)\n@register.filter\ndef add_paragraphs(value):\n    \"\"\"\n    Convert double newlines (\\n\\n or \\r\\n\\r\\n) or double <br> tags into paragraphs,\n    preserving existing <p> tags, single <br> tags, and all whitespace within paragraphs.\n    Handle single-block content by wrapping it in a <p> tag.\n    \"\"\"",
+        "detail": "news.templatetags.post_filters",
+        "documentation": {}
+    },
+    {
+        "label": "CategoryAdmin",
+        "kind": 6,
+        "importPath": "news.admin",
+        "description": "news.admin",
+        "peekOfCode": "class CategoryAdmin(admin.ModelAdmin):\n    list_display = ('name', 'slug', 'created_at')\n    list_filter = ('created_at',)\n    search_fields = ('name', 'description')\n    prepopulated_fields = {'slug': ('name',)}\n    date_hierarchy = 'created_at'\nclass CommentInline(admin.TabularInline):\n    model = Comment\n    extra = 1\n    fields = ('author_name', 'author_email', 'content', 'is_approved', 'created_at')",
+        "detail": "news.admin",
+        "documentation": {}
+    },
+    {
+        "label": "CommentInline",
+        "kind": 6,
+        "importPath": "news.admin",
+        "description": "news.admin",
+        "peekOfCode": "class CommentInline(admin.TabularInline):\n    model = Comment\n    extra = 1\n    fields = ('author_name', 'author_email', 'content', 'is_approved', 'created_at')\n    readonly_fields = ('created_at',)\nclass CarouselSlideInline(admin.StackedInline):\n    model = CarouselSlide\n    extra = 1\n    fields = ('title', 'subtitle', 'description', 'image', 'image_webp', 'cdn_image_url', 'image_alt_text', 'is_active', 'order', 'featured_until', 'responsive_images')\n    prepopulated_fields = {'image_alt_text': ('title',)}",
+        "detail": "news.admin",
+        "documentation": {}
+    },
+    {
+        "label": "CarouselSlideInline",
+        "kind": 6,
+        "importPath": "news.admin",
+        "description": "news.admin",
+        "peekOfCode": "class CarouselSlideInline(admin.StackedInline):\n    model = CarouselSlide\n    extra = 1\n    fields = ('title', 'subtitle', 'description', 'image', 'image_webp', 'cdn_image_url', 'image_alt_text', 'is_active', 'order', 'featured_until', 'responsive_images')\n    prepopulated_fields = {'image_alt_text': ('title',)}\n    readonly_fields = ('responsive_images',)\n    def responsive_images(self, obj):\n        \"\"\"Display responsive image URLs in admin\"\"\"\n        images = obj.get_responsive_images()\n        if not images:",
+        "detail": "news.admin",
+        "documentation": {}
+    },
+    {
+        "label": "PostAdmin",
+        "kind": 6,
+        "importPath": "news.admin",
+        "description": "news.admin",
+        "peekOfCode": "class PostAdmin(admin.ModelAdmin):\n    list_display = ('title', 'category', 'author', 'status', 'views', 'likes', 'is_trending', 'created_at')\n    list_filter = ('status', 'category', 'author', 'is_trending', 'created_at')\n    search_fields = ('title', 'content', 'excerpt', 'meta_keywords')\n    prepopulated_fields = {'slug': ('title',)}\n    date_hierarchy = 'created_at'\n    inlines = [CommentInline]\n    list_editable = ('status', 'is_trending')\n    actions = ['make_published', 'make_draft']\n    fieldsets = (",
+        "detail": "news.admin",
+        "documentation": {}
+    },
+    {
+        "label": "VideoAdmin",
+        "kind": 6,
+        "importPath": "news.admin",
+        "description": "news.admin",
+        "peekOfCode": "class VideoAdmin(admin.ModelAdmin):\n    list_display = ('title', 'post', 'duration', 'format', 'is_external', 'created_at')\n    list_filter = ('format', 'created_at')\n    search_fields = ('title', 'description', 'post__title')\n    date_hierarchy = 'created_at'\n    fieldsets = (\n        (None, {\n            'fields': ('title', 'description', 'post')\n        }),\n        ('Video File', {",
+        "detail": "news.admin",
+        "documentation": {}
+    },
+    {
+        "label": "CarouselSlideAdmin",
+        "kind": 6,
+        "importPath": "news.admin",
+        "description": "news.admin",
+        "peekOfCode": "class CarouselSlideAdmin(admin.ModelAdmin):\n    list_display = ('title', 'is_active', 'order', 'featured_until', 'created_at')\n    list_filter = ('is_active', 'created_at')\n    search_fields = ('title', 'description', 'post__title')\n    prepopulated_fields = {'image_alt_text': ('title',)}\n    date_hierarchy = 'created_at'\n    fieldsets = (\n        (None, {\n            'fields': ('title', 'subtitle', 'description', 'is_active', 'order', 'featured_until')\n        }),",
+        "detail": "news.admin",
+        "documentation": {}
+    },
+    {
+        "label": "CommentAdmin",
+        "kind": 6,
+        "importPath": "news.admin",
+        "description": "news.admin",
+        "peekOfCode": "class CommentAdmin(admin.ModelAdmin):\n    list_display = ('author', 'post', 'is_approved', 'created_at')\n    list_filter = ('is_approved', 'created_at', 'post')\n    search_fields = ('author', 'content', 'post__title')\n    list_editable = ('is_approved',)\n    date_hierarchy = 'created_at'\n@admin.register(NewsletterSubscriber)\nclass NewsletterSubscriberAdmin(admin.ModelAdmin):\n    list_display = ('email', 'first_name', 'is_active', 'subscribed_at')\n    list_filter = ('is_active', 'subscribed_at')",
+        "detail": "news.admin",
+        "documentation": {}
+    },
+    {
+        "label": "NewsletterSubscriberAdmin",
+        "kind": 6,
+        "importPath": "news.admin",
+        "description": "news.admin",
+        "peekOfCode": "class NewsletterSubscriberAdmin(admin.ModelAdmin):\n    list_display = ('email', 'first_name', 'is_active', 'subscribed_at')\n    list_filter = ('is_active', 'subscribed_at')\n    search_fields = ('email', 'first_name')\n    date_hierarchy = 'subscribed_at'\n    actions = ['unsubscribe']\n    def unsubscribe(self, request, queryset):\n        for subscriber in queryset:\n            subscriber.unsubscribe()\n        self.message_user(request, \"Selected subscribers have been unsubscribed.\")",
+        "detail": "news.admin",
+        "documentation": {}
+    },
+    {
+        "label": "PostViewAdmin",
+        "kind": 6,
+        "importPath": "news.admin",
+        "description": "news.admin",
+        "peekOfCode": "class PostViewAdmin(admin.ModelAdmin):\n    list_display = ('post', 'ip_address', 'user', 'viewed_at')\n    list_filter = ('viewed_at', 'post')\n    search_fields = ('post__title', 'ip_address', 'user__username')\n    date_hierarchy = 'viewed_at'\n    readonly_fields = ('user_agent', 'referrer', 'viewed_at')",
+        "detail": "news.admin",
+        "documentation": {}
+    },
+    {
+        "label": "NewsConfig",
+        "kind": 6,
+        "importPath": "news.apps",
+        "description": "news.apps",
+        "peekOfCode": "class NewsConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'news'",
+        "detail": "news.apps",
+        "documentation": {}
+    },
+    {
+        "label": "global_context",
+        "kind": 2,
+        "importPath": "news.context_processors",
+        "description": "news.context_processors",
+        "peekOfCode": "def global_context(request):\n    return {\n        'categories': Category.objects.all(),\n        'current_year': settings.CURRENT_YEAR,\n    }",
+        "detail": "news.context_processors",
+        "documentation": {}
+    },
+    {
+        "label": "CustomUserCreationForm",
+        "kind": 6,
+        "importPath": "news.forms",
+        "description": "news.forms",
+        "peekOfCode": "class CustomUserCreationForm(UserCreationForm):\n    email = forms.EmailField(\n        required=True,\n        widget=forms.EmailInput(attrs={\n            'class': 'newsletter-input',\n            'placeholder': 'Enter your email'\n        })\n    )\n    class Meta:\n        model = User",
+        "detail": "news.forms",
+        "documentation": {}
+    },
+    {
+        "label": "LoginForm",
+        "kind": 6,
+        "importPath": "news.forms",
+        "description": "news.forms",
+        "peekOfCode": "class LoginForm(forms.Form):\n    username = forms.CharField(\n        max_length=150,\n        widget=forms.TextInput(attrs={\n            'class': 'newsletter-input',\n            'placeholder': 'Enter your username'\n        })\n    )\n    password = forms.CharField(\n        widget=forms.PasswordInput(attrs={",
+        "detail": "news.forms",
+        "documentation": {}
+    },
+    {
+        "label": "PostForm",
+        "kind": 6,
+        "importPath": "news.forms",
+        "description": "news.forms",
+        "peekOfCode": "class PostForm(forms.ModelForm):\n    featured_image = forms.FileField(\n        help_text=\"Maximum file size is 10MB. Supported formats: JPEG, PNG.\",\n        widget=forms.FileInput(attrs={'class': 'form-group'}),\n        required=False\n    )\n    featured_video = forms.FileField(\n        help_text=\"Maximum file size is 100MB. Supported formats: MP4, WebM, MOV.\",\n        widget=forms.FileInput(attrs={'class': 'form-group'}),\n        required=False",
+        "detail": "news.forms",
+        "documentation": {}
+    },
+    {
+        "label": "CategoryForm",
+        "kind": 6,
+        "importPath": "news.forms",
+        "description": "news.forms",
+        "peekOfCode": "class CategoryForm(forms.ModelForm):\n    class Meta:\n        model = Category\n        fields = ['name', 'description']\n        widgets = {\n            'description': forms.Textarea(attrs={'rows': 3, 'class': 'form-group'}),\n            'name': forms.TextInput(attrs={'class': 'form-group'}),\n        }\nclass CarouselSlideForm(forms.ModelForm):\n    class Meta:",
+        "detail": "news.forms",
+        "documentation": {}
+    },
+    {
+        "label": "CarouselSlideForm",
+        "kind": 6,
+        "importPath": "news.forms",
+        "description": "news.forms",
+        "peekOfCode": "class CarouselSlideForm(forms.ModelForm):\n    class Meta:\n        model = CarouselSlide\n        fields = ['title', 'description', 'image', 'is_active', 'featured_until']\n        widgets = {\n            'title': forms.TextInput(attrs={'class': 'form-group'}),\n            'description': forms.Textarea(attrs={'rows': 4, 'class': 'form-group'}),\n            'image': forms.FileInput(attrs={'class': 'form-group'}),\n            'is_active': forms.CheckboxInput(attrs={'class': 'form-group'}),\n            'featured_until': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-group'}),",
+        "detail": "news.forms",
+        "documentation": {}
+    },
+    {
+        "label": "CommentForm",
+        "kind": 6,
+        "importPath": "news.forms",
+        "description": "news.forms",
+        "peekOfCode": "class CommentForm(forms.ModelForm):\n    class Meta:\n        model = Comment\n        fields = ['content']\n        widgets = {\n            'content': forms.Textarea(attrs={\n                'class': 'comment-input',\n                'placeholder': 'Write your comment...',\n                'rows': 4,\n            }),",
+        "detail": "news.forms",
+        "documentation": {}
+    },
+    {
+        "label": "Category",
+        "kind": 6,
+        "importPath": "news.models",
+        "description": "news.models",
+        "peekOfCode": "class Category(models.Model):\n    name = models.CharField(max_length=50, unique=True)\n    slug = models.SlugField(max_length=100, unique=True, db_index=True)\n    description = models.TextField(max_length=200, blank=True)\n    created_at = models.DateTimeField(auto_now_add=True)\n    def __str__(self):\n        return self.name\n    def get_absolute_url(self):\n        return reverse('news:category_detail', kwargs={'slug': self.slug})\n    class Meta:",
+        "detail": "news.models",
+        "documentation": {}
+    },
+    {
+        "label": "Post",
+        "kind": 6,
+        "importPath": "news.models",
+        "description": "news.models",
+        "peekOfCode": "class Post(models.Model):\n    class PostStatus(models.TextChoices):\n        DRAFT = 'draft', 'Draft'\n        PUBLISHED = 'published', 'Published'\n        ARCHIVED = 'archived', 'Archived'\n    title = models.CharField(max_length=200)\n    slug = models.SlugField(max_length=250, unique=True, db_index=True)\n    content = CKEditor5Field(config_name='default')\n    status = models.CharField(\n        max_length=20, ",
+        "detail": "news.models",
+        "documentation": {}
+    },
+    {
+        "label": "CarouselSlide",
+        "kind": 6,
+        "importPath": "news.models",
+        "description": "news.models",
+        "peekOfCode": "class CarouselSlide(models.Model):\n    \"\"\"Featured content displayed in hero carousel\"\"\"\n    title = models.CharField(max_length=200)\n    subtitle = models.CharField(max_length=300, blank=True)\n    description = models.TextField(max_length=500, blank=True)\n    # Images with optimization\n    image = CloudinaryField('carousel', blank=True, null=True) \n    image_webp = models.ImageField(upload_to='carousel/webp/', blank=True, null=True)\n    image_alt_text = models.CharField(max_length=100, blank=True)\n    # Relationships",
+        "detail": "news.models",
+        "documentation": {}
+    },
+    {
+        "label": "SlideView",
+        "kind": 6,
+        "importPath": "news.models",
+        "description": "news.models",
+        "peekOfCode": "class SlideView(models.Model):\n    \"\"\"Track detailed view analytics for carousel slides\"\"\"\n    slide = models.ForeignKey(CarouselSlide, on_delete=models.CASCADE, related_name='slide_views')\n    ip_address = models.GenericIPAddressField()\n    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)\n    user_agent = models.TextField(blank=True)\n    referrer = models.URLField(blank=True)\n    viewed_at = models.DateTimeField(auto_now_add=True)\n    def __str__(self):\n        return f'{self.slide.title} - {self.viewed_at}'",
+        "detail": "news.models",
+        "documentation": {}
+    },
+    {
+        "label": "Comment",
+        "kind": 6,
+        "importPath": "news.models",
+        "description": "news.models",
+        "peekOfCode": "class Comment(models.Model):\n    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')\n    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='comments')  # Changed to ForeignKey to require authenticated user\n    content = models.TextField(max_length=1000)\n    is_approved = models.BooleanField(default=False)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return f'Comment by {self.author.username} on {self.post.title}'\n    class Meta:",
+        "detail": "news.models",
+        "documentation": {}
+    },
+    {
+        "label": "Like",
+        "kind": 6,
+        "importPath": "news.models",
+        "description": "news.models",
+        "peekOfCode": "class Like(models.Model):\n    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_likes')\n    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='user_likes')\n    created_at = models.DateTimeField(auto_now_add=True)\n    class Meta:\n        unique_together = ['post', 'user']  # Ensure a user can like a post only once\n        indexes = [\n            models.Index(fields=['post', 'user']),\n        ]\nclass Video(models.Model):",
+        "detail": "news.models",
+        "documentation": {}
+    },
+    {
+        "label": "Video",
+        "kind": 6,
+        "importPath": "news.models",
+        "description": "news.models",
+        "peekOfCode": "class Video(models.Model):\n    \"\"\"Dedicated video model for better video management\"\"\"\n    title = models.CharField(max_length=200)\n    description = models.TextField(blank=True)\n    # Video file (Local storage)\n    video_file = models.FileField(upload_to='videos/', blank=True, null=True)\n    # Video metadata\n    duration = models.PositiveIntegerField(blank=True, null=True, help_text=\"Duration in seconds\")\n    file_size = models.PositiveIntegerField(blank=True, null=True, help_text=\"File size in bytes\")\n    resolution = models.CharField(max_length=20, blank=True, help_text=\"e.g., 1920x1080\")",
+        "detail": "news.models",
+        "documentation": {}
+    },
+    {
+        "label": "NewsletterSubscriber",
+        "kind": 6,
+        "importPath": "news.models",
+        "description": "news.models",
+        "peekOfCode": "class NewsletterSubscriber(models.Model):\n    email = models.EmailField(unique=True)\n    is_active = models.BooleanField(default=True)\n    subscribed_at = models.DateTimeField(auto_now_add=True)\n    unsubscribed_at = models.DateTimeField(blank=True, null=True)\n    # Optional subscriber details\n    first_name = models.CharField(max_length=50, blank=True)\n    preferences = models.JSONField(default=dict, blank=True)  # Store subscription preferences\n    def __str__(self):\n        return self.email",
+        "detail": "news.models",
+        "documentation": {}
+    },
+    {
+        "label": "PostView",
+        "kind": 6,
+        "importPath": "news.models",
+        "description": "news.models",
+        "peekOfCode": "class PostView(models.Model):\n    \"\"\"Track detailed view analytics\"\"\"\n    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_views')\n    ip_address = models.GenericIPAddressField()\n    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)\n    user_agent = models.TextField(blank=True)\n    referrer = models.URLField(blank=True)\n    viewed_at = models.DateTimeField(auto_now_add=True)\n    def __str__(self):\n        return f'{self.post.title} - {self.viewed_at}'",
+        "detail": "news.models",
+        "documentation": {}
+    },
+    {
+        "label": "CategorySerializer",
+        "kind": 6,
+        "importPath": "news.serializers",
+        "description": "news.serializers",
+        "peekOfCode": "class CategorySerializer(serializers.ModelSerializer):\n    url = serializers.HyperlinkedIdentityField(view_name='category-detail', lookup_field='slug')\n    class Meta:\n        model = Category\n        fields = ['id', 'name', 'slug', 'description', 'created_at', 'url']\nclass TagSerializer(serializers.ModelSerializer):\n    url = serializers.HyperlinkedIdentityField(view_name='tag-detail', lookup_field='slug')\n    class Meta:\n        model = Tag\n        fields = ['id', 'name', 'slug', 'created_at', 'url']",
+        "detail": "news.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "TagSerializer",
+        "kind": 6,
+        "importPath": "news.serializers",
+        "description": "news.serializers",
+        "peekOfCode": "class TagSerializer(serializers.ModelSerializer):\n    url = serializers.HyperlinkedIdentityField(view_name='tag-detail', lookup_field='slug')\n    class Meta:\n        model = Tag\n        fields = ['id', 'name', 'slug', 'created_at', 'url']\nclass UserSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = User\n        fields = ['id', 'username', 'first_name', 'last_name']\nclass CommentSerializer(serializers.ModelSerializer):",
+        "detail": "news.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "UserSerializer",
+        "kind": 6,
+        "importPath": "news.serializers",
+        "description": "news.serializers",
+        "peekOfCode": "class UserSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = User\n        fields = ['id', 'username', 'first_name', 'last_name']\nclass CommentSerializer(serializers.ModelSerializer):\n    author_name = serializers.CharField(required=True)\n    author_email = serializers.EmailField(required=True)\n    post = serializers.SlugRelatedField(slug_field='slug', queryset=Post.objects.all())\n    class Meta:\n        model = Comment",
+        "detail": "news.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "CommentSerializer",
+        "kind": 6,
+        "importPath": "news.serializers",
+        "description": "news.serializers",
+        "peekOfCode": "class CommentSerializer(serializers.ModelSerializer):\n    author_name = serializers.CharField(required=True)\n    author_email = serializers.EmailField(required=True)\n    post = serializers.SlugRelatedField(slug_field='slug', queryset=Post.objects.all())\n    class Meta:\n        model = Comment\n        fields = ['id', 'post', 'author_name', 'author_email', 'content', 'is_approved', 'created_at', 'updated_at']\n        read_only_fields = ['is_approved', 'created_at', 'updated_at']\nclass CarouselSlideSerializer(serializers.ModelSerializer):\n    post = serializers.SlugRelatedField(slug_field='slug', queryset=Post.objects.all())",
+        "detail": "news.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "CarouselSlideSerializer",
+        "kind": 6,
+        "importPath": "news.serializers",
+        "description": "news.serializers",
+        "peekOfCode": "class CarouselSlideSerializer(serializers.ModelSerializer):\n    post = serializers.SlugRelatedField(slug_field='slug', queryset=Post.objects.all())\n    image_url = serializers.ImageField(source='image', read_only=True)\n    image_webp_url = serializers.ImageField(source='image_webp', read_only=True)\n    responsive_images = serializers.DictField(read_only=True, source='get_responsive_images')\n    is_currently_active = serializers.BooleanField(read_only=True)\n    class Meta:\n        model = CarouselSlide\n        fields = [\n            'id', 'title', 'subtitle', 'description', 'image', 'image_url', 'image_webp', ",
+        "detail": "news.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "PostSerializer",
+        "kind": 6,
+        "importPath": "news.serializers",
+        "description": "news.serializers",
+        "peekOfCode": "class PostSerializer(serializers.ModelSerializer):\n    category = CategorySerializer(read_only=True)\n    category_slug = serializers.SlugRelatedField(\n        source='category', slug_field='slug', queryset=Category.objects.all(), write_only=True\n    )\n    author = UserSerializer(read_only=True)\n    tags = TagSerializer(many=True, read_only=True)\n    tag_slugs = serializers.SlugRelatedField(\n        source='tags', slug_field='slug', many=True, queryset=Tag.objects.all(), write_only=True\n    )",
+        "detail": "news.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "NewsletterSubscriberSerializer",
+        "kind": 6,
+        "importPath": "news.serializers",
+        "description": "news.serializers",
+        "peekOfCode": "class NewsletterSubscriberSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = NewsletterSubscriber\n        fields = ['id', 'email', 'first_name', 'is_active', 'subscribed_at', 'preferences']\n        read_only_fields = ['subscribed_at', 'unsubscribed_at']\n    def validate_email(self, value):\n        if NewsletterSubscriber.objects.filter(email=value, is_active=True).exists():\n            raise serializers.ValidationError(\"This email is already subscribed.\")\n        return value",
+        "detail": "news.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "clear_sitemap_cache",
+        "kind": 2,
+        "importPath": "news.signals",
+        "description": "news.signals",
+        "peekOfCode": "def clear_sitemap_cache(sender, instance, **kwargs):\n    cache.delete_pattern('realnaijagist*')  # Clear all sitemap-related cache keys",
+        "detail": "news.signals",
+        "documentation": {}
+    },
+    {
+        "label": "PostSitemap",
+        "kind": 6,
+        "importPath": "news.sitemaps",
+        "description": "news.sitemaps",
+        "peekOfCode": "class PostSitemap(Sitemap):\n    changefreq = 'daily'\n    priority = 0.9\n    def items(self):\n        return Post.objects.filter(status=Post.PostStatus.PUBLISHED).order_by('-created_at')\n    def lastmod(self, obj):\n        return obj.updated_at or obj.created_at\n    def location(self, obj):\n        return obj.get_absolute_url()\n    def image(self, obj):",
+        "detail": "news.sitemaps",
+        "documentation": {}
+    },
+    {
+        "label": "CategorySitemap",
+        "kind": 6,
+        "importPath": "news.sitemaps",
+        "description": "news.sitemaps",
+        "peekOfCode": "class CategorySitemap(Sitemap):\n    changefreq = 'weekly'\n    priority = 0.7\n    def items(self):\n        return Category.objects.all()\n    def location(self, obj):\n        return obj.get_absolute_url()\n    def lastmod(self, obj):\n        latest_post = obj.posts.filter(status=Post.PostStatus.PUBLISHED).order_by('-updated_at').first()\n        return latest_post.updated_at if latest_post else obj.created_at",
+        "detail": "news.sitemaps",
+        "documentation": {}
+    },
+    {
+        "label": "CarouselSlideSitemap",
+        "kind": 6,
+        "importPath": "news.sitemaps",
+        "description": "news.sitemaps",
+        "peekOfCode": "class CarouselSlideSitemap(Sitemap):\n    changefreq = 'daily'\n    priority = 0.8\n    def items(self):\n        return CarouselSlide.get_active_slides()\n    def location(self, obj):\n        return obj.get_absolute_url()\n    def lastmod(self, obj):\n        return obj.updated_at or obj.created_at\n    def image(self, obj):",
+        "detail": "news.sitemaps",
+        "documentation": {}
+    },
+    {
+        "label": "NewsSitemap",
+        "kind": 6,
+        "importPath": "news.sitemaps",
+        "description": "news.sitemaps",
+        "peekOfCode": "class NewsSitemap(Sitemap):\n    changefreq = 'hourly'\n    priority = 1.0\n    protocol = 'https'\n    def items(self):\n        since_date = timezone.now() - timedelta(days=2)\n        return Post.objects.filter(\n            status=Post.PostStatus.PUBLISHED,\n            published_at__gte=since_date\n        ).order_by('-published_at')",
+        "detail": "news.sitemaps",
+        "documentation": {}
+    },
+    {
+        "label": "NewsSitemapIndex",
+        "kind": 6,
+        "importPath": "news.sitemaps",
+        "description": "news.sitemaps",
+        "peekOfCode": "class NewsSitemapIndex(Sitemap):\n    def items(self):\n        return ['posts', 'categories', 'carousel_slides', 'news']\n    def location(self, obj):\n        return reverse('django.contrib.sitemaps.views.sitemap', kwargs={'section': obj})\n    def lastmod(self, obj):\n        if obj == 'posts':\n            post = Post.objects.filter(status=Post.PostStatus.PUBLISHED).order_by('-updated_at').first()\n            return post.updated_at if post else timezone.now()\n        elif obj == 'categories':",
+        "detail": "news.sitemaps",
+        "documentation": {}
+    },
+    {
+        "label": "app_name",
+        "kind": 5,
+        "importPath": "news.urls",
+        "description": "news.urls",
+        "peekOfCode": "app_name = 'news'\nurlpatterns = [\n    path('', views.home, name='home'),\n    path('search/', views.search, name='search'),\n    path('category/<slug:slug>/', views.category_filter, name='category_detail'),\n    path('post/<slug:slug>/', views.post_detail, name='post_detail'),\n    path('post/<slug:slug>/like/', views.like_post, name='like_post'),\n    path('post/<slug:slug>/share/', views.share_post, name='share_post'),\n    path('newsletter/', views.newsletter_subscribe, name='newsletter'),\n    path('accounts/login/', views.login_view, name='login'),",
+        "detail": "news.urls",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "news.urls",
+        "description": "news.urls",
+        "peekOfCode": "urlpatterns = [\n    path('', views.home, name='home'),\n    path('search/', views.search, name='search'),\n    path('category/<slug:slug>/', views.category_filter, name='category_detail'),\n    path('post/<slug:slug>/', views.post_detail, name='post_detail'),\n    path('post/<slug:slug>/like/', views.like_post, name='like_post'),\n    path('post/<slug:slug>/share/', views.share_post, name='share_post'),\n    path('newsletter/', views.newsletter_subscribe, name='newsletter'),\n    path('accounts/login/', views.login_view, name='login'),\n    path('logout/', LogoutView.as_view(), name='logout'),",
+        "detail": "news.urls",
+        "documentation": {}
+    },
+    {
+        "label": "global_context",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def global_context(request):\n    return {\n        'categories': Category.objects.all(),\n        'current_year': datetime.now().year,\n    }\ndef generate_unique_slug(title, model_class, instance=None):\n    \"\"\"Generate a unique slug by appending a number if needed.\"\"\"\n    base_slug = slugify(title)\n    slug = base_slug\n    counter = 1",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "generate_unique_slug",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def generate_unique_slug(title, model_class, instance=None):\n    \"\"\"Generate a unique slug by appending a number if needed.\"\"\"\n    base_slug = slugify(title)\n    slug = base_slug\n    counter = 1\n    while model_class.objects.filter(slug=slug).exclude(pk=instance.pk if instance else None).exists():\n        slug = f\"{base_slug}-{counter}\"\n        counter += 1\n    return slug\ndef home(request):",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def home(request):\n    posts = Post.objects.select_related('category', 'author').filter(status=Post.PostStatus.PUBLISHED)\n    carousel_slides = CarouselSlide.get_active_slides()[:3]\n    trending_posts = Post.get_trending_posts(limit=3)\n    popular_posts = Post.objects.filter(\n        status=Post.PostStatus.PUBLISHED\n    ).select_related('category', 'author').order_by('-views')[:3]\n    categories = Category.objects.all()\n    paginator = Paginator(posts, 4)\n    page_number = request.GET.get('page')",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "search",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def search(request):\n    query = request.GET.get('q', '')\n    posts = Post.objects.filter(\n        Q(title__icontains=query) | Q(content__icontains=query) | Q(excerpt__icontains=query),\n        status=Post.PostStatus.PUBLISHED\n    ).select_related('category', 'author') if query else Post.objects.filter(\n        status=Post.PostStatus.PUBLISHED\n    ).select_related('category', 'author')\n    carousel_slides = CarouselSlide.get_active_slides().select_related('author')[:5]\n    trending_posts = Post.get_trending_posts(limit=3)",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "category_filter",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def category_filter(request, slug):\n    category = get_object_or_404(Category, slug=slug)\n    posts = Post.objects.filter(\n        category=category, status=Post.PostStatus.PUBLISHED\n    ).select_related('category', 'author')\n    carousel_slides = CarouselSlide.get_active_slides().select_related('author')[:5]\n    trending_posts = Post.get_trending_posts(limit=3)\n    popular_posts = Post.objects.filter(\n        status=Post.PostStatus.PUBLISHED\n    ).select_related('category', 'author').order_by('-views')[:3]",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "newsletter_subscribe",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def newsletter_subscribe(request):\n    if request.method == 'POST':\n        email = request.POST.get('email')\n        if email:\n            subscriber, created = NewsletterSubscriber.objects.get_or_create(email=email)\n            if created or not subscriber.is_active:\n                subscriber.is_active = True\n                subscriber.unsubscribed_at = None\n                subscriber.save()\n                messages.success(request, 'Subscribed successfully!')",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "register_view",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def register_view(request):\n    if request.method == 'POST':\n        form = CustomUserCreationForm(request.POST)\n        if form.is_valid():\n            user = form.save()\n            login(request, user)\n            messages.success(request, 'Registration successful! Welcome to RealNaijaGist.')\n            return redirect('news:home')\n        else:\n            messages.error(request, 'Please correct the errors below.')",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "login_view",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def login_view(request):\n    if request.method == 'POST':\n        form = LoginForm(data=request.POST)\n        if form.is_valid():\n            username = form.cleaned_data['username']\n            password = form.cleaned_data['password']\n            user = authenticate(request, username=username, password=password)\n            if user is not None:\n                login(request, user)\n                next_url = request.GET.get('next', 'news:home')",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "about",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def about(request):\n    return render(request, 'about.html', {'current_year': datetime.now().year})\ndef contact(request):\n    if request.method == 'POST':\n        name = request.POST.get('name')\n        email = request.POST.get('email')\n        message = request.POST.get('message')\n        if name and email and message:\n            try:\n                logger.info(f\"Attempting to send email from {email} to {settings.CONTACT_EMAIL}\")",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "contact",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def contact(request):\n    if request.method == 'POST':\n        name = request.POST.get('name')\n        email = request.POST.get('email')\n        message = request.POST.get('message')\n        if name and email and message:\n            try:\n                logger.info(f\"Attempting to send email from {email} to {settings.CONTACT_EMAIL}\")\n                send_mail(\n                    subject=f'Contact Form Submission from {name}',",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "privacy",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def privacy(request):\n    return render(request, 'privacy.html', {'current_year': datetime.now().year})\ndef terms(request):\n    return render(request, 'terms.html', {'current_year': datetime.now().year})\ndef advertise(request):\n    return render(request, 'advertise.html', {'current_year': datetime.now().year})\ndef write(request):\n    return render(request, 'write.html', {'current_year': datetime.now().year})\ndef is_staff(user):\n    return user.is_staff or user.is_superuser",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "terms",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def terms(request):\n    return render(request, 'terms.html', {'current_year': datetime.now().year})\ndef advertise(request):\n    return render(request, 'advertise.html', {'current_year': datetime.now().year})\ndef write(request):\n    return render(request, 'write.html', {'current_year': datetime.now().year})\ndef is_staff(user):\n    return user.is_staff or user.is_superuser\ndef is_admin(user):\n    return user.is_superuser or user.is_staff",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "advertise",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def advertise(request):\n    return render(request, 'advertise.html', {'current_year': datetime.now().year})\ndef write(request):\n    return render(request, 'write.html', {'current_year': datetime.now().year})\ndef is_staff(user):\n    return user.is_staff or user.is_superuser\ndef is_admin(user):\n    return user.is_superuser or user.is_staff\n@login_required\n@user_passes_test(is_staff)",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "write",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def write(request):\n    return render(request, 'write.html', {'current_year': datetime.now().year})\ndef is_staff(user):\n    return user.is_staff or user.is_superuser\ndef is_admin(user):\n    return user.is_superuser or user.is_staff\n@login_required\n@user_passes_test(is_staff)\ndef post_list(request):\n    query = request.GET.get('q', '')",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "is_staff",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def is_staff(user):\n    return user.is_staff or user.is_superuser\ndef is_admin(user):\n    return user.is_superuser or user.is_staff\n@login_required\n@user_passes_test(is_staff)\ndef post_list(request):\n    query = request.GET.get('q', '')\n    category_id = request.GET.get('category', '')\n    posts = Post.objects.select_related('category', 'author').all()",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "is_admin",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def is_admin(user):\n    return user.is_superuser or user.is_staff\n@login_required\n@user_passes_test(is_staff)\ndef post_list(request):\n    query = request.GET.get('q', '')\n    category_id = request.GET.get('category', '')\n    posts = Post.objects.select_related('category', 'author').all()\n    if query:\n        posts = posts.filter(Q(title__icontains=query) | Q(content__icontains=query))",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "post_list",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def post_list(request):\n    query = request.GET.get('q', '')\n    category_id = request.GET.get('category', '')\n    posts = Post.objects.select_related('category', 'author').all()\n    if query:\n        posts = posts.filter(Q(title__icontains=query) | Q(content__icontains=query))\n    if category_id:\n        posts = posts.filter(category_id=category_id)\n    paginator = Paginator(posts, 10)\n    page_number = request.GET.get('page')",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "post_create",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def post_create(request):\n    if request.method == 'POST':\n        form = PostForm(request.POST, request.FILES)\n        try:\n            featured_image = request.FILES.get('featured_image')\n            if featured_image and featured_image.size > 10 * 1024 * 1024:\n                form.add_error(\n                    'featured_image',\n                    f\"File size too large. Please reduce to less than 10 MB. \"\n                    f\"Uploaded file is {featured_image.size / (1024 * 1024):.2f} MB.\"",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "post_update",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def post_update(request, pk):\n    post = get_object_or_404(Post, pk=pk)\n    if request.method == 'POST':\n        form = PostForm(request.POST, request.FILES, instance=post)\n        try:\n            # Check for new uploaded image\n            featured_image = request.FILES.get('featured_image')\n            if featured_image:\n                if featured_image.size > 10 * 1024 * 1024:\n                    form.add_error(",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "post_delete",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def post_delete(request, pk):\n    post = get_object_or_404(Post, pk=pk)\n    if request.method == 'POST':\n        post.delete()\n        messages.success(request, 'Post deleted successfully!')\n        if request.headers.get('HX-Request'):\n            context = {\n                'section': 'posts',\n                'posts': Post.objects.all().order_by('-created_at')[:10],\n                'categories': Category.objects.all(),",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "add_category",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def add_category(request):\n    if request.method == 'POST':\n        form = CategoryForm(request.POST)\n        if form.is_valid():\n            category = form.save(commit=False)\n            category.slug = generate_unique_slug(category.name, Category)\n            category.save()\n            messages.success(request, 'Category added successfully.')\n            if request.headers.get('HX-Request'):\n                context = {",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "edit_category",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def edit_category(request, pk):\n    category = get_object_or_404(Category, pk=pk)\n    if request.method == 'POST':\n        form = CategoryForm(request.POST, instance=category)\n        if form.is_valid():\n            category = form.save(commit=False)\n            category.slug = generate_unique_slug(category.name, Category, instance=category)\n            category.save()\n            messages.success(request, 'Category updated successfully.')\n            if request.headers.get('HX-Request'):",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "delete_category",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def delete_category(request, pk):\n    category = get_object_or_404(Category, pk=pk)\n    if request.method == 'POST':\n        category.delete()\n        messages.success(request, 'Category deleted successfully.')\n        if request.headers.get('HX-Request'):\n            context = {\n                'section': 'categories',\n                'page_obj': Paginator(Category.objects.order_by('name'), 10).get_page(request.GET.get('page')),\n                'categories': Category.objects.all(),",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "add_carousel_slide",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def add_carousel_slide(request):\n    if request.method == 'POST':\n        form = CarouselSlideForm(request.POST, request.FILES)\n        if form.is_valid():\n            slide = form.save(commit=False)\n            max_order = CarouselSlide.objects.aggregate(Max('order'))['order__max']\n            slide.order = (max_order + 1) if max_order is not None else 0\n            if not slide.author:\n                slide.author = request.user\n            if slide.image:",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "edit_carousel_slide",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def edit_carousel_slide(request, pk):\n    slide = get_object_or_404(CarouselSlide, pk=pk)\n    if request.method == 'POST':\n        form = CarouselSlideForm(request.POST, request.FILES, instance=slide)\n        if form.is_valid():\n            slide = form.save(commit=False)\n            if not slide.author:\n                slide.author = request.user\n            # Handle image processing\n            if 'image' in request.FILES:",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "delete_carousel_slide",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def delete_carousel_slide(request, pk):\n    slide = get_object_or_404(CarouselSlide, pk=pk)\n    if request.method == 'POST':\n        slide.delete()\n        messages.success(request, 'Carousel slide deleted successfully.')\n        if request.headers.get('HX-Request'):\n            context = {\n                'section': 'carousel',\n                'page_obj': Paginator(CarouselSlide.objects.order_by('-id'), 10).get_page(request.GET.get('page')),\n                'categories': Category.objects.all(),",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "delete_subscriber",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def delete_subscriber(request, pk):\n    subscriber = get_object_or_404(NewsletterSubscriber, pk=pk)\n    if request.method == 'POST':\n        subscriber.delete()\n        messages.success(request, 'Subscriber removed successfully.')\n        if request.headers.get('HX-Request'):\n            context = {\n                'section': 'subscribers',\n                'page_obj': Paginator(NewsletterSubscriber.objects.order_by('-subscribed_at'), 10).get_page(request.GET.get('page')),\n                'categories': Category.objects.all(),",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "admin_dashboard",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def admin_dashboard(request):\n    section = request.GET.get('section', 'posts')\n    query = request.GET.get('q', '')\n    category_filter = request.GET.get('category', '')\n    last_month = timezone.now() - timedelta(days=30)\n    previous_month = last_month - timedelta(days=30)\n    total_posts = Post.objects.count()\n    post_growth = Post.objects.filter(created_at__gte=last_month).count() / (total_posts or 1) * 100\n    active_categories = Category.objects.count()\n    new_categories = Category.objects.filter(created_at__gte=last_month).count()",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "tag_detail",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def tag_detail(request, slug):\n    tag = get_object_or_404(Tag, slug=slug)\n    posts = Post.objects.filter(\n        tags__slug=slug, status=Post.PostStatus.PUBLISHED\n    ).select_related('category', 'author')\n    categories = Category.objects.all()\n    carousel_slides = CarouselSlide.get_active_slides().select_related('author')[:5]\n    trending_posts = Post.get_trending_posts(limit=3)\n    popular_posts = Post.objects.filter(\n        status=Post.PostStatus.PUBLISHED",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "carousel_slide_detail",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def carousel_slide_detail(request, pk):\n    slide = get_object_or_404(\n        CarouselSlide.objects.select_related('author'),\n        pk=pk, is_active=True\n    )\n    slide.increment_views()\n    categories = Category.objects.all()\n    related_posts = Post.objects.filter(\n        author=slide.author, status=Post.PostStatus.PUBLISHED\n    ).select_related('category', 'author').order_by('-views')[:3]",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "handler404",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def handler404(request, exception):\n    return render(request, '404.html', {'current_year': datetime.now().year}, status=404)\ndef handler500(request):\n    return render(request, '500.html', {'current_year': datetime.now().year}, status=500)\n# def test_500(request):\n#     raise Exception(\"Test 500 error\")\n# Set up logging\nlogger = logging.getLogger(__name__)\ndef post_detail(request, slug):\n    post = get_object_or_404(",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "handler500",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def handler500(request):\n    return render(request, '500.html', {'current_year': datetime.now().year}, status=500)\n# def test_500(request):\n#     raise Exception(\"Test 500 error\")\n# Set up logging\nlogger = logging.getLogger(__name__)\ndef post_detail(request, slug):\n    post = get_object_or_404(\n        Post.objects.select_related('category', 'author').prefetch_related('tags', 'comments', 'post_likes'),\n        slug=slug, status=Post.PostStatus.PUBLISHED",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "post_detail",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def post_detail(request, slug):\n    post = get_object_or_404(\n        Post.objects.select_related('category', 'author').prefetch_related('tags', 'comments', 'post_likes'),\n        slug=slug, status=Post.PostStatus.PUBLISHED\n    )\n    # Safely increment views\n    try:\n        post.increment_views(\n            ip_address=request.META.get('REMOTE_ADDR'),\n            user=request.user if request.user.is_authenticated else None,",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "like_post",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def like_post(request, slug):\n    try:\n        post = get_object_or_404(Post, slug=slug, status=Post.PostStatus.PUBLISHED)\n        user = request.user\n        like, created = Like.objects.get_or_create(post=post, user=user)\n        if created:\n            # Increment likes count\n            Post.objects.filter(pk=post.pk).update(likes=F('likes') + 1)\n            post.refresh_from_db(fields=['likes'])\n            return JsonResponse({",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "share_post",
+        "kind": 2,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "def share_post(request, slug):\n    try:\n        post = get_object_or_404(Post, slug=slug, status=Post.PostStatus.PUBLISHED)\n        # Check if post has shares field and handle gracefully\n        if hasattr(post, 'shares'):\n            # Increment shares count using F() expression\n            Post.objects.filter(pk=post.pk).update(shares=F('shares') + 1)\n            post.refresh_from_db(fields=['shares'])\n            shares_count = post.shares\n        else:",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "logger = logging.getLogger(__name__)\ndef global_context(request):\n    return {\n        'categories': Category.objects.all(),\n        'current_year': datetime.now().year,\n    }\ndef generate_unique_slug(title, model_class, instance=None):\n    \"\"\"Generate a unique slug by appending a number if needed.\"\"\"\n    base_slug = slugify(title)\n    slug = base_slug",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "news.views",
+        "description": "news.views",
+        "peekOfCode": "logger = logging.getLogger(__name__)\ndef post_detail(request, slug):\n    post = get_object_or_404(\n        Post.objects.select_related('category', 'author').prefetch_related('tags', 'comments', 'post_likes'),\n        slug=slug, status=Post.PostStatus.PUBLISHED\n    )\n    # Safely increment views\n    try:\n        post.increment_views(\n            ip_address=request.META.get('REMOTE_ADDR'),",
+        "detail": "news.views",
+        "documentation": {}
+    },
+    {
+        "label": "application",
+        "kind": 5,
+        "importPath": "realnaijagist.asgi",
+        "description": "realnaijagist.asgi",
+        "peekOfCode": "application = get_asgi_application()",
+        "detail": "realnaijagist.asgi",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_DIR",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\npymysql.install_as_MySQLdb()\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = config('SECRET_KEY')\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = ['realnaijagist.com', 'www.realnaijagist.com','localhost']\n# Application definition",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "SECRET_KEY = config('SECRET_KEY')\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = ['realnaijagist.com', 'www.realnaijagist.com','localhost']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "DEBUG",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "DEBUG = True\nALLOWED_HOSTS = ['realnaijagist.com', 'www.realnaijagist.com','localhost']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "ALLOWED_HOSTS",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "ALLOWED_HOSTS = ['realnaijagist.com', 'www.realnaijagist.com','localhost']\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'django.contrib.sitemaps',",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "INSTALLED_APPS",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'django.contrib.sitemaps',\n    'cloudinary_storage',\n    'cloudinary',",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "MIDDLEWARE",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "MIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'whitenoise.middleware.WhiteNoiseMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\n]",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "ROOT_URLCONF",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "ROOT_URLCONF = 'realnaijagist.urls'\nTEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [BASE_DIR / 'templates'],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',\n                'django.template.context_processors.request',",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "TEMPLATES",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "TEMPLATES = [\n    {\n        'BACKEND': 'django.template.backends.django.DjangoTemplates',\n        'DIRS': [BASE_DIR / 'templates'],\n        'APP_DIRS': True,\n        'OPTIONS': {\n            'context_processors': [\n                'django.template.context_processors.debug',\n                'django.template.context_processors.request',\n                'django.contrib.auth.context_processors.auth',",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "WSGI_APPLICATION",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "WSGI_APPLICATION = 'realnaijagist.wsgi.application'\n# Database\n# https://docs.djangoproject.com/en/4.2/ref/settings/#databases\n# DATABASES = {\n#     'default': {\n#         'ENGINE': 'django.db.backends.sqlite3',\n#         'NAME': BASE_DIR / 'db.sqlite3',\n#     }\n# }\nDATABASES = {",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "DATABASES",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "DATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.mysql',\n        'NAME': config('DB_NAME'),\n        'USER': config('DB_USER'),\n        'PASSWORD': config('DB_PASSWORD'),\n        'HOST': config('DB_HOST', default='localhost'),\n        'PORT': config('DB_PORT', default='3306'),\n        'OPTIONS': {\n            'charset': 'utf8mb4',",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "AUTH_PASSWORD_VALIDATORS",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "AUTH_PASSWORD_VALIDATORS = [\n    {\n        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',\n    },\n    {\n        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',\n    },",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "LANGUAGE_CODE",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'Africa/Lagos'\nUSE_I18N = True\nUSE_TZ = True\nUSE_L10N = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nSTATIC_URL = 'static/'\nSTATICFILES_DIRS = [BASE_DIR / 'static']\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "TIME_ZONE",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "TIME_ZONE = 'Africa/Lagos'\nUSE_I18N = True\nUSE_TZ = True\nUSE_L10N = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nSTATIC_URL = 'static/'\nSTATICFILES_DIRS = [BASE_DIR / 'static']\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nSTATICFILES_FINDERS = [",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "USE_I18N",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\nUSE_L10N = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nSTATIC_URL = 'static/'\nSTATICFILES_DIRS = [BASE_DIR / 'static']\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nSTATICFILES_FINDERS = [\n    'django.contrib.staticfiles.finders.FileSystemFinder',",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "USE_TZ",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "USE_TZ = True\nUSE_L10N = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nSTATIC_URL = 'static/'\nSTATICFILES_DIRS = [BASE_DIR / 'static']\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nSTATICFILES_FINDERS = [\n    'django.contrib.staticfiles.finders.FileSystemFinder',\n    'django.contrib.staticfiles.finders.AppDirectoriesFinder',",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "USE_L10N",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "USE_L10N = True\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/4.2/howto/static-files/\nSTATIC_URL = 'static/'\nSTATICFILES_DIRS = [BASE_DIR / 'static']\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nSTATICFILES_FINDERS = [\n    'django.contrib.staticfiles.finders.FileSystemFinder',\n    'django.contrib.staticfiles.finders.AppDirectoriesFinder',\n]",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATIC_URL",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "STATIC_URL = 'static/'\nSTATICFILES_DIRS = [BASE_DIR / 'static']\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nSTATICFILES_FINDERS = [\n    'django.contrib.staticfiles.finders.FileSystemFinder',\n    'django.contrib.staticfiles.finders.AppDirectoriesFinder',\n]\nSTATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'\n# Cloudinary configuration for images\nif config('USE_CLOUDINARY', default=False, cast=bool):",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATICFILES_DIRS",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "STATICFILES_DIRS = [BASE_DIR / 'static']\nSTATIC_ROOT = BASE_DIR / \"staticfiles\"\nSTATICFILES_FINDERS = [\n    'django.contrib.staticfiles.finders.FileSystemFinder',\n    'django.contrib.staticfiles.finders.AppDirectoriesFinder',\n]\nSTATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'\n# Cloudinary configuration for images\nif config('USE_CLOUDINARY', default=False, cast=bool):\n    import cloudinary",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATIC_ROOT",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "STATIC_ROOT = BASE_DIR / \"staticfiles\"\nSTATICFILES_FINDERS = [\n    'django.contrib.staticfiles.finders.FileSystemFinder',\n    'django.contrib.staticfiles.finders.AppDirectoriesFinder',\n]\nSTATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'\n# Cloudinary configuration for images\nif config('USE_CLOUDINARY', default=False, cast=bool):\n    import cloudinary\n    import cloudinary.uploader",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATICFILES_FINDERS",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "STATICFILES_FINDERS = [\n    'django.contrib.staticfiles.finders.FileSystemFinder',\n    'django.contrib.staticfiles.finders.AppDirectoriesFinder',\n]\nSTATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'\n# Cloudinary configuration for images\nif config('USE_CLOUDINARY', default=False, cast=bool):\n    import cloudinary\n    import cloudinary.uploader\n    import cloudinary.api",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "STATICFILES_STORAGE",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'\n# Cloudinary configuration for images\nif config('USE_CLOUDINARY', default=False, cast=bool):\n    import cloudinary\n    import cloudinary.uploader\n    import cloudinary.api\n    CLOUDINARY_STORAGE = {\n        'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),\n        'API_KEY': config('CLOUDINARY_API_KEY'),\n        'API_SECRET': config('CLOUDINARY_API_SECRET'),",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "MEDIA_URL",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media')\n# For now, use local storage as fallback\n# Cloudinary will be used when USE_CLOUDINARY=True and env vars are set\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\ncustomColorPalette = [\n    {'color': 'hsl(4, 90%, 58%)', 'label': 'Red'},\n    {'color': 'hsl(340, 82%, 52%)', 'label': 'Pink'},",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "MEDIA_ROOT",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "MEDIA_ROOT = os.path.join(BASE_DIR, 'media')\n# For now, use local storage as fallback\n# Cloudinary will be used when USE_CLOUDINARY=True and env vars are set\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\ncustomColorPalette = [\n    {'color': 'hsl(4, 90%, 58%)', 'label': 'Red'},\n    {'color': 'hsl(340, 82%, 52%)', 'label': 'Pink'},\n    {'color': 'hsl(291, 64%, 42%)', 'label': 'Purple'},",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_AUTO_FIELD",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\ncustomColorPalette = [\n    {'color': 'hsl(4, 90%, 58%)', 'label': 'Red'},\n    {'color': 'hsl(340, 82%, 52%)', 'label': 'Pink'},\n    {'color': 'hsl(291, 64%, 42%)', 'label': 'Purple'},\n    {'color': 'hsl(262, 52%, 47%)', 'label': 'Deep Purple'},\n    {'color': 'hsl(231, 48%, 48%)', 'label': 'Indigo'},\n    {'color': 'hsl(207, 90%, 54%)', 'label': 'Blue'},\n]\n# CKEDITOR_5_CONFIGS = {",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "customColorPalette",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "customColorPalette = [\n    {'color': 'hsl(4, 90%, 58%)', 'label': 'Red'},\n    {'color': 'hsl(340, 82%, 52%)', 'label': 'Pink'},\n    {'color': 'hsl(291, 64%, 42%)', 'label': 'Purple'},\n    {'color': 'hsl(262, 52%, 47%)', 'label': 'Deep Purple'},\n    {'color': 'hsl(231, 48%, 48%)', 'label': 'Indigo'},\n    {'color': 'hsl(207, 90%, 54%)', 'label': 'Blue'},\n]\n# CKEDITOR_5_CONFIGS = {\n#     'default': {",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "CKEDITOR_5_CONFIGS",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "CKEDITOR_5_CONFIGS = {\n    'default': {\n        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote', 'insertTable', 'imageUpload', 'mediaEmbed', 'undo', 'redo'],\n        'heading': {\n            'options': [\n                {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},\n                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},\n                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'},\n                {'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3'}\n            ]",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "CACHES",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "CACHES = {\n    'default': {\n        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',\n        'LOCATION': os.path.join(BASE_DIR, 'cache'),  # Path to cache directory\n        'TIMEOUT': 3600,\n        'OPTIONS': {\n            'MAX_ENTRIES': 1000,\n            'KEY_PREFIX': 'realnaijagist',\n        },\n    }",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "LOGIN_REDIRECT_URL",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "LOGIN_REDIRECT_URL = 'news:home'\nLOGOUT_REDIRECT_URL = 'news:home'\nEMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'\nEMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 465\nEMAIL_USE_TLS = False\nEMAIL_USE_SSL = True\nEMAIL_HOST_USER = 'realnaijagist123@gmail.com'\nEMAIL_HOST_PASSWORD = 'jnwn lgsy iszu zylp'\nDEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "LOGOUT_REDIRECT_URL",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "LOGOUT_REDIRECT_URL = 'news:home'\nEMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'\nEMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 465\nEMAIL_USE_TLS = False\nEMAIL_USE_SSL = True\nEMAIL_HOST_USER = 'realnaijagist123@gmail.com'\nEMAIL_HOST_PASSWORD = 'jnwn lgsy iszu zylp'\nDEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'\nCONTACT_EMAIL = 'realnaijagist123@gmail.com'",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "EMAIL_BACKEND",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'\nEMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 465\nEMAIL_USE_TLS = False\nEMAIL_USE_SSL = True\nEMAIL_HOST_USER = 'realnaijagist123@gmail.com'\nEMAIL_HOST_PASSWORD = 'jnwn lgsy iszu zylp'\nDEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'\nCONTACT_EMAIL = 'realnaijagist123@gmail.com'\nCURRENT_YEAR = 2025",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "EMAIL_HOST",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "EMAIL_HOST = 'smtp.gmail.com'\nEMAIL_PORT = 465\nEMAIL_USE_TLS = False\nEMAIL_USE_SSL = True\nEMAIL_HOST_USER = 'realnaijagist123@gmail.com'\nEMAIL_HOST_PASSWORD = 'jnwn lgsy iszu zylp'\nDEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'\nCONTACT_EMAIL = 'realnaijagist123@gmail.com'\nCURRENT_YEAR = 2025\n# jnwn lgsy iszu zylp",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "EMAIL_PORT",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "EMAIL_PORT = 465\nEMAIL_USE_TLS = False\nEMAIL_USE_SSL = True\nEMAIL_HOST_USER = 'realnaijagist123@gmail.com'\nEMAIL_HOST_PASSWORD = 'jnwn lgsy iszu zylp'\nDEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'\nCONTACT_EMAIL = 'realnaijagist123@gmail.com'\nCURRENT_YEAR = 2025\n# jnwn lgsy iszu zylp",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "EMAIL_USE_TLS",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "EMAIL_USE_TLS = False\nEMAIL_USE_SSL = True\nEMAIL_HOST_USER = 'realnaijagist123@gmail.com'\nEMAIL_HOST_PASSWORD = 'jnwn lgsy iszu zylp'\nDEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'\nCONTACT_EMAIL = 'realnaijagist123@gmail.com'\nCURRENT_YEAR = 2025\n# jnwn lgsy iszu zylp",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "EMAIL_USE_SSL",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "EMAIL_USE_SSL = True\nEMAIL_HOST_USER = 'realnaijagist123@gmail.com'\nEMAIL_HOST_PASSWORD = 'jnwn lgsy iszu zylp'\nDEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'\nCONTACT_EMAIL = 'realnaijagist123@gmail.com'\nCURRENT_YEAR = 2025\n# jnwn lgsy iszu zylp",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "EMAIL_HOST_USER",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "EMAIL_HOST_USER = 'realnaijagist123@gmail.com'\nEMAIL_HOST_PASSWORD = 'jnwn lgsy iszu zylp'\nDEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'\nCONTACT_EMAIL = 'realnaijagist123@gmail.com'\nCURRENT_YEAR = 2025\n# jnwn lgsy iszu zylp",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "EMAIL_HOST_PASSWORD",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "EMAIL_HOST_PASSWORD = 'jnwn lgsy iszu zylp'\nDEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'\nCONTACT_EMAIL = 'realnaijagist123@gmail.com'\nCURRENT_YEAR = 2025\n# jnwn lgsy iszu zylp",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "DEFAULT_FROM_EMAIL",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "DEFAULT_FROM_EMAIL = 'realnaijagist123@gmail.com'\nCONTACT_EMAIL = 'realnaijagist123@gmail.com'\nCURRENT_YEAR = 2025\n# jnwn lgsy iszu zylp",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "CONTACT_EMAIL",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "CONTACT_EMAIL = 'realnaijagist123@gmail.com'\nCURRENT_YEAR = 2025\n# jnwn lgsy iszu zylp",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "CURRENT_YEAR",
+        "kind": 5,
+        "importPath": "realnaijagist.settings",
+        "description": "realnaijagist.settings",
+        "peekOfCode": "CURRENT_YEAR = 2025\n# jnwn lgsy iszu zylp",
+        "detail": "realnaijagist.settings",
+        "documentation": {}
+    },
+    {
+        "label": "sitemaps",
+        "kind": 5,
+        "importPath": "realnaijagist.urls",
+        "description": "realnaijagist.urls",
+        "peekOfCode": "sitemaps = {\n    'posts': PostSitemap,\n    'categories': CategorySitemap,\n    'carousel_slides': CarouselSlideSitemap,\n    'news': NewsSitemap,\n}\nadmin.site.site_header = \"RealNaijaGist Admin\"\nadmin.site.site_title = \"RealNaijaGist Admin\"\nadmin.site.index_title = \"Welcome to RealNaijaGist Admin\"\nhandler404 = views.handler404",
+        "detail": "realnaijagist.urls",
+        "documentation": {}
+    },
+    {
+        "label": "admin.site.site_header",
+        "kind": 5,
+        "importPath": "realnaijagist.urls",
+        "description": "realnaijagist.urls",
+        "peekOfCode": "admin.site.site_header = \"RealNaijaGist Admin\"\nadmin.site.site_title = \"RealNaijaGist Admin\"\nadmin.site.index_title = \"Welcome to RealNaijaGist Admin\"\nhandler404 = views.handler404\nhandler500 = views.handler500\nurlpatterns = [\n    path('secure-admin/', admin.site.urls),\n    # This single sitemap view serves as both the index and sectioned sitemaps\n    path('sitemap.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='sitemap'),\n    path('sitemap-<section>.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),",
+        "detail": "realnaijagist.urls",
+        "documentation": {}
+    },
+    {
+        "label": "admin.site.site_title",
+        "kind": 5,
+        "importPath": "realnaijagist.urls",
+        "description": "realnaijagist.urls",
+        "peekOfCode": "admin.site.site_title = \"RealNaijaGist Admin\"\nadmin.site.index_title = \"Welcome to RealNaijaGist Admin\"\nhandler404 = views.handler404\nhandler500 = views.handler500\nurlpatterns = [\n    path('secure-admin/', admin.site.urls),\n    # This single sitemap view serves as both the index and sectioned sitemaps\n    path('sitemap.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='sitemap'),\n    path('sitemap-<section>.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),\n    path('robots.txt', serve, {'document_root': settings.BASE_DIR, 'path': 'robots.txt'}),",
+        "detail": "realnaijagist.urls",
+        "documentation": {}
+    },
+    {
+        "label": "admin.site.index_title",
+        "kind": 5,
+        "importPath": "realnaijagist.urls",
+        "description": "realnaijagist.urls",
+        "peekOfCode": "admin.site.index_title = \"Welcome to RealNaijaGist Admin\"\nhandler404 = views.handler404\nhandler500 = views.handler500\nurlpatterns = [\n    path('secure-admin/', admin.site.urls),\n    # This single sitemap view serves as both the index and sectioned sitemaps\n    path('sitemap.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='sitemap'),\n    path('sitemap-<section>.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),\n    path('robots.txt', serve, {'document_root': settings.BASE_DIR, 'path': 'robots.txt'}),\n    path('ckeditor5/', include('django_ckeditor_5.urls')),",
+        "detail": "realnaijagist.urls",
+        "documentation": {}
+    },
+    {
+        "label": "handler404",
+        "kind": 5,
+        "importPath": "realnaijagist.urls",
+        "description": "realnaijagist.urls",
+        "peekOfCode": "handler404 = views.handler404\nhandler500 = views.handler500\nurlpatterns = [\n    path('secure-admin/', admin.site.urls),\n    # This single sitemap view serves as both the index and sectioned sitemaps\n    path('sitemap.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='sitemap'),\n    path('sitemap-<section>.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),\n    path('robots.txt', serve, {'document_root': settings.BASE_DIR, 'path': 'robots.txt'}),\n    path('ckeditor5/', include('django_ckeditor_5.urls')),\n    path('', include('news.urls')),",
+        "detail": "realnaijagist.urls",
+        "documentation": {}
+    },
+    {
+        "label": "handler500",
+        "kind": 5,
+        "importPath": "realnaijagist.urls",
+        "description": "realnaijagist.urls",
+        "peekOfCode": "handler500 = views.handler500\nurlpatterns = [\n    path('secure-admin/', admin.site.urls),\n    # This single sitemap view serves as both the index and sectioned sitemaps\n    path('sitemap.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='sitemap'),\n    path('sitemap-<section>.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),\n    path('robots.txt', serve, {'document_root': settings.BASE_DIR, 'path': 'robots.txt'}),\n    path('ckeditor5/', include('django_ckeditor_5.urls')),\n    path('', include('news.urls')),\n] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)",
+        "detail": "realnaijagist.urls",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "realnaijagist.urls",
+        "description": "realnaijagist.urls",
+        "peekOfCode": "urlpatterns = [\n    path('secure-admin/', admin.site.urls),\n    # This single sitemap view serves as both the index and sectioned sitemaps\n    path('sitemap.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='sitemap'),\n    path('sitemap-<section>.xml', cache_page(60 * 60)(sitemap), {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),\n    path('robots.txt', serve, {'document_root': settings.BASE_DIR, 'path': 'robots.txt'}),\n    path('ckeditor5/', include('django_ckeditor_5.urls')),\n    path('', include('news.urls')),\n] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)",
+        "detail": "realnaijagist.urls",
+        "documentation": {}
+    },
+    {
+        "label": "application",
+        "kind": 5,
+        "importPath": "realnaijagist.wsgi",
+        "description": "realnaijagist.wsgi",
+        "peekOfCode": "application = get_wsgi_application()",
+        "detail": "realnaijagist.wsgi",
+        "documentation": {}
+    },
+    {
+        "label": "add_class",
+        "kind": 2,
+        "importPath": "templatetags.form_tags",
+        "description": "templatetags.form_tags",
+        "peekOfCode": "def add_class(field, css_class):\n    \"\"\"Add a CSS class to a form field's widget.\"\"\"\n    if not field:\n        return field\n    widget = field.field.widget\n    existing_classes = widget.attrs.get('class', '')\n    widget.attrs['class'] = f\"{existing_classes} {css_class}\".strip()\n    return field\n@register.filter\ndef add_paragraphs(value):",
+        "detail": "templatetags.form_tags",
+        "documentation": {}
+    },
+    {
+        "label": "add_paragraphs",
+        "kind": 2,
+        "importPath": "templatetags.form_tags",
+        "description": "templatetags.form_tags",
+        "peekOfCode": "def add_paragraphs(value):\n    \"\"\"\n    Convert double newlines or double <br> tags into paragraphs, preserving existing <p> tags.\n    If content already contains <p> tags, return it unchanged.\n    If content is plain text or contains <br> tags, wrap segments in <p> tags.\n    \"\"\"\n    # Check if content already contains <p> tags\n    if '<p>' in value:\n        return mark_safe(value)  # Return unchanged if <p> tags exist\n    # Replace multiple <br> tags with double newlines for processing",
+        "detail": "templatetags.form_tags",
+        "documentation": {}
+    },
+    {
+        "label": "register",
+        "kind": 5,
+        "importPath": "templatetags.form_tags",
+        "description": "templatetags.form_tags",
+        "peekOfCode": "register = template.Library()\n@register.filter\ndef add_class(field, css_class):\n    \"\"\"Add a CSS class to a form field's widget.\"\"\"\n    if not field:\n        return field\n    widget = field.field.widget\n    existing_classes = widget.attrs.get('class', '')\n    widget.attrs['class'] = f\"{existing_classes} {css_class}\".strip()\n    return field",
+        "detail": "templatetags.form_tags",
+        "documentation": {}
+    },
+    {
+        "label": "add_paragraphs",
+        "kind": 2,
+        "importPath": "templatetags.post_filters",
+        "description": "templatetags.post_filters",
+        "peekOfCode": "def add_paragraphs(value):\n    \"\"\"\n    Convert double newlines or double <br> tags into paragraphs, preserving existing <p> tags.\n    If content already contains <p> tags, return it unchanged.\n    If content is plain text or contains <br> tags, wrap segments in <p> tags.\n    \"\"\"\n    # Check if content already contains <p> tags\n    if '<p>' in value:\n        return mark_safe(value)  # Return unchanged if <p> tags exist\n    # Replace multiple <br> tags with double newlines for processing",
+        "detail": "templatetags.post_filters",
+        "documentation": {}
+    },
+    {
+        "label": "register",
+        "kind": 5,
+        "importPath": "templatetags.post_filters",
+        "description": "templatetags.post_filters",
+        "peekOfCode": "register = template.Library()\n@register.filter\ndef add_paragraphs(value):\n    \"\"\"\n    Convert double newlines or double <br> tags into paragraphs, preserving existing <p> tags.\n    If content already contains <p> tags, return it unchanged.\n    If content is plain text or contains <br> tags, wrap segments in <p> tags.\n    \"\"\"\n    # Check if content already contains <p> tags\n    if '<p>' in value:",
+        "detail": "templatetags.post_filters",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "manage",
+        "description": "manage",
+        "peekOfCode": "def main():\n    \"\"\"Run administrative tasks.\"\"\"\n    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'realnaijagist.settings')\n    try:\n        from django.core.management import execute_from_command_line\n    except ImportError as exc:\n        raise ImportError(\n            \"Couldn't import Django. Are you sure it's installed and \"\n            \"available on your PYTHONPATH environment variable? Did you \"\n            \"forget to activate a virtual environment?\"",
+        "detail": "manage",
+        "documentation": {}
+    }
+]

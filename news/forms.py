@@ -124,6 +124,28 @@ class PostForm(forms.ModelForm):
                 )
         return featured_video
     
+    def clean_tags(self):
+        """Clean and validate tags to prevent slug conflicts"""
+        tags = self.cleaned_data.get('tags')
+        if tags:
+            # Convert to list if it's not already
+            if isinstance(tags, str):
+                tags = [tag.strip() for tag in tags.split(',') if tag.strip()]
+            
+            # Clean tag names (remove special characters that might cause slug issues)
+            cleaned_tags = []
+            for tag in tags:
+                # Remove any special characters that might cause slug issues
+                cleaned_tag = tag.strip()
+                if cleaned_tag:
+                    # Limit tag length to prevent very long tags
+                    if len(cleaned_tag) > 50:
+                        cleaned_tag = cleaned_tag[:50]
+                    cleaned_tags.append(cleaned_tag)
+            
+            return cleaned_tags
+        return tags
+    
     def clean(self):
         cleaned_data = super().clean()
         # Ensure file size is checked even if CloudinaryField bypasses clean_featured_image

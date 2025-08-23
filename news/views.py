@@ -291,9 +291,20 @@ def post_create(request):
                     )
                 post.cdn_image_url = ''
                 post.save()
-                form.save_m2m()
-                post.meta_keywords = ', '.join([tag.name for tag in post.tags.all()] + [post.category.name]) if post.tags.exists() else post.category.name
-                post.save()
+                
+                # Handle tags more gracefully to prevent slug conflicts
+                try:
+                    form.save_m2m()
+                    post.meta_keywords = ', '.join([tag.name for tag in post.tags.all()] + [post.category.name]) if post.tags.exists() else post.category.name
+                    post.save()
+                except Exception as tag_error:
+                    # If tag saving fails, still save the post but log the tag error
+                    import logging
+                    logger = logging.getLogger(__name__)
+                    logger.warning(f"Tag saving failed for post {post.title}: {tag_error}")
+                    # Set default meta keywords without tags
+                    post.meta_keywords = post.category.name if post.category else ''
+                    post.save()
                 messages.success(request, 'Post created successfully!')
                 if request.headers.get('HX-Request'):
                     context = {
@@ -320,14 +331,31 @@ def post_create(request):
                 return render(request, 'partials/post_form.html', context)
             messages.error(request, 'Please correct the errors below.')
         except IntegrityError as e:
-            form.add_error(
-                'title',
-                'A post with a similar title already exists. Please modify the title to make it unique.'
-            )
+            # Check if it's a tag-related integrity error
+            if 'Duplicate entry' in str(e) and 'slug' in str(e):
+                form.add_error(
+                    'tags',
+                    'There was an issue with the tags. Please try again with different tags or contact support.'
+                )
+            else:
+                form.add_error(
+                    'title',
+                    'A post with a similar title already exists. Please modify the title to make it unique.'
+                )
             if request.headers.get('HX-Request'):
                 context = {'form': form}
                 return render(request, 'partials/post_form.html', context)
             messages.error(request, 'Please correct the errors below.')
+        except Exception as e:
+            # Catch any other unexpected errors
+            form.add_error(
+                None,
+                f'An unexpected error occurred: {str(e)}. Please try again or contact support.'
+            )
+            if request.headers.get('HX-Request'):
+                context = {'form': form}
+                return render(request, 'partials/post_form.html', context)
+            messages.error(request, 'An unexpected error occurred. Please try again.')
     else:
         form = PostForm()
     

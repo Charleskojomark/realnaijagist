@@ -130,6 +130,60 @@ class Post(models.Model):
             'original': base_url
         }
     
+    def get_preview_media(self):
+        """
+        Get the best available preview media for homepage/cards.
+        Priority: featured_image > video_thumbnail > default_video_placeholder
+        """
+        # First try to get the featured image
+        if self.featured_image:
+            base_url = self.get_image_url()
+            if base_url:
+                return {
+                    'type': 'image',
+                    'url': f"{base_url}?w=300&h=200&c=fill",
+                    'alt': self.image_alt_text or self.title,
+                    'thumbnail': f"{base_url}?w=300&h=200&c=fill",
+                    'medium': f"{base_url}?w=600&h=400&c=fill",
+                    'large': f"{base_url}?w=1200&h=800&c=fill",
+                    'original': base_url
+                }
+        
+        # If no image, try to get video thumbnail
+        if self.video_thumbnail:
+            return {
+                'type': 'video_thumbnail',
+                'url': self.video_thumbnail.url,
+                'alt': f"Video thumbnail for {self.title}",
+                'thumbnail': self.video_thumbnail.url,
+                'medium': self.video_thumbnail.url,
+                'large': self.video_thumbnail.url,
+                'original': self.video_thumbnail.url
+            }
+        
+        # If no video thumbnail but has video content, use default video placeholder
+        if self.has_video_content():
+            return {
+                'type': 'video_placeholder',
+                'url': '/static/images/video-placeholder.svg',
+                'alt': f"Video post: {self.title}",
+                'thumbnail': '/static/images/video-placeholder.svg',
+                'medium': '/static/images/video-placeholder.svg',
+                'large': '/static/images/video-placeholder.svg',
+                'original': '/static/images/video-placeholder.svg'
+            }
+        
+        # If no media at all, use default placeholder
+        return {
+            'type': 'default_placeholder',
+            'url': '/static/images/post-placeholder.svg',
+            'alt': f"No image available for {self.title}",
+            'thumbnail': '/static/images/post-placeholder.svg',
+            'medium': '/static/images/post-placeholder.svg',
+            'large': '/static/images/post-placeholder.svg',
+            'original': '/static/images/post-placeholder.svg'
+        }
+    
     def get_video_url(self):
         """Get video URL with fallback to embed URL"""
         if self.featured_video:
@@ -160,6 +214,8 @@ class Post(models.Model):
         if minutes > 0:
             return f"{minutes}:{seconds:02d}"
         return f"{seconds}s"
+    
+    def get_excerpt_or_truncated_content(self):
         """Return excerpt or truncated content if excerpt is empty"""
         if self.excerpt:
             return self.excerpt
@@ -185,8 +241,6 @@ class Post(models.Model):
             created_at__gte=since_date
         ).order_by('-views', '-likes')[:limit]
 
-    
-
     @classmethod
     def get_trending_posts(cls, limit=5):
         """Get trending posts"""
@@ -194,6 +248,22 @@ class Post(models.Model):
             status=cls.PostStatus.PUBLISHED,
             is_trending=True
         ).order_by('-created_at')[:limit]
+
+    def validate_tags(self):
+        """Validate that all tags have valid slugs"""
+        from taggit.models import Tag
+        invalid_tags = []
+        
+        for tag in self.tags.all():
+            try:
+                # Check if tag slug is valid
+                expected_slug = tag.slug
+                if not expected_slug or len(expected_slug) > 100:
+                    invalid_tags.append(tag.name)
+            except Exception:
+                invalid_tags.append(tag.name)
+        
+        return invalid_tags
 
     def save(self, *args, **kwargs):
         """Auto-set published_at when status changes to published"""
@@ -205,15 +275,13 @@ class Post(models.Model):
     class Meta:
         ordering = ['-created_at']
         indexes = [
-            models.Index(fields=['status', '-created_at']),
-            models.Index(fields=['category', '-created_at']),
-            models.Index(fields=['author', '-created_at']),
-            models.Index(fields=['-views']),
+            models.Index(fields=['status', 'created_at']),
+            models.Index(fields=['category', 'status']),
+            models.Index(fields=['author', 'status']),
+            models.Index(fields=['is_trending', 'created_at']),
+            models.Index(fields=['is_video_post', 'created_at']),
         ]
 
-
-from django.db import models
-from django.utils import timezone
 
 class CarouselSlide(models.Model):
     """Featured content displayed in hero carousel"""

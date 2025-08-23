@@ -1229,6 +1229,32 @@ body {
         margin: 20px 10px;
         padding: 1rem;
     }
+    
+    /* Mobile button styling */
+    .btn-primary {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        min-height: 36px;
+    }
+    
+    .post-card .btn-primary {
+        width: 100%;
+        margin-top: 0.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Tablet and mobile button styling */
+    .btn-primary {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        min-height: 40px;
+    }
+    
+    .post-card .btn-primary {
+        width: 100%;
+        margin-top: 1rem;
+    }
 }
 
 @media (min-width: 768px) {
@@ -1302,8 +1328,8 @@ body {
         font-size: 1.2rem;
     }
     .trending-image {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
     }
     .trending-content h4 {
         font-size: 0.9rem;
@@ -1412,4 +1438,106 @@ body {
     #loadMore {
         min-width: 200px;
     }
+}
+
+/* Video Post Preview Styles */
+.post-image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.trending-image-container,
+.popular-image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
+    flex-shrink: 0; /* Prevent container from shrinking */
+}
+
+.video-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.video-indicator:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translate(-50%, -50%) scale(1.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.video-indicator i {
+    margin-left: 2px; /* Slight offset for play button */
+}
+
+/* Video placeholder styling */
+.post-image[src*="video-placeholder"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.trending-image[src*="video-placeholder"],
+.popular-image[src*="video-placeholder"] {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.post-image[src*="post-placeholder"] {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.trending-image[src*="post-placeholder"],
+.popular-image[src*="post-placeholder"] {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Main post images - full width for grid layout */
+.post-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* Trending images - fixed dimensions for sidebar */
+.trending-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    transition: var(--transition);
+}
+
+/* Popular images - fixed dimensions for sidebar */
+.popular-image {
+    width: 60px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 5px;
+    transition: var(--transition);
+}
+
+/* Hover effects */
+.post-image-container:hover .post-image {
+    transform: scale(1.05);
+}
+
+.trending-item:hover .trending-image {
+    filter: brightness(1.1);
+}
+
+.popular-post:hover .popular-image {
+    filter: brightness(1.1);
 }
