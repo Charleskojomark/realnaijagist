@@ -624,6 +624,12 @@ body {
     flex-direction: column;
 }
 
+/* Ensure category badge doesn't stretch in flexbox */
+.post-category {
+    align-self: flex-start; /* Align to start, don't stretch */
+    flex-shrink: 0; /* Don't shrink the category badge */
+}
+
 .post-category {
     background: var(--primary-green);
     color: var(--white);
@@ -632,6 +638,11 @@ body {
     font-size: 0.75rem;
     display: inline-block;
     margin-bottom: 0.5rem;
+    width: fit-content; /* Ensure it only takes needed width */
+    max-width: 100%; /* Prevent overflow */
+    white-space: nowrap; /* Keep text on one line */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Show ellipsis for long category names */
 }
 
 .post-title {
