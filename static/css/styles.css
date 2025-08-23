@@ -596,6 +596,9 @@ body {
     overflow: hidden;
     box-shadow: var(--shadow);
     transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure all cards have same height */
 }
 
 .post-card:hover {
@@ -616,6 +619,9 @@ body {
 
 .post-content {
     padding: 1rem;
+    flex: 1; /* Take up remaining space in card */
+    display: flex;
+    flex-direction: column;
 }
 
 .post-category {
@@ -648,6 +654,7 @@ body {
     align-items: center;
     font-size: 0.75rem;
     color: var(--text-light);
+    margin-top: auto; /* Push to bottom of content area */
 }
 
 .author {
@@ -1241,6 +1248,11 @@ body {
         width: 100%;
         margin-top: 0.75rem;
     }
+    
+    /* Mobile post image consistency */
+    .post-image {
+        height: 180px; /* Slightly smaller for mobile but still uniform */
+    }
 }
 
 @media (max-width: 768px) {
@@ -1254,6 +1266,11 @@ body {
     .post-card .btn-primary {
         width: 100%;
         margin-top: 1rem;
+    }
+    
+    /* Small screen post image consistency */
+    .post-image {
+        height: 190px; /* Medium height for small screens */
     }
 }
 
@@ -1351,7 +1368,7 @@ body {
         gap: 2rem;
     }
     .post-image {
-        height: 200px;
+        height: 200px; /* Consistent height for tablet and desktop */
     }
     .post-title {
         font-size: 1.2rem;
@@ -1503,10 +1520,10 @@ body {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
 }
 
-/* Main post images - full width for grid layout */
+/* Main post images - consistent dimensions for uniform grid layout */
 .post-image {
     width: 100%;
-    height: auto;
+    height: 200px; /* Fixed height for uniform appearance */
     object-fit: cover;
     transition: transform 0.3s ease;
 }

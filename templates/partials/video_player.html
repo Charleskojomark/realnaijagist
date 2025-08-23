@@ -74,10 +74,9 @@
 .video-player-container {
     position: relative;
     margin: 2rem 0;
-    border-radius: var(--post-border-radius);
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: var(--post-shadow-soft);
-    background: var(--white);
+    background: #ffffff;
 }
 
 .local-video-player {
@@ -90,7 +89,8 @@
     height: auto;
     max-height: 70vh;
     display: block;
-    border-radius: var(--post-border-radius);
+    border-radius: 12px;
+    filter: brightness(1); /* Ensure full brightness */
 }
 
 .video-duration-badge {
@@ -103,7 +103,6 @@
     border-radius: 20px;
     font-size: 0.875rem;
     font-weight: 500;
-    backdrop-filter: blur(10px);
 }
 
 .video-duration-badge i {
@@ -130,21 +129,20 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: var(--post-border-radius);
+    border-radius: 12px;
+    filter: brightness(1); /* Ensure full brightness */
 }
 
 .video-post-indicator {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    background: var(--post-gradient-primary);
+    background: linear-gradient(135deg, #2B8F47, #34A853);
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 20px;
     font-size: 0.875rem;
     font-weight: 600;
-    backdrop-filter: blur(10px);
-    box-shadow: var(--post-shadow-soft);
 }
 
 .video-post-indicator i {
@@ -181,7 +179,14 @@
 /* Video Player Enhancements */
 .video-player::-webkit-media-controls {
     background: rgba(0, 0, 0, 0.8);
-    border-radius: 0 0 var(--post-border-radius) var(--post-border-radius);
+    border-radius: 0 0 12px 12px;
+}
+
+/* Ensure video maintains original brightness */
+.video-player,
+.video-iframe {
+    filter: brightness(1) contrast(1) saturate(1);
+    -webkit-filter: brightness(1) contrast(1) saturate(1);
 }
 
 .video-player::-webkit-media-controls-panel {
@@ -212,8 +217,7 @@
 /* Video Thumbnail Hover Effect */
 .video-player-container:hover {
     transform: translateY(-2px);
-    box-shadow: var(--post-shadow-hover);
-    transition: var(--post-transition);
+    transition: all 0.3s ease;
 }
 </style>
 
