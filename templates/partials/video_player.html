@@ -71,12 +71,21 @@
 </div>
 
 <style>
+/* Reset all potential shadow and darkening effects */
 .video-player-container {
     position: relative;
     margin: 2rem 0;
     border-radius: 12px;
     overflow: hidden;
     background: #ffffff;
+    box-shadow: none !important; /* Force remove any shadows */
+    filter: none !important; /* Remove any filters */
+}
+
+/* Ensure video container has no darkening effects */
+.video-player-container * {
+    box-shadow: none !important;
+    filter: none !important;
 }
 
 .local-video-player {
@@ -182,11 +191,46 @@
     border-radius: 0 0 12px 12px;
 }
 
-/* Ensure video maintains original brightness */
+/* Override any inherited darkening effects from parent containers */
+.video-section,
+.video-section * {
+    box-shadow: none !important;
+    filter: none !important;
+    background: transparent !important;
+}
+
+/* Ensure video player is completely clean */
+.video-player-container,
+.video-player-container *,
+.local-video-player,
+.local-video-player *,
+.external-video-embed,
+.external-video-embed * {
+    box-shadow: none !important;
+    filter: none !important;
+    background: transparent !important;
+    text-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+}
+
+/* Ensure video maintains original brightness - Force override any inherited styles */
 .video-player,
 .video-iframe {
-    filter: brightness(1) contrast(1) saturate(1);
-    -webkit-filter: brightness(1) contrast(1) saturate(1);
+    filter: brightness(1) contrast(1) saturate(1) !important;
+    -webkit-filter: brightness(1) contrast(1) saturate(1) !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    opacity: 1 !important;
+}
+
+/* Remove any potential dark overlays */
+.video-player::before,
+.video-player::after,
+.video-iframe::before,
+.video-iframe::after {
+    display: none !important;
+    content: none !important;
 }
 
 .video-player::-webkit-media-controls-panel {
@@ -218,7 +262,34 @@
 .video-player-container:hover {
     transform: translateY(-2px);
     transition: all 0.3s ease;
+    box-shadow: none !important; /* Ensure no shadow on hover */
 }
+
+/* Final override to ensure video clarity */
+.video-player,
+.video-iframe {
+    /* Force remove any potential darkening */
+    filter: brightness(1) contrast(1) saturate(1) hue-rotate(0deg) !important;
+    -webkit-filter: brightness(1) contrast(1) saturate(1) hue-rotate(0deg) !important;
+    -moz-filter: brightness(1) contrast(1) saturate(1) hue-rotate(0deg) !important;
+    
+    /* Remove any shadows or overlays */
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    
+    /* Ensure full opacity and transparency */
+    opacity: 1 !important;
+    background: transparent !important;
+    
+    /* Remove any potential dark borders */
+    border: none !important;
+    outline: none !important;
+    
+
+}
+
+
 </style>
 
 <script>
