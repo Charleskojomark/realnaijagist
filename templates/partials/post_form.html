@@ -5,45 +5,6 @@
 </div>
 <div id="formMessages" class="toast-messages"></div>
 
-<!-- Upload Progress Section -->
-<div class="upload-progress-container" style="display: none;">
-    <div class="upload-progress-header">
-        <h4><i class="fas fa-upload"></i> Uploading Post...</h4>
-        <p class="upload-status">Please wait while we process your content</p>
-    </div>
-    
-    <div class="progress-bar-container">
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-        <div class="progress-text">0%</div>
-    </div>
-    
-    <div class="upload-steps">
-        <div class="step active" data-step="1">
-            <i class="fas fa-check-circle"></i>
-            <span>Validating form data</span>
-        </div>
-        <div class="step" data-step="2">
-            <i class="fas fa-spinner fa-spin"></i>
-            <span>Processing images</span>
-        </div>
-        <div class="step" data-step="3">
-            <i class="fas fa-spinner fa-spin"></i>
-            <span>Processing videos</span>
-        </div>
-        <div class="step" data-step="4">
-            <i class="fas fa-spinner fa-spin"></i>
-            <span>Saving post</span>
-        </div>
-    </div>
-    
-    <div class="upload-tips">
-        <p><i class="fas fa-info-circle"></i> <strong>Tip:</strong> Video processing may take several minutes depending on file size</p>
-        <p><i class="fas fa-clock"></i> <strong>Estimated time:</strong> <span class="estimated-time">2-5 minutes</span></p>
-    </div>
-</div>
-
 <form method="POST" action="{% if post %}{% url 'news:post_update' post.pk %}{% else %}{% url 'news:post_create' %}{% endif %}" 
       class="post-form" enctype="multipart/form-data" id="postForm">
     {% csrf_token %}
@@ -79,193 +40,129 @@
 </form>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+// Simple, reliable form handler
+console.log('Post form script loaded');
+
+// Function to initialize the form
+function initializeForm() {
+    console.log('Initializing form...');
+    
     const form = document.getElementById('postForm');
     const submitBtn = document.getElementById('submitBtn');
-    const uploadProgress = document.querySelector('.upload-progress-container');
-    const progressFill = document.querySelector('.progress-fill');
-    const progressText = document.querySelector('.progress-text');
-    const uploadSteps = document.querySelectorAll('.upload-steps .step');
-    const estimatedTime = document.querySelector('.estimated-time');
     
-    let uploadInProgress = false;
-    let progressInterval;
+    if (!form || !submitBtn) {
+        console.error('Form elements not found, will retry...');
+        setTimeout(initializeForm, 100);
+        return;
+    }
     
-    // Form submission handler
-    form.addEventListener('submit', function(e) {
+    console.log('Form elements found:', !!form, !!submitBtn);
+    
+    // Remove any existing event listeners to prevent duplicates
+    const newForm = form.cloneNode(true);
+    form.parentNode.replaceChild(newForm, form);
+    
+    // Get fresh references
+    const freshForm = document.getElementById('postForm');
+    const freshSubmitBtn = freshForm.querySelector('#submitBtn');
+    
+    console.log('Fresh form created:', !!freshForm);
+    
+    // Add submit event listener
+    freshForm.addEventListener('submit', function(e) {
+        console.log('=== FORM SUBMISSION INTERCEPTED ===');
+        
+        // Prevent form submission
         e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
         
-        if (uploadInProgress) return;
+        console.log('Form submission prevented');
         
-        // Check if form has video content
-        const hasVideo = document.querySelector('input[name="featured_video"]')?.files.length > 0;
-        const isVideoPost = document.querySelector('input[name="is_video_post"]')?.checked;
+        // Disable button immediately
+        freshSubmitBtn.disabled = true;
+        freshSubmitBtn.style.pointerEvents = 'none';
+        freshSubmitBtn.style.opacity = '0.7';
         
-        // Start upload process
-        startUpload(hasVideo || isVideoPost);
+        // Change button text to "Processing..."
+        const btnText = freshSubmitBtn.querySelector('.btn-text');
+        const btnLoading = freshSubmitBtn.querySelector('.btn-loading');
         
-        // Submit form
-        submitForm();
+        if (btnText) {
+            btnText.textContent = 'Processing...';
+            btnText.style.color = '#ffffff';
+            console.log('Button text changed to "Processing..."');
+        }
+        
+        if (btnLoading) {
+            btnLoading.style.display = 'inline';
+            console.log('Loading spinner shown');
+        }
+        
+        // Wait 1 second to show processing state, then submit
+        console.log('Waiting 1 second to show processing state...');
+        setTimeout(() => {
+            console.log('Submitting form after showing processing state...');
+            
+            // Remove this event listener to prevent infinite loop
+            freshForm.removeEventListener('submit', arguments.callee);
+            
+            // Submit the form
+            freshForm.submit();
+        }, 1000);
+        
+        // Also reload page after 3 seconds as backup
+        setTimeout(() => {
+            console.log('Backup: Reloading page...');
+            window.location.reload();
+        }, 3000);
     });
     
-    function startUpload(hasVideo) {
-        uploadInProgress = true;
+    // Also add click handler as backup
+    freshSubmitBtn.addEventListener('click', function(e) {
+        console.log('Submit button clicked');
+        e.preventDefault();
+        e.stopPropagation();
         
-        // Show progress container
-        uploadProgress.style.display = 'block';
-        
-        // Disable submit button and show loading state
-        submitBtn.disabled = true;
-        submitBtn.querySelector('.btn-text').style.display = 'none';
-        submitBtn.querySelector('.btn-loading').style.display = 'inline';
-        
-        // Update estimated time based on content type
-        if (hasVideo) {
-            estimatedTime.textContent = '3-8 minutes';
+        if (freshForm.checkValidity()) {
+            console.log('Form is valid, triggering submit event');
+            // Trigger submit event
+            freshForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
         } else {
-            estimatedTime.textContent = '1-3 minutes';
+            console.log('Form validation failed');
         }
-        
-        // Start progress animation
-        startProgressAnimation(hasVideo);
-    }
+    });
     
-    function startProgressAnimation(hasVideo) {
-        let progress = 0;
-        const maxProgress = hasVideo ? 100 : 80;
-        const stepDuration = hasVideo ? 200 : 100;
-        
-        progressInterval = setInterval(() => {
-            if (progress >= maxProgress) {
-                clearInterval(progressInterval);
-                return;
-            }
-            
-            progress += Math.random() * 2 + 1;
-            if (progress > maxProgress) progress = maxProgress;
-            
-            updateProgress(progress);
-            updateSteps(progress, hasVideo);
-        }, stepDuration);
-    }
-    
-    function updateProgress(progress) {
-        progressFill.style.width = progress + '%';
-        progressText.textContent = Math.round(progress) + '%';
-    }
-    
-    function updateSteps(progress, hasVideo) {
-        const steps = document.querySelectorAll('.upload-steps .step');
-        
-        if (progress < 25) {
-            setStepActive(steps, 1);
-        } else if (progress < 50) {
-            setStepActive(steps, 2);
-        } else if (progress < 75 && hasVideo) {
-            setStepActive(steps, 3);
-        } else if (progress < 100) {
-            setStepActive(steps, 4);
-        }
-    }
-    
-    function setStepActive(steps, activeStep) {
-        steps.forEach((step, index) => {
-            const stepNum = index + 1;
-            const icon = step.querySelector('i');
-            
-            if (stepNum < activeStep) {
-                step.classList.add('completed');
-                step.classList.remove('active');
-                icon.className = 'fas fa-check-circle';
-                icon.style.color = '#28a745';
-            } else if (stepNum === activeStep) {
-                step.classList.add('active');
-                step.classList.remove('completed');
-                icon.className = 'fas fa-spinner fa-spin';
-                icon.style.color = '#007bff';
-            } else {
-                step.classList.remove('active', 'completed');
-                icon.className = 'fas fa-circle';
-                icon.style.color = '#6c757d';
-            }
-        });
-    }
-    
-    function submitForm() {
-        const formData = new FormData(form);
-        
-        fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                completeUpload();
-            } else {
-                throw new Error('Upload failed');
-            }
-        })
-        .catch(error => {
-            console.error('Upload error:', error);
-            showUploadError();
-        });
-    }
-    
-    function completeUpload() {
-        updateProgress(100);
-        setStepActive(document.querySelectorAll('.upload-steps .step'), 4);
-        
-        setTimeout(() => {
-            uploadProgress.innerHTML = `
-                <div class="upload-success">
-                    <i class="fas fa-check-circle" style="color: #28a745; font-size: 3rem;"></i>
-                    <h4>Post Created Successfully!</h4>
-                    <p>Your post has been uploaded and is now live.</p>
-                </div>
-            `;
-            
-            // Reload the admin dashboard content
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
-        }, 1000);
-    }
-    
-    function showUploadError() {
-        uploadProgress.innerHTML = `
-            <div class="upload-error">
-                <i class="fas fa-exclamation-triangle" style="color: #dc3545; font-size: 3rem;"></i>
-                <h4>Upload Failed</h4>
-                <p>There was an error processing your post. Please try again.</p>
-                <button onclick="location.reload()" class="btn btn-primary">
-                    <i class="fas fa-redo"></i> Try Again
-                </button>
-            </div>
-        `;
-    }
-    
-    // File input change handlers
-    const videoInput = document.querySelector('input[name="featured_video"]');
-    const imageInput = document.querySelector('input[name="featured_image"]');
-    
-    if (videoInput) {
-        videoInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const fileSize = (file.size / (1024 * 1024)).toFixed(2);
-                
-                if (fileSize > 50) {
-                    estimatedTime.textContent = '5-10 minutes';
-                } else if (fileSize > 20) {
-                    estimatedTime.textContent = '3-6 minutes';
-                } else {
-                    estimatedTime.textContent = '2-4 minutes';
-                }
-            }
-        });
+    console.log('Form initialization complete');
+}
+
+// Try to initialize immediately
+initializeForm();
+
+// Also try when DOM is ready (backup)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeForm);
+} else {
+    // DOM already ready
+    setTimeout(initializeForm, 100);
+}
+
+// Also try when HTMX content is loaded
+document.addEventListener('htmx:afterSwap', function(e) {
+    if (e.detail.target.id === 'modal-content') {
+        console.log('HTMX modal loaded, initializing form...');
+        setTimeout(initializeForm, 100);
     }
 });
+
+// Periodic check as final fallback
+setInterval(() => {
+    if (document.getElementById('postForm') && !document.getElementById('postForm').hasAttribute('data-initialized')) {
+        console.log('Periodic check found form, initializing...');
+        document.getElementById('postForm').setAttribute('data-initialized', 'true');
+        initializeForm();
+    }
+}, 500);
+
+console.log('Form initialization strategies set up');
 </script>
