@@ -26,6 +26,7 @@ import requests
 from django.views.decorators.http import require_POST
 from django.db.models import F
 from cloudinary.exceptions import Error as CloudinaryError
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -944,4 +945,13 @@ def share_post(request, slug):
         logger.error(f"Error in share_post for slug '{slug}': {str(e)}")
         logger.exception("Full traceback:")  # This will log the full stack trace
         return JsonResponse({'error': f'An error occurred: {str(e)}'}, status=500)
+
+@require_POST
+def ping(request):
+    """Ping endpoint to keep user session alive"""
+    if request.user.is_authenticated:
+        # Update last activity in session
+        request.session['last_activity'] = time.time()
+        return JsonResponse({'status': 'ok'})
+    return JsonResponse({'status': 'unauthorized'}, status=401)
 

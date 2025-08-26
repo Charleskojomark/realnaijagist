@@ -3,11 +3,11 @@
     <h3>{{ post|yesno:"Edit Post,Add Post" }}</h3>
     <button class="modal-close" type="button" aria-label="Close modal">×</button>
 </div>
-<div id="formMessages" class="toast-messages"></div>
 
 <form method="POST" action="{% if post %}{% url 'news:post_update' post.pk %}{% else %}{% url 'news:post_create' %}{% endif %}" 
       class="post-form" enctype="multipart/form-data" id="postForm">
     {% csrf_token %}
+    
     <div class="modal-body">
         {{ form.non_field_errors }}
         {% for field in form %}
@@ -40,10 +40,9 @@
 </form>
 
 <script>
-// Simple, reliable form handler
 console.log('Post form script loaded');
 
-// Function to initialize the form
+// Simple form handler that shows processing state
 function initializeForm() {
     console.log('Initializing form...');
     
@@ -57,80 +56,37 @@ function initializeForm() {
     }
     
     console.log('Form elements found:', !!form, !!submitBtn);
-    
-    // Remove any existing event listeners to prevent duplicates
-    const newForm = form.cloneNode(true);
-    form.parentNode.replaceChild(newForm, form);
-    
-    // Get fresh references
-    const freshForm = document.getElementById('postForm');
-    const freshSubmitBtn = freshForm.querySelector('#submitBtn');
-    
-    console.log('Fresh form created:', !!freshForm);
+    console.log('Form action:', form.action);
+    console.log('Form method:', form.method);
+    console.log('Form enctype:', form.enctype);
     
     // Add submit event listener
-    freshForm.addEventListener('submit', function(e) {
-        console.log('=== FORM SUBMISSION INTERCEPTED ===');
+    form.addEventListener('submit', function(e) {
+        console.log('=== FORM SUBMISSION STARTED ===');
         
-        // Prevent form submission
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        
-        console.log('Form submission prevented');
+        // Don't prevent default - let the form submit normally
+        // Just show processing state
         
         // Disable button immediately
-        freshSubmitBtn.disabled = true;
-        freshSubmitBtn.style.pointerEvents = 'none';
-        freshSubmitBtn.style.opacity = '0.7';
+        submitBtn.disabled = true;
+        submitBtn.style.pointerEvents = 'none';
+        submitBtn.style.opacity = '0.7';
         
         // Change button text to "Processing..."
-        const btnText = freshSubmitBtn.querySelector('.btn-text');
-        const btnLoading = freshSubmitBtn.querySelector('.btn-loading');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
         
         if (btnText) {
             btnText.textContent = 'Processing...';
             btnText.style.color = '#ffffff';
-            console.log('Button text changed to "Processing..."');
         }
         
         if (btnLoading) {
             btnLoading.style.display = 'inline';
-            console.log('Loading spinner shown');
         }
         
-        // Wait 1 second to show processing state, then submit
-        console.log('Waiting 1 second to show processing state...');
-        setTimeout(() => {
-            console.log('Submitting form after showing processing state...');
-            
-            // Remove this event listener to prevent infinite loop
-            freshForm.removeEventListener('submit', arguments.callee);
-            
-            // Submit the form
-            freshForm.submit();
-        }, 1000);
-        
-        // Also reload page after 3 seconds as backup
-        setTimeout(() => {
-            console.log('Backup: Reloading page...');
-            window.location.reload();
-        }, 3000);
-    });
-    
-    // Also add click handler as backup
-    freshSubmitBtn.addEventListener('click', function(e) {
-        console.log('Submit button clicked');
-        e.preventDefault();
-        e.stopPropagation();
-        
-        if (freshForm.checkValidity()) {
-            console.log('Form is valid, triggering submit event');
-            // Trigger submit event
-            freshForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
-        } else {
-            console.log('Form validation failed');
-        }
+        console.log('Form is submitting normally...');
+        // Form will submit normally and Django will handle it
     });
     
     console.log('Form initialization complete');
@@ -154,15 +110,6 @@ document.addEventListener('htmx:afterSwap', function(e) {
         setTimeout(initializeForm, 100);
     }
 });
-
-// Periodic check as final fallback
-setInterval(() => {
-    if (document.getElementById('postForm') && !document.getElementById('postForm').hasAttribute('data-initialized')) {
-        console.log('Periodic check found form, initializing...');
-        document.getElementById('postForm').setAttribute('data-initialized', 'true');
-        initializeForm();
-    }
-}, 500);
 
 console.log('Form initialization strategies set up');
 </script>

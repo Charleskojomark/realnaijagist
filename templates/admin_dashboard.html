@@ -1337,6 +1337,116 @@
                     }
                 }
             });
+
+            // Session Timeout Management
+            let sessionTimeout;
+            let warningTimeout;
+            const SESSION_DURATION = 30 * 60 * 1000; // 30 minutes in milliseconds
+            const WARNING_TIME = 5 * 60 * 1000; // Show warning 5 minutes before logout
+
+            function resetSessionTimer() {
+                // Clear existing timeouts
+                if (sessionTimeout) clearTimeout(sessionTimeout);
+                if (warningTimeout) clearTimeout(warningTimeout);
+
+                // Set warning timeout (25 minutes)
+                warningTimeout = setTimeout(() => {
+                    showSessionWarning();
+                }, SESSION_DURATION - WARNING_TIME);
+
+                // Set session timeout (30 minutes)
+                sessionTimeout = setTimeout(() => {
+                    logoutUser();
+                }, SESSION_DURATION);
+            }
+
+            function showSessionWarning() {
+                // Create warning modal
+                const warningModal = document.createElement('div');
+                warningModal.id = 'session-warning-modal';
+                warningModal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    z-index: 9999;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                `;
+
+                warningModal.innerHTML = `
+                    <div style="
+                        background: white;
+                        padding: 30px;
+                        border-radius: 10px;
+                        text-align: center;
+                        max-width: 400px;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                    ">
+                        <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+                        <h3 style="color: #d63384; margin-bottom: 15px;">Session Expiring Soon</h3>
+                        <p style="color: #6c757d; margin-bottom: 25px;">
+                            Your session will expire in <strong>5 minutes</strong> due to inactivity.
+                        </p>
+                        <div style="display: flex; gap: 15px; justify-content: center;">
+                            <button id="extend-session" style="
+                                background: #198754;
+                                color: white;
+                                border: none;
+                                padding: 12px 24px;
+                                border-radius: 6px;
+                                cursor: pointer;
+                                font-weight: 500;
+                            ">Extend Session</button>
+                            <button id="logout-now" style="
+                                background: #dc3545;
+                                color: white;
+                                border: none;
+                                padding: 12px 24px;
+                                border-radius: 6px;
+                                cursor: pointer;
+                                font-weight: 500;
+                            ">Logout Now</button>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(warningModal);
+
+                // Add event listeners
+                document.getElementById('extend-session').addEventListener('click', () => {
+                    document.body.removeChild(warningModal);
+                    resetSessionTimer();
+                    // Send activity ping to server
+                    fetch('/ping/', { method: 'POST' }).catch(() => {});
+                });
+
+                document.getElementById('logout-now').addEventListener('click', () => {
+                    logoutUser();
+                });
+            }
+
+            function logoutUser() {
+                // Redirect to logout
+                window.location.href = '/logout/';
+            }
+
+            // Track user activity
+            const activityEvents = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+            activityEvents.forEach(event => {
+                document.addEventListener(event, resetSessionTimer, true);
+            });
+
+            // Initialize session timer
+            resetSessionTimer();
+
+            // Ping server every 5 minutes to keep session alive
+            setInterval(() => {
+                fetch('/ping/', { method: 'POST' }).catch(() => {});
+            }, 5 * 60 * 1000);
         }
     });
 </script>
