@@ -1,4 +1,5 @@
 from django import forms
+from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
 from django_ckeditor_5.widgets import CKEditor5Widget
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -94,7 +95,16 @@ class PostForm(forms.ModelForm):
     
     def clean_featured_image(self):
         featured_image = self.cleaned_data.get('featured_image')
-        if featured_image:
+        if not featured_image:
+            return featured_image
+
+        # Only validate size for actual uploaded file objects.
+        is_uploaded_file = isinstance(
+            featured_image,
+            (InMemoryUploadedFile, TemporaryUploadedFile),
+        ) or hasattr(featured_image, "size")
+
+        if is_uploaded_file and getattr(featured_image, "size", None) is not None:
             # Check file size (10 MB = 10,485,760 bytes)
             max_size = 10 * 1024 * 1024  # 10 MB
             if featured_image.size > max_size:
@@ -106,7 +116,15 @@ class PostForm(forms.ModelForm):
     
     def clean_featured_video(self):
         featured_video = self.cleaned_data.get('featured_video')
-        if featured_video:
+        if not featured_video:
+            return featured_video
+
+        is_uploaded_file = isinstance(
+            featured_video,
+            (InMemoryUploadedFile, TemporaryUploadedFile),
+        ) or hasattr(featured_video, "size")
+
+        if is_uploaded_file and getattr(featured_video, "size", None) is not None:
             # Check file size (100 MB = 100,857,600 bytes)
             max_size = 100 * 1024 * 1024  # 100 MB
             if featured_video.size > max_size:
@@ -114,11 +132,12 @@ class PostForm(forms.ModelForm):
                     f"Video file size too large. Maximum is {max_size / (1024 * 1024)} MB. "
                     f"Uploaded file is {featured_video.size / (1024 * 1024):.2f} MB."
                 )
-            
-            # Check file extension
+
+        # For uploaded files, validate extension. Skip for existing remote resources.
+        if hasattr(featured_video, "name"):
             allowed_extensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv']
             file_extension = os.path.splitext(featured_video.name)[1].lower()
-            if file_extension not in allowed_extensions:
+            if file_extension and file_extension not in allowed_extensions:
                 raise forms.ValidationError(
                     f"Unsupported video format. Allowed formats: {', '.join(allowed_extensions)}"
                 )
