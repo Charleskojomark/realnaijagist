@@ -280,7 +280,7 @@ def post_create(request):
                 post.slug = generate_unique_slug(post.title, Post)
                 post.excerpt = post.content[:150] if post.content else ''
                 post.meta_description = post.excerpt or post.content[:160]
-                post.image_alt_text = post.title[:90]
+                post.image_alt_text = (post.title or "")[:100]
                 if post.featured_image:
                     img = Image.open(post.featured_image)
                     webp_io = io.BytesIO()
@@ -388,7 +388,7 @@ def post_update(request, pk):
                 updated_post.slug = generate_unique_slug(updated_post.title, Post, instance=post)
                 updated_post.excerpt = updated_post.content[:150] if updated_post.content else ''
                 updated_post.meta_description = updated_post.excerpt or updated_post.content[:160]
-                updated_post.image_alt_text = updated_post.title
+                updated_post.image_alt_text = (updated_post.title or "")[:100]
 
                 # Process new image if uploaded
                 if featured_image:
