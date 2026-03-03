@@ -143,8 +143,12 @@
                 {% else %}
                     <span class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></span>
                 {% endif %}
-                {% for num in posts.paginator.page_range %}
-                    <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category.slug }}{% endif %}" class="pagination-btn {% if posts.number == num %}active{% endif %}">{{ num }}</a>
+                {% for num in page_range %}
+                    {% if num == posts.paginator.ELLIPSIS %}
+                        <span class="pagination-btn disabled">{{ num }}</span>
+                    {% else %}
+                        <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category.slug }}{% endif %}" class="pagination-btn {% if posts.number == num %}active{% endif %}">{{ num }}</a>
+                    {% endif %}
                 {% endfor %}
                 {% if posts.has_next %}
                     <a href="?page={{ posts.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category.slug }}{% endif %}" class="pagination-btn"><i class="fas fa-chevron-right"></i></a>

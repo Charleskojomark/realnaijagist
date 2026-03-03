@@ -57,8 +57,10 @@ def home(request):
     paginator = Paginator(posts, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    page_range = paginator.get_elided_page_range(page_obj.number, on_each_side=2, on_ends=1)
     context = {
         'posts': page_obj,
+        'page_range': page_range,
         'carousel_slides': carousel_slides,
         'trending_posts': trending_posts,
         'popular_posts': popular_posts,
@@ -84,8 +86,10 @@ def search(request):
     paginator = Paginator(posts, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    page_range = list(paginator.get_elided_page_range(page_obj.number, on_each_side=2, on_ends=1))
     return render(request, 'home.html', {
         'posts': page_obj,
+        'page_range': page_range,
         'query': query,
         'categories': categories,
         'carousel_slides': carousel_slides,
@@ -108,8 +112,10 @@ def category_filter(request, slug):
     paginator = Paginator(posts, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    page_range = list(paginator.get_elided_page_range(page_obj.number, on_each_side=2, on_ends=1))
     return render(request, 'home.html', {
         'posts': page_obj,
+        'page_range': page_range,
         'category': category,
         'categories': categories,
         'carousel_slides': carousel_slides,
@@ -785,9 +791,11 @@ def tag_detail(request, slug):
     paginator = Paginator(posts, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    page_range = list(paginator.get_elided_page_range(page_obj.number, on_each_side=2, on_ends=1))
     return render(request, 'tag_detail.html', {
         'tag': tag,
         'posts': page_obj,
+        'page_range': page_range,
         'categories': categories,
         'carousel_slides': carousel_slides,
         'trending_posts': trending_posts,
