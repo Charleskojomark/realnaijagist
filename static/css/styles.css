@@ -1702,3 +1702,205 @@ body {
 .popular-post:hover .popular-image {
     filter: brightness(1.1);
 }
+/* ====== PROFESSIONAL POST DETAIL REDESIGN ====== */
+.article-container {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+}
+
+@media (max-width: 992px) {
+    .article-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.article-main {
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border: 1px solid var(--border-color);
+}
+
+@media (max-width: 768px) {
+    .article-main {
+        padding: 1.5rem;
+    }
+}
+
+.article-header {
+    margin-bottom: 2.5rem;
+}
+
+.article-badge {
+    display: inline-block;
+    background: var(--light-gray);
+    color: var(--primary-green);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    margin-bottom: 1.5rem;
+}
+
+.article-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+    .article-title {
+        font-size: 2rem;
+    }
+}
+
+.article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.article-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.article-hero-image {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
+}
+
+.article-content {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #334155;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.article-content p {
+    margin-bottom: 1.75rem;
+}
+
+.article-content h2,
+.article-content h3 {
+    color: var(--text-dark);
+    margin: 2.5rem 0 1.25rem;
+    font-weight: 700;
+}
+
+.article-content h2 { font-size: 1.75rem; }
+.article-content h3 { font-size: 1.5rem; }
+
+.article-content blockquote {
+    border-left: 4px solid var(--primary-green);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    background: var(--light-gray);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: #475569;
+}
+
+.article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 3rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.article-tag {
+    background: var(--light-gray);
+    color: var(--text-dark);
+    padding: 0.4rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+}
+
+.article-tag:hover {
+    background: var(--primary-green);
+    color: var(--white);
+    border-color: var(--primary-green);
+}
+
+.article-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-dark);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-outline:hover {
+    background: var(--light-gray);
+    border-color: #cbd5e1;
+}
+
+.btn-outline.liked {
+    background: rgb(244 63 94 / 0.1);
+    color: var(--accent-red);
+    border-color: var(--accent-red);
+}
+
+.article-sidebar .widget {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.article-sidebar h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--primary-green);
+    display: inline-block;
+}
+
+.article-author-card {
+    text-align: center;
+}
+
+.article-author-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
