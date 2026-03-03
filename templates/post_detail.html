@@ -85,6 +85,7 @@ request.get_host }}{% static 'images/og-image.jpg' %}{% endif %}
 <!-- Professional typography styles are located in styles.css -->
 {% endblock %}
 
+{% block content %}
 <div class="article-container">
     <main class="article-main">
         <article>
@@ -339,7 +340,7 @@ request.get_host }}{% static 'images/og-image.jpg' %}{% endif %}
         </div>
     </aside>
 </div>
-
+{% endblock %}
 
 {% block extra_js %}
 <script>
