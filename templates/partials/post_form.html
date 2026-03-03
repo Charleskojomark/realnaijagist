@@ -101,8 +101,13 @@
                     {{ form.featured_image }}
                     {% if form.featured_image.help_text %}<small class="form-text text-muted"
                         style="display:block; margin-top:4px;">{{ form.featured_image.help_text }}</small>{% endif %}
-                    {% if form.featured_image.errors %}<ul class="errorlist">{% for error in form.featured_image.errors
-                        %}<li class="invalid-feedback">{{ error }}</li>{% endfor %}</ul>{% endif %}
+                    {% if form.featured_image.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.featured_image.errors %}
+                        <li class="invalid-feedback">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
@@ -111,8 +116,13 @@
                     {{ form.featured_video }}
                     {% if form.featured_video.help_text %}<small class="form-text text-muted"
                         style="display:block; margin-top:4px;">{{ form.featured_video.help_text }}</small>{% endif %}
-                    {% if form.featured_video.errors %}<ul class="errorlist">{% for error in form.featured_video.errors
-                        %}<li class="invalid-feedback">{{ error }}</li>{% endfor %}</ul>{% endif %}
+                    {% if form.featured_video.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.featured_video.errors %}
+                        <li class="invalid-feedback">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
@@ -121,9 +131,13 @@
                     {{ form.video_embed_url }}
                     {% if form.video_embed_url.help_text %}<small class="form-text text-muted"
                         style="display:block; margin-top:4px;">{{ form.video_embed_url.help_text }}</small>{% endif %}
-                    {% if form.video_embed_url.errors %}<ul class="errorlist">{% for error in
-                        form.video_embed_url.errors %}<li class="invalid-feedback">{{ error }}</li>{% endfor %}</ul>{%
-                    endif %}
+                    {% if form.video_embed_url.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.video_embed_url.errors %}
+                        <li class="invalid-feedback">{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
 
                 <div class="form-group" style="display: flex; align-items: center; gap: 8px;">
