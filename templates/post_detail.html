@@ -10,15 +10,21 @@
 {% block og_title %}{{ post.title }}{% endblock %}
 {% block og_description %}{{ post.excerpt|truncatechars:160|striptags }}{% endblock %}
 {% block og_image %}
-{% if post.get_image_url %}{{ post.get_image_url|absolute_url:request }}{% else %}{{ request.scheme }}://{{
-request.get_host }}{% static 'images/og-image.jpg' %}{% endif %}
+{% if post.get_image_url %}
+{{ post.get_image_url|absolute_url:request }}
+{% else %}
+{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}
+{% endif %}
 {% endblock %}
 {% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
 {% block twitter_title %}{{ post.title }}{% endblock %}
 {% block twitter_description %}{{ post.excerpt|truncatechars:160|striptags }}{% endblock %}
 {% block twitter_image %}
-{% if post.get_image_url %}{{ post.get_image_url|absolute_url:request }}{% else %}{{ request.scheme }}://{{
-request.get_host }}{% static 'images/og-image.jpg' %}{% endif %}
+{% if post.get_image_url %}
+{{ post.get_image_url|absolute_url:request }}
+{% else %}
+{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}
+{% endif %}
 {% endblock %}
 
 {% block extra_head %}
@@ -90,8 +96,9 @@ request.get_host }}{% static 'images/og-image.jpg' %}{% endif %}
     <main class="article-main">
         <article>
             <header class="article-header">
-                <a href="{% url 'news:category_detail' post.category.slug %}" class="article-badge">{{
-                    post.category.name }}</a>
+                <a href="{% url 'news:category_detail' post.category.slug %}" class="article-badge">
+                    {{ post.category.name }}
+                </a>
                 <h1 class="article-title">{{ post.title }}</h1>
                 <div class="article-meta">
                     <span>
@@ -303,9 +310,9 @@ request.get_host }}{% static 'images/og-image.jpg' %}{% endif %}
                             loading="lazy" style="height: 160px;">
                     </a>
                     <div class="post-content" style="padding: 1.25rem;">
-                        <span class="category-badge"
-                            style="font-size: 0.75rem; margin-bottom: 0.5rem; display: inline-block;">{{
-                            related_post.category.name }}</span>
+                        style="font-size: 0.75rem; margin-bottom: 0.5rem; display: inline-block;">
+                        {{ related_post.category.name }}
+                        </span>
                         <h3 class="post-title" style="font-size: 1.1rem; margin-bottom: 0.5rem;"><a
                                 href="{{ related_post.get_absolute_url }}">{{ related_post.title|truncatechars:50 }}</a>
                         </h3>
@@ -324,8 +331,13 @@ request.get_host }}{% static 'images/og-image.jpg' %}{% endif %}
         <div class="widget article-author-card">
             <img src="https://ui-avatars.com/api/?name={{ post.author.username }}&background=0284c7&color=fff"
                 alt="Author">
-            <h3>{% if post.author.first_name %}{{ post.author.first_name }} {{ post.author.last_name }}{% else %}{{
-                post.author.username }}{% endif %}</h3>
+            <h3>
+                {% if post.author.first_name %}
+                {{ post.author.first_name }} {{ post.author.last_name }}
+                {% else %}
+                {{ post.author.username }}
+                {% endif %}
+            </h3>
             <p>Author at RealNaijaGist</p>
         </div>
 
@@ -333,8 +345,11 @@ request.get_host }}{% static 'images/og-image.jpg' %}{% endif %}
             <h3>Categories</h3>
             <ul class="nav-menu" style="display:flex; flex-direction:column; gap:0.5rem; align-items:flex-start;">
                 {% for category in categories %}
-                <li><a href="{% url 'news:category_detail' category.slug %}" style="color:var(--text-dark);">{{
-                        category.name }}</a></li>
+                <li>
+                    <a href="{% url 'news:category_detail' category.slug %}" style="color:var(--text-dark);">
+                        {{ category.name }}
+                    </a>
+                </li>
                 {% endfor %}
             </ul>
         </div>

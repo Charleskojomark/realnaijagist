@@ -89,15 +89,17 @@
 
                 <div class="form-group" style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
                     {{ form.is_trending }}
-                    <label for="{{ form.is_trending.id_for_label }}" class="form-label" style="margin: 0;">{{
-                        form.is_trending.label }}</label>
+                    <label for="{{ form.is_trending.id_for_label }}" class="form-label" style="margin: 0;">
+                        {{ form.is_trending.label }}
+                    </label>
                 </div>
 
                 <h4 style="margin: 15px 0 10px 0; font-size: 1rem; color: var(--text-dark);">Media</h4>
 
                 <div class="form-group">
-                    <label for="{{ form.featured_image.id_for_label }}" class="form-label">{{ form.featured_image.label
-                        }}</label>
+                    <label for="{{ form.featured_image.id_for_label }}" class="form-label">
+                        {{ form.featured_image.label }}
+                    </label>
                     {{ form.featured_image }}
                     {% if form.featured_image.help_text %}<small class="form-text text-muted"
                         style="display:block; margin-top:4px;">{{ form.featured_image.help_text }}</small>{% endif %}
@@ -111,8 +113,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="{{ form.featured_video.id_for_label }}" class="form-label">{{ form.featured_video.label
-                        }}</label>
+                    <label for="{{ form.featured_video.id_for_label }}" class="form-label">
+                        {{ form.featured_video.label }}
+                    </label>
                     {{ form.featured_video }}
                     {% if form.featured_video.help_text %}<small class="form-text text-muted"
                         style="display:block; margin-top:4px;">{{ form.featured_video.help_text }}</small>{% endif %}
@@ -126,8 +129,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="{{ form.video_embed_url.id_for_label }}" class="form-label">{{
-                        form.video_embed_url.label }}</label>
+                    <label for="{{ form.video_embed_url.id_for_label }}" class="form-label">
+                        {{ form.video_embed_url.label }}
+                    </label>
                     {{ form.video_embed_url }}
                     {% if form.video_embed_url.help_text %}<small class="form-text text-muted"
                         style="display:block; margin-top:4px;">{{ form.video_embed_url.help_text }}</small>{% endif %}
@@ -142,8 +146,9 @@
 
                 <div class="form-group" style="display: flex; align-items: center; gap: 8px;">
                     {{ form.is_video_post }}
-                    <label for="{{ form.is_video_post.id_for_label }}" class="form-label" style="margin: 0;">{{
-                        form.is_video_post.label }}</label>
+                    <label for="{{ form.is_video_post.id_for_label }}" class="form-label" style="margin: 0;">
+                        {{ form.is_video_post.label }}
+                    </label>
                 </div>
             </div>
         </div>
