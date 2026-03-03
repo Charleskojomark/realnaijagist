@@ -163,37 +163,69 @@ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}{% e
                     </p>
                 </div>
                 {% endif %}
+                {% if user.is_authenticated %}
                 <div class="share-options-grid"
                     style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:1rem;">
                     <button type="button" class="share-option twitter" data-platform="twitter"
                         data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)" {% if
-                        user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}"
-                        data-hx-target="#share-count" data-hx-swap="innerHTML" {% endif %}
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;"><i
-                            class="fab fa-twitter"></i> <span>Twitter</span></button>
+                        data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
+                        data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                        data-hx-swap="innerHTML"
+                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
+                        <i class="fab fa-twitter"></i> <span>Twitter</span>
+                    </button>
                     <button type="button" class="share-option facebook" data-platform="facebook"
                         data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        onclick="handleShareClick(this)" {% if user.is_authenticated
-                        %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
-                        data-hx-swap="innerHTML" {% endif %}
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;"><i
-                            class="fab fa-facebook"></i> <span>Facebook</span></button>
+                        onclick="handleShareClick(this)" data-hx-post="{% url 'news:share_post' post.slug %}"
+                        data-hx-target="#share-count" data-hx-swap="innerHTML"
+                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
+                        <i class="fab fa-facebook"></i> <span>Facebook</span>
+                    </button>
                     <button type="button" class="share-option linkedin" data-platform="linkedin"
                         data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        data-title="{{ post.title|urlencode }}" onclick="handleShareClick(this)" {% if
-                        user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}"
-                        data-hx-target="#share-count" data-hx-swap="innerHTML" {% endif %}
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;"><i
-                            class="fab fa-linkedin"></i> <span>LinkedIn</span></button>
+                        data-title="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
+                        data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                        data-hx-swap="innerHTML"
+                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
+                        <i class="fab fa-linkedin"></i> <span>LinkedIn</span>
+                    </button>
                     <button type="button" class="share-option whatsapp" data-platform="whatsapp"
                         data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)" {% if
-                        user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}"
-                        data-hx-swap="innerHTML" {% endif %}
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;"><i
-                            class="fab fa-whatsapp"></i> <span>WhatsApp</span></button>
+                        data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
+                        data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-swap="innerHTML"
+                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
+                        <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
+                    </button>
                 </div>
+                {% else %}
+                <div class="share-options-grid"
+                    style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:1rem;">
+                    <button type="button" class="share-option twitter" data-platform="twitter"
+                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
+                        data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
+                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
+                        <i class="fab fa-twitter"></i> <span>Twitter</span>
+                    </button>
+                    <button type="button" class="share-option facebook" data-platform="facebook"
+                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
+                        onclick="handleShareClick(this)"
+                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
+                        <i class="fab fa-facebook"></i> <span>Facebook</span>
+                    </button>
+                    <button type="button" class="share-option linkedin" data-platform="linkedin"
+                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
+                        data-title="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
+                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
+                        <i class="fab fa-linkedin"></i> <span>LinkedIn</span>
+                    </button>
+                    <button type="button" class="share-option whatsapp" data-platform="whatsapp"
+                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
+                        data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
+                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
+                        <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
+                    </button>
+                </div>
+                {% endif %}
                 <div class="share-link-input"
                     style="display:flex; border:1px solid var(--border-color); border-radius:8px; overflow:hidden;">
                     <input type="text" id="shareLinkInput" value="{{ request.build_absolute_uri }}" readonly
