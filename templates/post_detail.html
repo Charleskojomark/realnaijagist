@@ -129,16 +129,20 @@ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}{% e
             {% endif %}
 
             <div class="article-actions">
-                <button class="btn-outline like-btn {% if has_liked %}liked{% endif %}" data-slug="{{ post.slug }}" {%
-                    if not user.is_authenticated %}onclick="showLoginMessage('like')" title="Please login to like" {%
-                    else %}hx-post="{% url 'news:like_post' post.slug %}" hx-target="#like-count" hx-swap="innerHTML"
-                    hx-indicator="#like-indicator" {% endif %}>
-                    <i class="{% if has_liked %}fas{% else %}far{% endif %} fa-heart"></i>
-                    <span id="like-count">{{ post.likes }}</span> Likes
-                </button>
-                <button id="share-btn" class="btn-outline" onclick="openShareDropdown()">
-                    <i class="far fa-share-square"></i> Share
-                </button>
+                {% if not user.is_authenticated %}
+                <button class="btn-outline like-btn {% if has_liked %}liked{% endif %}" data-slug="{{ post.slug }}"
+                    onclick="showLoginMessage('like')" title="Please login to like">
+                    {% else %}
+                    <button class="btn-outline like-btn {% if has_liked %}liked{% endif %}" data-slug="{{ post.slug }}"
+                        hx-post="{% url 'news:like_post' post.slug %}" hx-target="#like-count" hx-swap="innerHTML"
+                        hx-indicator="#like-indicator">
+                        {% endif %}
+                        <i class="{% if has_liked %}fas{% else %}far{% endif %} fa-heart"></i>
+                        <span id="like-count">{{ post.likes }}</span> Likes
+                    </button>
+                    <button id="share-btn" class="btn-outline" onclick="openShareDropdown()">
+                        <i class="far fa-share-square"></i> Share
+                    </button>
             </div>
         </article>
 
