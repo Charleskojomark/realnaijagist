@@ -1453,10 +1453,19 @@ body {
         flex-direction: row;
         align-items: center;
         padding: 0 1rem;
+        gap: 1.5rem;
     }
 
     .search-box {
-        max-width: 600px;
+        max-width: 400px;
+        flex-shrink: 0;
+    }
+
+    .category-filters {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        flex-grow: 1;
+        align-items: center;
     }
 
     .hero {
