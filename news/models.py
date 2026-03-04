@@ -296,10 +296,12 @@ class CarouselSlide(models.Model):
     # Images with optimization
     image = CloudinaryField('carousel', blank=True, null=True) 
     image_webp = models.ImageField(upload_to='carousel/webp/', blank=True, null=True)
+    scraped_image_url = models.URLField(max_length=500, blank=True, null=True, help_text="Stored URL for scraped posts (bypasses Cloudinary upload)")
     image_alt_text = models.CharField(max_length=100, blank=True)
     
     # Relationships
     author = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='carousel_slides')
+    post = models.ForeignKey('Post', on_delete=models.SET_NULL, null=True, blank=True, related_name='carousel_slide')
     
     # Analytics
     likes = models.PositiveIntegerField(default=0)
@@ -321,6 +323,8 @@ class CarouselSlide(models.Model):
         return f"{self.title} (Order: {self.order})"
 
     def get_absolute_url(self):
+        if self.post:
+            return self.post.get_absolute_url()
         return reverse('news:carousel_slide_detail', kwargs={'pk': self.pk})
 
     def increment_views(self, ip_address=None, user=None, user_agent='', referrer=''):
@@ -337,10 +341,12 @@ class CarouselSlide(models.Model):
 
     def get_image_url(self, size='original'):
         """Get optimized image URL"""
+        if self.scraped_image_url:
+            return self.scraped_image_url
         if size == 'webp' and self.image_webp:
             return self.image_webp.url
         elif self.image:
-            return self.image.url
+            return getattr(self.image, 'url', None)
         return None
 
     def get_responsive_images(self):

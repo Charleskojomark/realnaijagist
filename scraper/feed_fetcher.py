@@ -205,12 +205,10 @@ class FeedFetcher:
                     title=title,
                     subtitle=summary,
                     author=author,
-                    is_active=True
+                    is_active=True,
+                    scraped_image_url=post.cdn_image_url if post.cdn_image_url else None,
+                    post=post
                 )
-                if post.cdn_image_url:
-                    # Let's hope Cloudinary handles URL strings or we omit it for now
-                    # Or we download image for slide.
-                    pass
                 slide.save()
             except Exception as e:
                 logger.error(f"Error creating carousel slide: {e}")
