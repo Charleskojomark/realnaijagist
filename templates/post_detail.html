@@ -127,6 +127,34 @@
             </div>
             {% endif %}
 
+            <!-- TTS Player -->
+            <div class="tts-player-wrapper fade-in"
+                style="margin: 2rem 0; background: var(--bg-light); padding: 1rem 1.5rem; border-radius: 8px; border-left: 4px solid var(--primary-green); display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+                <div class="tts-controls" style="display: flex; align-items: center; gap: 1rem;">
+                    <button id="tts-play-btn" aria-label="Play Article Audio"
+                        style="background: var(--primary-green); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s, background 0.2s;">
+                        <i class="fas fa-play" style="font-size: 1.2rem; margin-left: 3px;" id="tts-play-icon"></i>
+                    </button>
+                    <div class="tts-status">
+                        <span id="tts-status-text"
+                            style="font-weight: 600; font-size: 1rem; color: var(--text-dark);">Listen to this
+                            article</span>
+                        <div id="tts-time" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">
+                            Estimated length: <span id="tts-duration" style="font-weight: 500;">calculating...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tts-settings" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <button id="tts-stop-btn"
+                        style="background: transparent; border: 1px solid var(--border-color); color: var(--text-dark); padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; display: none; font-size: 0.85rem; transition: background 0.2s;"><i
+                            class="fas fa-stop"></i> Stop</button>
+                    <select id="tts-voice-select"
+                        style="padding: 0.4rem; border-radius: 4px; border: 1px solid var(--border-color); background: #fff; max-width: 140px; font-size: 0.85rem; outline: none; cursor: pointer; color: var(--text-dark);">
+                        <option value="">Loading voices...</option>
+                    </select>
+                </div>
+            </div>
+
             <div class="article-content">
                 {{ post.content|add_paragraphs|safe }}
             </div>
@@ -136,7 +164,8 @@
                 style="margin: 2rem 0; padding: 1rem; background-color: var(--bg-light); border-left: 4px solid var(--primary-green); border-radius: 4px;">
                 <p style="margin: 0; font-size: 0.95rem; font-weight: 500;">
                     <em>This article originally appeared on <a href="{{ post.source_url }}" target="_blank"
-                            rel="noopener nofollow" style="color: var(--primary-green); text-decoration: underline;">{{ post.source_name|default:"another source" }}</a>.</em>
+                            rel="noopener nofollow" style="color: var(--primary-green); text-decoration: underline;">{{
+                            post.source_name|default:"another source" }}</a>.</em>
                 </p>
             </div>
             {% endif %}
@@ -189,24 +218,28 @@
                 style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
                 <button type="button" class="btn-share" data-platform="twitter"
                     data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}"
-                    onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated
+                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
                     data-hx-swap="innerHTML" {% endif %}
                     style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #1DA1F2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
                         class="fab fa-twitter"></i> <span>Twitter</span></button>
                 <button type="button" class="btn-share" data-platform="facebook"
-                    data-url="{{ post.get_absolute_url|urlencode }}" onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}"
+                    data-url="{{ post.get_absolute_url|urlencode }}" onclick="handleShareClick(this)" {% if
+                    user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}"
                     data-hx-target="#share-count" data-hx-swap="innerHTML" {% endif %}
                     style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #4267B2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
                         class="fab fa-facebook-f"></i> <span>Facebook</span></button>
                 <button type="button" class="btn-share" data-platform="linkedin"
                     data-url="{{ post.get_absolute_url|urlencode }}" data-title="{{ post.title|urlencode }}"
-                    onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated
+                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
                     data-hx-swap="innerHTML" {% endif %}
                     style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #0077b5; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
                         class="fab fa-linkedin-in"></i> <span>LinkedIn</span></button>
                 <button type="button" class="btn-share" data-platform="whatsapp"
                     data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}"
-                    onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated
+                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
                     data-hx-swap="innerHTML" {% endif %}
                     style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #25D366; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
                         class="fab fa-whatsapp"></i> <span>WhatsApp</span></button>
@@ -772,8 +805,152 @@
         window.addEventListener('resize', function () {
             if (window.innerWidth <= 768) {
                 initMobileImprovements();
-            }
         });
     });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    if (!("speechSynthesis" in window)) {
+        const ttsPlayer = document.querySelector(".tts-player-wrapper");
+        if(ttsPlayer) ttsPlayer.style.display = "none";
+        return;
+    }
+
+    const synth = window.speechSynthesis;
+    const playBtn = document.getElementById("tts-play-btn");
+    const playIcon = document.getElementById("tts-play-icon");
+    const stopBtn = document.getElementById("tts-stop-btn");
+    const voiceSelect = document.getElementById("tts-voice-select");
+    const statusText = document.getElementById("tts-status-text");
+    const durationText = document.getElementById("tts-duration");
+    const articleContent = document.querySelector(".article-content");
+    
+    let voices = [];
+    let utterance = null;
+    let isPlaying = false;
+    let isPaused = false;
+    
+    let textToRead = "";
+    if (articleContent) {
+        textToRead = articleContent.innerText || articleContent.textContent;
+        const wordCount = textToRead.split(/\s+/).length;
+        const minutes = Math.ceil(wordCount / 150);
+        if(durationText) durationText.innerText = minutes + (minutes === 1 ? " minute" : " minutes");
+    }
+
+    function populateVoices() {
+        if(!voiceSelect) return;
+        voices = synth.getVoices();
+        if(voices.length === 0) return;
+        
+        voiceSelect.innerHTML = "";
+        
+        const enVoices = voices.filter(v => v.lang.startsWith("en"));
+        const otherVoices = voices.filter(v => !v.lang.startsWith("en"));
+        const sortedVoices = [...enVoices, ...otherVoices];
+        
+        sortedVoices.forEach((voice, i) => {
+            const option = document.createElement("option");
+            option.textContent = `${voice.name} (${voice.lang})`;
+            option.setAttribute("data-lang", voice.lang);
+            option.setAttribute("data-name", voice.name);
+            voiceSelect.appendChild(option);
+        });
+        
+        let bestVoice = sortedVoices.find(v => v.name.includes("Google UK English Male")) || 
+                        sortedVoices.find(v => v.name.includes("Google US English")) ||
+                        sortedVoices[0];
+                        
+        if(bestVoice) {
+            for(let i=0; i<voiceSelect.options.length; i++) {
+                if(voiceSelect.options[i].getAttribute("data-name") === bestVoice.name) {
+                    voiceSelect.selectedIndex = i;
+                    break;
+                }
+            }
+        }
+    }
+
+    populateVoices();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoices;
+    }
+
+    function stopPlayback() {
+        synth.cancel();
+        isPlaying = false;
+        isPaused = false;
+        if(playIcon) {
+            playIcon.className = "fas fa-play";
+            playIcon.style.marginLeft = "3px";
+        }
+        if(playBtn) playBtn.style.background = "var(--primary-green)";
+        if(statusText) statusText.innerText = "Listen to this article";
+        if(stopBtn) stopBtn.style.display = "none";
+    }
+
+    if(playBtn) {
+        playBtn.addEventListener("click", function() {
+            if (isPlaying && !isPaused) {
+                synth.pause();
+                isPaused = true;
+                if(playIcon) {
+                    playIcon.className = "fas fa-play";
+                    playIcon.style.marginLeft = "3px";
+                }
+                playBtn.style.background = "var(--primary-green)";
+                if(statusText) statusText.innerText = "Paused";
+            } else if (isPlaying && isPaused) {
+                synth.resume();
+                isPaused = false;
+                if(playIcon) {
+                    playIcon.className = "fas fa-pause";
+                    playIcon.style.marginLeft = "0";
+                }
+                playBtn.style.background = "#e74c3c";
+                if(statusText) statusText.innerText = "Playing audio...";
+            } else {
+                if (!textToRead) return;
+                stopPlayback();
+                
+                utterance = new SpeechSynthesisUtterance(textToRead);
+                const selectedOption = voiceSelect?.selectedOptions[0]?.getAttribute("data-name");
+                if(selectedOption) {
+                    for(let i = 0; i < voices.length ; i++) {
+                        if(voices[i].name === selectedOption) {
+                            utterance.voice = voices[i];
+                            break;
+                        }
+                    }
+                }
+                
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+                
+                utterance.onend = stopPlayback;
+                utterance.onerror = stopPlayback;
+                
+                synth.speak(utterance);
+                
+                isPlaying = true;
+                isPaused = false;
+                if(playIcon) {
+                    playIcon.className = "fas fa-pause";
+                    playIcon.style.marginLeft = "0";
+                }
+                playBtn.style.background = "#e74c3c";
+                statusText.innerText = "Playing audio...";
+                stopBtn.style.display = "block";
+            }
+        });
+    }
+    
+    if(stopBtn) stopBtn.addEventListener("click", stopPlayback);
+    
+    window.addEventListener("beforeunload", function() {
+        synth.cancel();
+    });
+});
 </script>
 {% endblock %}
