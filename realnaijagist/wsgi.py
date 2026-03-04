@@ -14,3 +14,5 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'realnaijagist.settings')
 
 application = get_wsgi_application()
+
+# DEPLOY_RESTART_TRIGGER: 2026-03-04T12:10
