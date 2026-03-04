@@ -29,10 +29,18 @@ class FeedFetcher:
             self.source.save(update_fields=['last_fetched'])
 
         logger.info(f"Fetching RSS feed for {self.source.name} from {self.source.rss_url}")
-        feed = feedparser.parse(self.source.rss_url)
         
-        if feed.bozo and feed.bozo_exception:
-            logger.error(f"Error parsing feed from {self.source.name}: {feed.bozo_exception}")
+        try:
+            # Use requests with a browser User-Agent to bypass basic anti-bot blocks
+            response = requests.get(self.source.rss_url, headers=self.headers, timeout=15)
+            response.raise_for_status()
+            feed = feedparser.parse(response.content)
+        except Exception as e:
+            logger.error(f"Failed to fetch feed from {self.source.name}: {e}")
+            return {'added': 0, 'existing': 0, 'failed': 0, 'articles': []}
+        
+        if getattr(feed, 'bozo', False) and getattr(feed, 'bozo_exception', None):
+            logger.warning(f"Warning parsing feed from {self.source.name}: {feed.bozo_exception}")
 
         processed = 0
         results = {'added': 0, 'existing': 0, 'failed': 0, 'articles': []}
