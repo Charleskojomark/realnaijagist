@@ -1952,3 +1952,144 @@ body {
     border-radius: 50%;
     margin-bottom: 1rem;
 }
+
+/* =============================
+   Sidebar Category List (replaces .nav-menu to avoid conflict)
+   ============================= */
+.sidebar-category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar-category-list li a {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+    color: var(--text-dark);
+    text-decoration: none;
+}
+
+.sidebar-category-list li a:hover {
+    background: var(--light-gray);
+    color: var(--primary-green);
+}
+
+/* =============================
+   "Don't Miss" sidebar widget
+   ============================= */
+.dont-miss-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dont-miss-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.dont-miss-item:hover {
+    background: var(--light-gray);
+}
+
+.dont-miss-thumb {
+    width: 72px;
+    height: 54px;
+    min-width: 72px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.dont-miss-thumb-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light-gray);
+    color: var(--text-light);
+    font-size: 1.25rem;
+}
+
+.dont-miss-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.dont-miss-category {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary-green);
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.dont-miss-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.35;
+    margin: 0 0 0.25rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.dont-miss-date {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+/* =============================
+   Mobile: Article Actions
+   ============================= */
+@media (max-width: 600px) {
+    .article-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btn-outline {
+        width: 100%;
+        justify-content: center;
+        padding: 0.9rem 1rem;
+        font-size: 1rem;
+    }
+
+    .article-title {
+        font-size: 1.6rem;
+    }
+
+    .article-content {
+        font-size: 1.05rem;
+        line-height: 1.75;
+    }
+
+    .article-hero-image {
+        max-height: 280px;
+    }
+
+    .share-buttons-container {
+        flex-direction: column;
+    }
+
+    .btn-share {
+        width: 100%;
+        min-width: unset !important;
+    }
+}

@@ -153,7 +153,7 @@
                         <i class="{% if has_liked %}fas{% else %}far{% endif %} fa-heart"></i>
                         <span id="like-count">{{ post.likes }}</span> Likes
                     </button>
-                    <button id="share-btn" class="btn-outline"
+                    <button id="share-btn" class="btn-outline btn-share-toggle"
                         onclick="document.getElementById('shareSection').style.display = document.getElementById('shareSection').style.display === 'none' ? 'block' : 'none';">
                         <i class="far fa-share-square"></i> <span id="share-count">{{ post.shares }}</span> Shares
                     </button>
@@ -177,16 +177,35 @@
 
             <div class="share-buttons-container"
                 style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-                <button type="button" class="btn-share" data-platform="twitter" data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count" data-hx-swap="innerHTML"{% endif %} style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #1DA1F2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;">
+                <button type="button" class="btn-share" data-platform="twitter"
+                    data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated
+                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    data-hx-swap="innerHTML" {% endif %}
+                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #1DA1F2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;">
                     <i class="fab fa-twitter"></i> <span>Twitter</span>
                 </button>
-                <button type="button" class="btn-share" data-platform="facebook" data-url="{{ post.get_absolute_url|urlencode }}" onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count" data-hx-swap="innerHTML"{% endif %} style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #4267B2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;">
+                <button type="button" class="btn-share" data-platform="facebook"
+                    data-url="{{ post.get_absolute_url|urlencode }}" onclick="handleShareClick(this)" {% if
+                    user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}"
+                    data-hx-target="#share-count" data-hx-swap="innerHTML" {% endif %}
+                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #4267B2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;">
                     <i class="fab fa-facebook-f"></i> <span>Facebook</span>
                 </button>
-                <button type="button" class="btn-share" data-platform="linkedin" data-url="{{ post.get_absolute_url|urlencode }}" data-title="{{ post.title|urlencode }}" onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count" data-hx-swap="innerHTML"{% endif %} style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #0077b5; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;">
+                <button type="button" class="btn-share" data-platform="linkedin"
+                    data-url="{{ post.get_absolute_url|urlencode }}" data-title="{{ post.title|urlencode }}"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated
+                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    data-hx-swap="innerHTML" {% endif %}
+                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #0077b5; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;">
                     <i class="fab fa-linkedin-in"></i> <span>LinkedIn</span>
                 </button>
-                <button type="button" class="btn-share" data-platform="whatsapp" data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count" data-hx-swap="innerHTML"{% endif %} style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #25D366; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;">
+                <button type="button" class="btn-share" data-platform="whatsapp"
+                    data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated
+                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    data-hx-swap="innerHTML" {% endif %}
+                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #25D366; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;">
                     <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
                 </button>
             </div>
@@ -280,32 +299,54 @@
     </main>
 
     <aside class="article-sidebar">
-        <div class="widget article-author-card">
-            <img src="https://ui-avatars.com/api/?name={{ post.author.username }}&background=0284c7&color=fff"
-                alt="Author">
-            <h3>
-                {% if post.author.first_name %}
-                {{ post.author.first_name }} {{ post.author.last_name }}
-                {% else %}
-                {{ post.author.username }}
-                {% endif %}
-            </h3>
-            <p>Author at RealNaijaGist</p>
-        </div>
-
-        <div class="widget">
-            <h3>Categories</h3>
-            <ul class="nav-menu" style="display:flex; flex-direction:column; gap:0.5rem; align-items:flex-start;">
-                {% for category in categories %}
-                <li>
-                    <a href="{% url 'news:category_detail' category.slug %}" style="color:var(--text-dark);">
-                        {{ category.name }}
-                    </a>
-                </li>
+        {% if related_posts %}
+        <div class="widget dont-miss-widget">
+            <h3>Don't Miss</h3>
+            <div class="dont-miss-list">
+                {% for rp in related_posts|slice:":4" %}
+                <a href="{{ rp.get_absolute_url }}" class="dont-miss-item">
+                    {% if rp.get_image_url %}
+                    <img src="{{ rp.get_responsive_images.thumbnail|default:rp.get_image_url }}"
+                        alt="{{ rp.image_alt_text|default:rp.title }}" class="dont-miss-thumb" loading="lazy">
+                    {% else %}
+                    <div class="dont-miss-thumb dont-miss-thumb-fallback">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    {% endif %}
+                    <div class="dont-miss-text">
+                        <span class="dont-miss-category">{{ rp.category.name }}</span>
+                        <p class="dont-miss-title">{{ rp.title|truncatechars:60 }}</p>
+                        <span class="dont-miss-date">{{ rp.created_at|date:"M j, Y" }}</span>
+                    </div>
+                </a>
                 {% endfor %}
-            </ul>
+            </div>
         </div>
-    </aside>
+        {% endif %}
+        <img src="https://ui-avatars.com/api/?name={{ post.author.username }}&background=0284c7&color=fff" alt="Author">
+        <h3>
+            {% if post.author.first_name %}
+            {{ post.author.first_name }} {{ post.author.last_name }}
+            {% else %}
+            {{ post.author.username }}
+            {% endif %}
+        </h3>
+        <p>Author at RealNaijaGist</p>
+</div>
+
+<div class="widget">
+    <h3>Categories</h3>
+    <ul class="sidebar-category-list">
+        {% for category in categories %}
+        <li>
+            <a href="{% url 'news:category_detail' category.slug %}" style="color:var(--text-dark);">
+                {{ category.name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+</aside>
 </div>
 {% endblock %}
 
