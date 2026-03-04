@@ -304,12 +304,22 @@ body {
 
 .category-filters {
     display: flex;
-    flex-wrap: wrap;
     gap: 0.5rem;
-    justify-content: center;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.category-filters::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
 }
 
 .filter-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
     padding: 0.5rem 1rem;
     background: var(--light-gray);
     border: 1px solid var(--border-color);
