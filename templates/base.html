@@ -39,7 +39,7 @@
     <link rel="canonical" href="{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock %}">
     <!-- Favicon and Performance -->
     <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
-    <link rel="preload" href="{% static 'css/styles.css' %}?v=2.6" as="style">
+    <link rel="preload" href="{% static 'css/styles.css' %}?v=2.7" as="style">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <!-- Font Awesome -->
@@ -49,7 +49,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet" media="print" onload="this.media='all'">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=2.6">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=2.7">
     <!-- HTMX with Deferred Loading -->
     <script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
     {% block extra_css %}{% endblock %}

@@ -295,30 +295,18 @@
             </div>
         </div>
         {% endif %}
-        <img src="https://ui-avatars.com/api/?name={{ post.author.username }}&background=0284c7&color=fff" alt="Author">
-        <h3>
-            {% if post.author.first_name %}
-            {{ post.author.first_name }} {{ post.author.last_name }}
-            {% else %}
-            {{ post.author.username }}
-            {% endif %}
-        </h3>
-        <p>Author at RealNaijaGist</p>
-</div>
-
-<div class="widget">
-    <h3>Categories</h3>
-    <ul class="sidebar-category-list">
-        {% for category in categories %}
-        <li>
-            <a href="{% url 'news:category_detail' category.slug %}" style="color:var(--text-dark);">
-                {{ category.name }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-</div>
-</aside>
+        <div class="widget article-author-card">
+            <img src="https://ui-avatars.com/api/?name={{ post.author.username }}&background=0284c7&color=fff&size=80" alt="Author">
+            <h3>
+                {% if post.author.first_name %}
+                {{ post.author.first_name }} {{ post.author.last_name }}
+                {% else %}
+                {{ post.author.username }}
+                {% endif %}
+            </h3>
+            <p>Author at RealNaijaGist</p>
+        </div>
+    </aside>
 </div>
 {% endblock %}
 
