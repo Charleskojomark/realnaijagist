@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'taggit',
     'news.apps.NewsConfig',
+    'scraper.apps.ScraperConfig',
     'django_ckeditor_5',
 ]
 

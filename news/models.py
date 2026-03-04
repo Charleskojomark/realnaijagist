@@ -78,6 +78,11 @@ class Post(models.Model):
     
     # Editorial flags
     is_trending = models.BooleanField(default=False)  # Currently trending
+    
+    # Scraper / Aggregator fields
+    source_url = models.URLField(max_length=500, blank=True, help_text="Link to original article if scraped")
+    source_name = models.CharField(max_length=100, blank=True, help_text="Name of the original source (e.g. Punch Nigeria)")
+    is_aggregated = models.BooleanField(default=False, db_index=True, help_text="True if this post was auto-scraped")
 
     def __str__(self):
         return self.title

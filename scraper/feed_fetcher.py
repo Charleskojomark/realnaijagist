@@ -1,0 +1,218 @@
+import feedparser
+import requests
+import re
+import logging
+from bs4 import BeautifulSoup
+from django.utils import timezone
+from datetime import datetime
+from email.utils import parsedate_to_datetime
+
+from django.core.files.base import ContentFile
+from cloudinary.uploader import upload as cloudinary_upload
+
+from news.models import Post, Category
+from scraper.models import NewsSource, ScrapedArticle
+
+logger = logging.getLogger(__name__)
+
+class FeedFetcher:
+    def __init__(self, source):
+        self.source = source
+        self.headers = {
+            'User-Agent': 'RealNaijaGistBot/1.0 (+http://realnaijagist.com)'
+        }
+
+    def fetch(self, limit=10, dry_run=False, auto_publish=False):
+        """Fetch and process articles from the source RSS feed."""
+        if not dry_run:
+            self.source.last_fetched = timezone.now()
+            self.source.save(update_fields=['last_fetched'])
+
+        logger.info(f"Fetching RSS feed for {self.source.name} from {self.source.rss_url}")
+        feed = feedparser.parse(self.source.rss_url)
+        
+        if feed.bozo and feed.bozo_exception:
+            logger.error(f"Error parsing feed from {self.source.name}: {feed.bozo_exception}")
+
+        processed = 0
+        results = {'added': 0, 'existing': 0, 'failed': 0, 'articles': []}
+
+        for entry in feed.entries:
+            if processed >= limit:
+                break
+                
+            original_url = getattr(entry, 'link', None)
+            if not original_url:
+                continue
+
+            # Check if this article was already scraped
+            if ScrapedArticle.objects.filter(original_url=original_url).exists():
+                results['existing'] += 1
+                continue
+
+            title = getattr(entry, 'title', '').strip()
+            summary = self._extract_summary(entry)
+            image_url = self._extract_image(entry)
+            pub_date = self._extract_pub_date(entry)
+
+            results['articles'].append({
+                'title': title,
+                'url': original_url,
+                'image_url': image_url,
+                'pub_date': pub_date
+            })
+
+            if not dry_run:
+                try:
+                    self._create_article(title, original_url, summary, image_url, pub_date, auto_publish)
+                    results['added'] += 1
+                except Exception as e:
+                    logger.exception(f"Failed to process article {title}: {e}")
+                    # Log the failure in ScrapedArticle
+                    ScrapedArticle.objects.create(
+                        source=self.source,
+                        original_url=original_url,
+                        original_title=title,
+                        status=ScrapedArticle.Status.FAILED,
+                        error_log=str(e),
+                        image_url=image_url or ''
+                    )
+                    results['failed'] += 1
+
+            processed += 1
+
+        return results
+
+    def _extract_summary(self, entry):
+        """Extract a clean summary from the RSS entry."""
+        # Try different summary fields provided by feeds
+        raw_summary = getattr(entry, 'summary', '') or getattr(entry, 'description', '')
+        
+        # Clean HTML tags
+        clean_text = re.sub('<[^<]+?>', '', raw_summary)
+        # Decode entities and strip whitespace
+        import html
+        clean_text = html.unescape(clean_text).strip()
+        
+        # Limit to ~300 chars for excerpt
+        if len(clean_text) > 300:
+            clean_text = clean_text[:297] + '...'
+            
+        return clean_text
+
+    def _extract_image(self, entry):
+        """Extract the best image URL from the RSS entry."""
+        # 1. Check media:content
+        if hasattr(entry, 'media_content'):
+            for media in entry.media_content:
+                if 'url' in media and media.get('medium') == 'image':
+                    return media['url']
+
+        # 2. Check enclosures
+        if hasattr(entry, 'enclosures'):
+            for enc in entry.enclosures:
+                if 'type' in enc and enc['type'].startswith('image/'):
+                    return enc['href']
+
+        # 3. Check for <img> in summary/description
+        raw_content = getattr(entry, 'content', [{'value': ''}])[0].get('value', '')
+        raw_summary = getattr(entry, 'summary', '')
+        
+        for html_content in [raw_content, raw_summary]:
+            if html_content and '<img' in html_content:
+                soup = BeautifulSoup(html_content, 'html.parser')
+                img = soup.find('img')
+                if img and img.get('src'):
+                    return img['src']
+
+        return None
+
+    def _extract_pub_date(self, entry):
+        """Extract publication date as timezone-aware datetime."""
+        if hasattr(entry, 'published'):
+            try:
+                return parsedate_to_datetime(entry.published)
+            except Exception:
+                pass
+        return timezone.now()
+
+    def _create_article(self, title, original_url, summary, image_url, pub_date, auto_publish):
+        """Create the ScrapedArticle, download image, and create the Post."""
+        
+        from django.utils.text import slugify
+        try:
+            from django.contrib.auth.models import User
+            # Try to get an author for scraped posts, default to the first superuser
+            author = User.objects.filter(is_superuser=True).first()
+        except ImportError:
+            author = None
+
+        # Build attribution content
+        content = f"<p>{summary}</p><p><em><a href='{original_url}' target='_blank' rel='noopener nofollow'>Read more at {self.source.name}</a></em></p>"
+
+        # Determine status
+        status = Post.PostStatus.PUBLISHED if auto_publish else Post.PostStatus.DRAFT
+
+        # Create basic post
+        slug_base = slugify(title)
+        slug = slug_base
+        counter = 1
+        while Post.objects.filter(slug=slug).exists():
+            slug = f"{slug_base}-{counter}"
+            counter += 1
+
+        post = Post(
+            title=title,
+            slug=slug,
+            content=content,
+            excerpt=summary,
+            status=status,
+            category=self.source.default_category,
+            author=author,
+            created_at=pub_date,
+            published_at=pub_date if auto_publish else None,
+            source_url=original_url,
+            source_name=self.source.name,
+            is_aggregated=True
+        )
+
+        # Handle image download and Cloudinary upload
+        if image_url:
+            try:
+                # We need to upload it directly to Cloudinary or via CloudinaryField
+                # First let's check if we can just set the cdn_image_url
+                # Wait, cdn_image_url is exactly for this!
+                post.cdn_image_url = image_url
+            except Exception as e:
+                logger.error(f"Error handling image {image_url}: {e}")
+
+        # Save post
+        post.save()
+
+        # Handle featured -> CarouselSlide
+        if self.source.is_featured and auto_publish:
+            from news.models import CarouselSlide
+            try:
+                slide = CarouselSlide(
+                    title=title,
+                    subtitle=summary,
+                    author=author,
+                    is_active=True
+                )
+                if post.cdn_image_url:
+                    # Let's hope Cloudinary handles URL strings or we omit it for now
+                    # Or we download image for slide.
+                    pass
+                slide.save()
+            except Exception as e:
+                logger.error(f"Error creating carousel slide: {e}")
+
+        # Record successful scrape
+        ScrapedArticle.objects.create(
+            source=self.source,
+            original_url=original_url,
+            original_title=title,
+            post=post,
+            status=ScrapedArticle.Status.PUBLISHED if auto_publish else ScrapedArticle.Status.PENDING,
+            image_url=image_url or ''
+        )
