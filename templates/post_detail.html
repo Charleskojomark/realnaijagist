@@ -218,28 +218,24 @@
                 style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
                 <button type="button" class="btn-share" data-platform="twitter"
                     data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}"
-                    onclick="handleShareClick(this)" {% if user.is_authenticated
-                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
                     data-hx-swap="innerHTML" {% endif %}
                     style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #1DA1F2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
                         class="fab fa-twitter"></i> <span>Twitter</span></button>
                 <button type="button" class="btn-share" data-platform="facebook"
-                    data-url="{{ post.get_absolute_url|urlencode }}" onclick="handleShareClick(this)" {% if
-                    user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}"
+                    data-url="{{ post.get_absolute_url|urlencode }}" onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}"
                     data-hx-target="#share-count" data-hx-swap="innerHTML" {% endif %}
                     style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #4267B2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
                         class="fab fa-facebook-f"></i> <span>Facebook</span></button>
                 <button type="button" class="btn-share" data-platform="linkedin"
                     data-url="{{ post.get_absolute_url|urlencode }}" data-title="{{ post.title|urlencode }}"
-                    onclick="handleShareClick(this)" {% if user.is_authenticated
-                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
                     data-hx-swap="innerHTML" {% endif %}
                     style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #0077b5; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
                         class="fab fa-linkedin-in"></i> <span>LinkedIn</span></button>
                 <button type="button" class="btn-share" data-platform="whatsapp"
                     data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}"
-                    onclick="handleShareClick(this)" {% if user.is_authenticated
-                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
                     data-hx-swap="innerHTML" {% endif %}
                     style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #25D366; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
                         class="fab fa-whatsapp"></i> <span>WhatsApp</span></button>
