@@ -138,10 +138,9 @@ body {
 }
 
 .nav-menu {
-    display: none;
     position: fixed;
     top: 0;
-    left: -100%;
+    transform: translateX(-100%);
     width: 80%;
     height: 100%;
     background: var(--primary-green);
@@ -155,8 +154,7 @@ body {
 }
 
 .nav-menu.active {
-    display: flex;
-    left: 0;
+    transform: translateX(0);
 }
 
 .nav-menu li {
@@ -216,8 +214,7 @@ body {
 .mobile-menu-toggle {
     background: none;
     border: none;
-    color: #ffffff;
-    /* Explicitly set to white to fix mismatch */
+    color: var(--text-dark);
     font-size: 1.8rem;
     cursor: pointer;
     transition: var(--transition);
@@ -277,6 +274,7 @@ body {
 
 .search-input {
     flex: 1;
+    min-width: 0;
     padding: 1rem 1.5rem;
     border: none;
     background: transparent;
@@ -1355,7 +1353,26 @@ body {
     /* Small screen post image consistency */
     .post-image {
         height: 190px;
-        /* Medium height for small screens */
+    }
+
+    /* Modern search bar sizing for mobile */
+    .search-input {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .search-btn {
+        padding: 0.8rem 1.2rem;
+    }
+
+    /* Make sure menu links are always readable without hover on mobile */
+    .nav-menu a {
+        color: var(--white) !important;
+        opacity: 1 !important;
+    }
+
+    .nav-menu a:active {
+        background: rgba(255, 255, 255, 0.2);
     }
 }
 
