@@ -21,7 +21,6 @@ def add_paragraphs(value):
     
     # Check if content already contains <p> tags
     if '<p>' in value:
-        logger.debug("Found existing <p> tags, returning unchanged")
         return mark_safe(value)
 
     # Normalize double <br> tags to \n\n

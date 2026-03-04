@@ -138,21 +138,20 @@ class Post(models.Model):
     def get_preview_media(self):
         """
         Get the best available preview media for homepage/cards.
-        Priority: featured_image > video_thumbnail > default_video_placeholder
+        Priority: featured_image/cdn_image_url > video_thumbnail > default_video_placeholder
         """
-        # First try to get the featured image
-        if self.featured_image:
-            base_url = self.get_image_url()
-            if base_url:
-                return {
-                    'type': 'image',
-                    'url': f"{base_url}?w=300&h=200&c=fill",
-                    'alt': self.image_alt_text or self.title,
-                    'thumbnail': f"{base_url}?w=300&h=200&c=fill",
-                    'medium': f"{base_url}?w=600&h=400&c=fill",
-                    'large': f"{base_url}?w=1200&h=800&c=fill",
-                    'original': base_url
-                }
+        # First try to get the featured image or cdn_image_url
+        base_url = self.get_image_url()
+        if base_url:
+            return {
+                'type': 'image',
+                'url': f"{base_url}?w=300&h=200&c=fill",
+                'alt': self.image_alt_text or self.title,
+                'thumbnail': f"{base_url}?w=300&h=200&c=fill",
+                'medium': f"{base_url}?w=600&h=400&c=fill",
+                'large': f"{base_url}?w=1200&h=800&c=fill",
+                'original': base_url
+            }
         
         # If no image, try to get video thumbnail
         if self.video_thumbnail:
