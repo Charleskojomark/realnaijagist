@@ -153,100 +153,70 @@
                         <i class="{% if has_liked %}fas{% else %}far{% endif %} fa-heart"></i>
                         <span id="like-count">{{ post.likes }}</span> Likes
                     </button>
-                    <button id="share-btn" class="btn-outline" onclick="openShareDropdown()">
-                        <i class="far fa-share-square"></i> Share
+                    <button id="share-btn" class="btn-outline"
+                        onclick="document.getElementById('shareSection').style.display = document.getElementById('shareSection').style.display === 'none' ? 'block' : 'none';">
+                        <i class="far fa-share-square"></i> <span id="share-count">{{ post.shares }}</span> Shares
                     </button>
             </div>
         </article>
 
-        <!-- Share Modal -->
-        <div class="modern-share-menu" style="margin-bottom: 3rem;">
-            <div id="shareDropdown" class="share-dropdown" role="dialog" aria-labelledby="shareDropdownTitle"
-                aria-hidden="true">
-                <div class="share-dropdown-header">
-                    <h3 id="shareDropdownTitle" class="share-dropdown-title">Share</h3>
-                    <button type="button" class="share-dropdown-close" aria-label="Close"
-                        onclick="closeShareDropdown()"><i class="fas fa-times"></i></button>
-                </div>
-                {% if not user.is_authenticated %}
-                <div class="share-login-notice"
-                    style="background:#f8fafc; padding:1rem; border-radius:8px; margin-bottom:1rem; font-size:0.9rem;">
-                    <p><i class="fas fa-info-circle text-primary"></i> <a
-                            href="{% url 'news:login' %}?next={{ request.path }}">Login</a> to update the share count.
-                    </p>
-                </div>
-                {% endif %}
-                {% if user.is_authenticated %}
-                <div class="share-options-grid"
-                    style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:1rem;">
-                    <button type="button" class="share-option twitter" data-platform="twitter"
-                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
-                        data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
-                        data-hx-swap="innerHTML"
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
-                        <i class="fab fa-twitter"></i> <span>Twitter</span>
-                    </button>
-                    <button type="button" class="share-option facebook" data-platform="facebook"
-                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        onclick="handleShareClick(this)" data-hx-post="{% url 'news:share_post' post.slug %}"
-                        data-hx-target="#share-count" data-hx-swap="innerHTML"
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
-                        <i class="fab fa-facebook"></i> <span>Facebook</span>
-                    </button>
-                    <button type="button" class="share-option linkedin" data-platform="linkedin"
-                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        data-title="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
-                        data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
-                        data-hx-swap="innerHTML"
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
-                        <i class="fab fa-linkedin"></i> <span>LinkedIn</span>
-                    </button>
-                    <button type="button" class="share-option whatsapp" data-platform="whatsapp"
-                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
-                        data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-swap="innerHTML"
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
-                        <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
-                    </button>
-                </div>
-                {% else %}
-                <div class="share-options-grid"
-                    style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; margin-bottom:1rem;">
-                    <button type="button" class="share-option twitter" data-platform="twitter"
-                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
-                        <i class="fab fa-twitter"></i> <span>Twitter</span>
-                    </button>
-                    <button type="button" class="share-option facebook" data-platform="facebook"
-                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        onclick="handleShareClick(this)"
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
-                        <i class="fab fa-facebook"></i> <span>Facebook</span>
-                    </button>
-                    <button type="button" class="share-option linkedin" data-platform="linkedin"
-                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        data-title="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
-                        <i class="fab fa-linkedin"></i> <span>LinkedIn</span>
-                    </button>
-                    <button type="button" class="share-option whatsapp" data-platform="whatsapp"
-                        data-slug="{{ post.slug }}" data-url="{{ post.get_absolute_url|urlencode }}"
-                        data-text="{{ post.title|urlencode }}" onclick="handleShareClick(this)"
-                        style="padding:0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; align-items:center; gap:0.5rem; background:white; cursor:pointer;">
-                        <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
-                    </button>
-                </div>
-                {% endif %}
-                <div class="share-link-input"
-                    style="display:flex; border:1px solid var(--border-color); border-radius:8px; overflow:hidden;">
-                    <input type="text" id="shareLinkInput" value="{{ request.build_absolute_uri }}" readonly
-                        style="flex:1; padding:0.75rem; border:none; background:#f8fafc; outline:none; font-size:0.9rem;">
-                    <button type="button" class="copy-link-btn" onclick="copyShareLink()"
-                        style="background:var(--text-dark); color:white; border:none; padding:0 1rem; cursor:pointer; font-weight:600;"><i
-                            class="far fa-copy"></i> Copy</button>
-                </div>
+        <!-- Inline Share Section -->
+        <div id="shareSection" class="share-section"
+            style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--light-gray); border-radius: 8px;">
+            <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-dark);">Share this article</h3>
+
+            {% if not user.is_authenticated %}
+            <div class="share-login-notice"
+                style="background:#fff; padding:0.75rem; border-radius:8px; margin-bottom:1rem; font-size:0.9rem; border: 1px solid var(--border-color);">
+                <p><i class="fas fa-info-circle" style="color: var(--primary-green);"></i> <a
+                        href="{% url 'news:login' %}?next={{ request.path }}"
+                        style="font-weight: 600; color: var(--primary-green); text-decoration: underline;">Login</a> to
+                    update the official share count.</p>
+            </div>
+            {% endif %}
+
+            <div class="share-buttons-container"
+                style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                <button type="button" class="btn-share" data-platform="twitter"
+                    data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated
+                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    data-hx-swap="innerHTML" {% endif %}
+                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #1DA1F2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600; transition: transform 0.2s;">
+                    <i class="fab fa-twitter"></i> <span>Twitter</span>
+                </button>
+                <button type="button" class="btn-share" data-platform="facebook"
+                    data-url="{{ post.get_absolute_url|urlencode }}" onclick="handleShareClick(this)" {% if
+                    user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}"
+                    data-hx-target="#share-count" data-hx-swap="innerHTML" {% endif %}
+                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #4267B2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600; transition: transform 0.2s;">
+                    <i class="fab fa-facebook-f"></i> <span>Facebook</span>
+                </button>
+                <button type="button" class="btn-share" data-platform="linkedin"
+                    data-url="{{ post.get_absolute_url|urlencode }}" data-title="{{ post.title|urlencode }}"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated
+                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    data-hx-swap="innerHTML" {% endif %}
+                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #0077b5; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600; transition: transform 0.2s;">
+                    <i class="fab fa-linkedin-in"></i> <span>LinkedIn</span>
+                </button>
+                <button type="button" class="btn-share" data-platform="whatsapp"
+                    data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}"
+                    onclick="handleShareClick(this)" {% if user.is_authenticated
+                    %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
+                    data-hx-swap="innerHTML" {% endif %}
+                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #25D366; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600; transition: transform 0.2s;">
+                    <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
+                </button>
+            </div>
+
+            <div class="share-link-input"
+                style="display:flex; border:1px solid var(--border-color); border-radius:5px; overflow:hidden;">
+                <input type="text" id="shareLinkInput" value="{{ request.build_absolute_uri }}" readonly
+                    style="flex:1; padding:0.75rem; border:none; background:#fff; outline:none; font-size:0.9rem; color: var(--text-dark);">
+                <button type="button" class="copy-link-btn" onclick="copyShareLink()"
+                    style="background:var(--primary-green); color:white; border:none; padding:0 1.25rem; cursor:pointer; font-weight:600; transition: background 0.2s;"><i
+                        class="far fa-copy"></i> Copy</button>
             </div>
         </div>
 
@@ -310,8 +280,9 @@
                             loading="lazy" style="height: 160px;">
                     </a>
                     <div class="post-content" style="padding: 1.25rem;">
-                        style="font-size: 0.75rem; margin-bottom: 0.5rem; display: inline-block;">
-                        {{ related_post.category.name }}
+                        <span class="post-category"
+                            style="font-size: 0.75rem; margin-bottom: 0.5rem; display: inline-block;">
+                            {{ related_post.category.name }}
                         </span>
                         <h3 class="post-title" style="font-size: 1.1rem; margin-bottom: 0.5rem;"><a
                                 href="{{ related_post.get_absolute_url }}">{{ related_post.title|truncatechars:50 }}</a>
@@ -445,24 +416,10 @@
         }, 3000);
     }
 
-    // Modal functions
-    function openShareDropdown() {
-        const dropdown = document.getElementById('shareDropdown');
-        if (dropdown) {
-            dropdown.classList.add('active');
-            dropdown.setAttribute('aria-hidden', 'false');
-            console.log('Share dropdown opened successfully');
-        } else {
-            console.error('Share dropdown not found!');
-        }
-    }
-
     function closeShareDropdown() {
-        const dropdown = document.getElementById('shareDropdown');
-        if (dropdown) {
-            dropdown.classList.remove('active');
-            dropdown.setAttribute('aria-hidden', 'true');
-            console.log('Share dropdown closed successfully');
+        const section = document.getElementById('shareSection');
+        if (section) {
+            section.style.display = 'none';
         }
     }
 
@@ -492,25 +449,10 @@
         }
     }
 
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (event) {
-        const dropdown = document.getElementById('shareDropdown');
-        const shareBtn = document.getElementById('share-btn');
-
-        if (dropdown && dropdown.classList.contains('active')) {
-            if (!dropdown.contains(event.target) && !shareBtn.contains(event.target)) {
-                closeShareDropdown();
-            }
-        }
-    });
-
     // Add keyboard support
     document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape') {
-            const dropdown = document.getElementById('shareDropdown');
-            if (dropdown && dropdown.classList.contains('active')) {
-                closeShareDropdown();
-            }
+            closeShareDropdown();
         }
     });
 
@@ -821,133 +763,4 @@
         });
     });
 </script>
-
-<style>
-    /* Additional mobile-friendly styles */
-    @media (max-width: 768px) {
-        .modern-post-actions {
-            flex-direction: column;
-            gap: var(--spacing-3);
-            align-items: stretch;
-        }
-
-        .modern-action-btn,
-        .modern-share-btn {
-            width: 100%;
-            justify-content: center;
-            padding: var(--spacing-3) var(--spacing-4);
-            font-size: var(--font-size-base);
-        }
-
-        .modern-post-tags {
-            flex-wrap: wrap;
-            gap: var(--spacing-2);
-        }
-
-        .modern-tag {
-            font-size: var(--font-size-sm);
-            padding: var(--spacing-1) var(--spacing-2);
-        }
-
-        .modern-sidebar {
-            margin-top: var(--spacing-6);
-        }
-
-        .modern-widget {
-            padding: var(--spacing-4);
-        }
-
-        .modern-widget-title {
-            font-size: var(--font-size-lg);
-        }
-
-        .modern-category-list a {
-            font-size: var(--font-size-sm);
-            padding: var(--spacing-2) var(--spacing-3);
-        }
-    }
-
-    @media (max-width: 480px) {
-        .modern-post-actions {
-            gap: var(--spacing-2);
-        }
-
-        .modern-action-btn,
-        .modern-share-btn {
-            padding: var(--spacing-2) var(--spacing-3);
-            font-size: var(--font-size-sm);
-        }
-
-        .modern-post-tags {
-            gap: var(--spacing-1);
-        }
-
-        .modern-tag {
-            font-size: var(--font-size-xs);
-            padding: var(--spacing-1) var(--spacing-2);
-        }
-
-        .modern-widget {
-            padding: var(--spacing-3);
-        }
-
-        .modern-widget-title {
-            font-size: var(--font-size-base);
-        }
-
-        .modern-category-list a {
-            font-size: var(--font-size-xs);
-            padding: var(--spacing-1.5) var(--spacing-2);
-        }
-    }
-
-    /* Login link styling in toast messages */
-    .login-link {
-        color: var(--white);
-        text-decoration: underline;
-        font-weight: 600;
-        transition: var(--post-transition);
-    }
-
-    .login-link:hover {
-        color: var(--golden-yellow);
-        text-decoration: none;
-    }
-
-    /* Improved mobile modal */
-    @media (max-width: 768px) {
-        .modal-content {
-            width: 95%;
-            max-width: none;
-            margin: 20px auto;
-            padding: var(--spacing-4);
-        }
-
-        .modal-content h3 {
-            font-size: var(--font-size-lg);
-        }
-
-        .modern-share-option {
-            padding: var(--spacing-3) var(--spacing-4);
-            font-size: var(--font-size-base);
-        }
-    }
-
-    @media (max-width: 480px) {
-        .modal-content {
-            width: 98%;
-            margin: 10px auto;
-            padding: var(--spacing-3);
-        }
-
-        .modal-content h3 {
-            font-size: var(--font-size-base);
-        }
-
-        .modern-share-option {
-            padding: var(--spacing-2) var(--spacing-3);
-            font-size: var(--font-size-sm);
-        }
-    }
-</style>
 {% endblock %}

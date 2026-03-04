@@ -1881,10 +1881,11 @@ body {
     background: var(--light-gray);
     color: var(--text-dark);
     padding: 0.4rem 1rem;
-    border-radius: 9999px;
+    border-radius: 6px;
     font-size: 0.9rem;
     font-weight: 500;
     border: 1px solid var(--border-color);
+    display: inline-block;
 }
 
 .article-tag:hover {
