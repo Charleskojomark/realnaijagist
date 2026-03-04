@@ -16,3 +16,4 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'realnaijagist.settings')
 application = get_wsgi_application()
 
 # DEPLOY_RESTART_TRIGGER: 2026-03-04T12:10
+# Namecheap deploy hook: Wed Mar  4 03:13:37 PM WAT 2026
