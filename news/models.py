@@ -323,8 +323,6 @@ class CarouselSlide(models.Model):
         return f"{self.title} (Order: {self.order})"
 
     def get_absolute_url(self):
-        if self.post:
-            return self.post.get_absolute_url()
         return reverse('news:carousel_slide_detail', kwargs={'pk': self.pk})
 
     def increment_views(self, ip_address=None, user=None, user_agent='', referrer=''):

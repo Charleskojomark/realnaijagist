@@ -808,7 +808,15 @@ def carousel_slide_detail(request, pk):
         CarouselSlide.objects.select_related('author'),
         pk=pk, is_active=True
     )
-    slide.increment_views()
+    slide.increment_views(
+        ip_address=request.META.get('REMOTE_ADDR'),
+        user=request.user if request.user.is_authenticated else None,
+        user_agent=request.META.get('HTTP_USER_AGENT', ''),
+        referrer=request.META.get('HTTP_REFERER', '')
+    )
+    
+    if slide.post:
+        return redirect(slide.post.get_absolute_url())
     categories = Category.objects.all()
     related_posts = Post.objects.filter(
         author=slide.author, status=Post.PostStatus.PUBLISHED
