@@ -816,6 +816,18 @@ def carousel_slide_detail(request, pk):
     )
     
     if slide.post:
+        # Also increment the actual Post object's views so it reflects accurately
+        # on the homepage and popular posts section
+        try:
+            slide.post.increment_views(
+                ip_address=request.META.get('REMOTE_ADDR'),
+                user=request.user if request.user.is_authenticated else None,
+                user_agent=request.META.get('HTTP_USER_AGENT', ''),
+                referrer=request.META.get('HTTP_REFERER', '')
+            )
+        except Exception as e:
+            logger.error(f"Error incrementing views for carousel post {slide.post.slug}: {str(e)}")
+            
         return redirect(slide.post.get_absolute_url())
     categories = Category.objects.all()
     related_posts = Post.objects.filter(
