@@ -264,7 +264,7 @@ class Post(models.Model):
     def attribution_text_source(self):
         """Returns safe text for article attribution without breaking HTML."""
         name = self.source_name if self.source_name else "another source"
-        return f"This article originally appeared on {name}"
+        return name
 
     @classmethod
     def get_trending_posts(cls, limit=5):
