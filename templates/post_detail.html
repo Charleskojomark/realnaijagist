@@ -278,8 +278,8 @@
                                 style="font-size: 0.75rem; margin-bottom: 0.5rem; display: inline-block;">
                                 {{ related_post.category.name }}
                             </span>
-                            <h3 class="post-title" style="font-size: 1.1rem; margin-bottom: 0.5rem;"><a
-                                    href="{{ related_post.get_absolute_url }}">{{ related_post.title|truncatechars:50
+                            <h3 class="post-title" style="font-size: 1.1rem; margin-bottom: 0.5rem;">
+                                <a href="{{ related_post.get_absolute_url }}">{{ related_post.title|truncatechars:50
                                     }}</a>
                             </h3>
                             <div class="post-meta" style="font-size: 0.85rem;">
