@@ -117,15 +117,22 @@ class FeedFetcher:
             response.raise_for_status()
             soup = BeautifulSoup(response.content, 'html.parser')
             
-            # Common article containers
-            article_body = None
+            # Common article containers - expanded for better coverage
             selectors = [
                 'article',
+                '.article-body',
+                '.article-content',
                 '.entry-content',
                 '.post-content',
-                '.article-content',
+                '.post-body',
+                '.article__body',
+                '.article__content',
                 '[itemprop="articleBody"]',
+                '.story-content',
+                '.story-body',
                 '.content-inner',
+                '#article-body',
+                '#content-main',
             ]
             
             for selector in selectors:
@@ -135,21 +142,39 @@ class FeedFetcher:
                     break
                     
             if not article_body:
-                # Fallback to the largest div with paragraphs
-                divs = soup.find_all('div')
-                if divs:
-                    article_body = max(divs, key=lambda d: len(d.find_all('p')))
+                # Fallback: Find the container with the highest paragraph count
+                # but ignore common layout wrappers that are too high up
+                containers = soup.find_all(['div', 'section', 'main'])
+                best_container = None
+                max_paragraphs = 0
+                
+                for container in containers:
+                    # Skip very small or empty containers
+                    paragraphs = container.find_all('p', recursive=False)
+                    if len(paragraphs) > max_paragraphs:
+                        max_paragraphs = len(paragraphs)
+                        best_container = container
+                
+                if best_container and max_paragraphs >= 2:
+                    article_body = best_container
                     
             if article_body:
-                # Clean up unwanted elements
-                for element in article_body(["script", "style", "nav", "footer", "header", "aside", ".social-share", ".related-posts", ".advertisement", ".addtoany_share_save_container"]):
+                # Clean up unwanted elements - expanded list
+                unwanted = [
+                    "script", "style", "nav", "footer", "header", "aside", 
+                    ".social-share", ".related-posts", ".advertisement", 
+                    ".addtoany_share_save_container", ".author-bio", ".comments",
+                    ".newsletter-signup", ".inline-ad", ".tags-container"
+                ]
+                for element in article_body.select(", ".join(unwanted)):
                     element.decompose()
                     
                 # Extract paragraphs and wrap them nicely to keep formatting clean
                 paragraphs = article_body.find_all('p')
                 if paragraphs:
                     content = "".join([str(p) for p in paragraphs if p.text.strip()])
-                    if len(content) > 500: # Ensure we actually got substantial content
+                    # Check if we got enough content to be useful
+                    if len(re.sub('<[^<]+?>', '', content)) > 200:
                         return content
                         
         except Exception as e:
@@ -204,9 +229,8 @@ class FeedFetcher:
         except ImportError:
             author = None
 
-        # Build attribution content
-        display_content = full_content if full_content else f"<p>{summary}</p>"
-        content = f"{display_content}<hr style='margin: 2rem 0; border: 0; border-top: 1px solid #ccc;'><p><em><a href='{original_url}' target='_blank' rel='noopener nofollow'>This article originally appeared on {self.source.name}</a></em></p>"
+        # Content is now just the extracted body
+        content = full_content if full_content else f"<p>{summary}</p>"
 
         # Determine status
         status = Post.PostStatus.PUBLISHED if auto_publish else Post.PostStatus.DRAFT
