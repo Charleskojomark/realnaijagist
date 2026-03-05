@@ -2,6 +2,8 @@ import feedparser
 import requests
 import re
 import logging
+import trafilatura
+import cloudscraper
 from bs4 import BeautifulSoup
 from django.utils import timezone
 from datetime import datetime
@@ -111,13 +113,35 @@ class FeedFetcher:
         return clean_text
 
     def _fetch_full_article_content(self, url):
-        """Fetch and extract the full article content from the source URL."""
+        """Fetch and extract the full article content from the source URL using Trafilatura."""
         try:
-            response = requests.get(url, headers=self.headers, timeout=15)
+            # Use Cloudscraper to bypass Cloudflare/WAF anti-bot protections
+            scraper = cloudscraper.create_scraper(
+                browser={
+                    'browser': 'chrome',
+                    'platform': 'windows',
+                    'desktop': True
+                }
+            )
+            response = scraper.get(url, timeout=15)
             response.raise_for_status()
+
+            # First try with Trafilatura for precise extraction
+            content = trafilatura.extract(
+                response.text, 
+                include_images=False,
+                include_links=True,
+                favor_precision=True,
+                output_format="html"
+            )
+            
+            if content and len(re.sub('<[^<]+?>', '', content)) > 200:
+                return content
+            
+            # Fallback to BeautifulSoup if Trafilatura fails
             soup = BeautifulSoup(response.content, 'html.parser')
             
-            # Common article containers - expanded for better coverage
+            # Common article containers
             selectors = [
                 'article',
                 '.article-body',
@@ -125,16 +149,10 @@ class FeedFetcher:
                 '.entry-content',
                 '.post-content',
                 '.post-body',
-                '.article__body',
-                '.article__content',
-                '[itemprop="articleBody"]',
                 '.story-content',
-                '.story-body',
-                '.content-inner',
-                '#article-body',
-                '#content-main',
             ]
             
+            article_body = None
             for selector in selectors:
                 body = soup.select_one(selector)
                 if body:
@@ -142,38 +160,30 @@ class FeedFetcher:
                     break
                     
             if not article_body:
-                # Fallback: Find the container with the highest paragraph count
-                # but ignore common layout wrappers that are too high up
                 containers = soup.find_all(['div', 'section', 'main'])
                 best_container = None
                 max_paragraphs = 0
-                
                 for container in containers:
-                    # Skip very small or empty containers
                     paragraphs = container.find_all('p', recursive=False)
                     if len(paragraphs) > max_paragraphs:
                         max_paragraphs = len(paragraphs)
                         best_container = container
-                
                 if best_container and max_paragraphs >= 2:
                     article_body = best_container
                     
             if article_body:
-                # Clean up unwanted elements - expanded list
+                # Clean up unwanted elements
                 unwanted = [
                     "script", "style", "nav", "footer", "header", "aside", 
                     ".social-share", ".related-posts", ".advertisement", 
-                    ".addtoany_share_save_container", ".author-bio", ".comments",
-                    ".newsletter-signup", ".inline-ad", ".tags-container"
+                    ".comments", ".newsletter-signup"
                 ]
                 for element in article_body.select(", ".join(unwanted)):
                     element.decompose()
                     
-                # Extract paragraphs and wrap them nicely to keep formatting clean
                 paragraphs = article_body.find_all('p')
                 if paragraphs:
                     content = "".join([str(p) for p in paragraphs if p.text.strip()])
-                    # Check if we got enough content to be useful
                     if len(re.sub('<[^<]+?>', '', content)) > 200:
                         return content
                         
