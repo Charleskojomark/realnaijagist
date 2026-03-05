@@ -245,6 +245,27 @@ class Post(models.Model):
             created_at__gte=since_date
         ).order_by('-views', '-likes')[:limit]
 
+    @property
+    def related_title(self):
+        """Returns a shortened title safe for related post cards."""
+        return self.title[:47] + '...' if len(self.title) > 50 else self.title
+
+    @property
+    def needs_attribution_block(self):
+        """Only show the attribution block if the content doesn't already have it."""
+        if not self.is_aggregated or not self.source_url:
+            return False
+        # Hide if the scraper already appended it in the database
+        if "This article originally appeared on" in getattr(self, 'content', ''):
+            return False
+        return True
+
+    @property
+    def attribution_text_source(self):
+        """Returns safe text for article attribution without breaking HTML."""
+        name = self.source_name if self.source_name else "another source"
+        return f"This article originally appeared on {name}"
+
     @classmethod
     def get_trending_posts(cls, limit=5):
         """Get trending posts"""

@@ -159,13 +159,13 @@
                 {{ post.content|add_paragraphs|safe }}
             </div>
 
-            {% if post.is_aggregated and post.source_url %}
+            {% if post.needs_attribution_block %}
             <div class="article-attribution"
                 style="margin: 2rem 0; padding: 1rem; background-color: var(--bg-light); border-left: 4px solid var(--primary-green); border-radius: 4px;">
                 <p style="margin: 0; font-size: 0.95rem; font-weight: 500;">
                     <em>This article originally appeared on <a href="{{ post.source_url }}" target="_blank"
                             rel="noopener nofollow" style="color: var(--primary-green); text-decoration: underline;">{{
-                            post.source_name|default:"another source" }}</a>.</em>
+                            post.attribution_text_source }}</a>.</em>
                 </p>
             </div>
             {% endif %}
@@ -279,8 +279,7 @@
                                 {{ related_post.category.name }}
                             </span>
                             <h3 class="post-title" style="font-size: 1.1rem; margin-bottom: 0.5rem;">
-                                <a href="{{ related_post.get_absolute_url }}">{{ related_post.title|truncatechars:50
-                                    }}</a>
+                                <a href="{{ related_post.get_absolute_url }}">{{ related_post.related_title }}</a>
                             </h3>
                             <div class="post-meta" style="font-size: 0.85rem;">
                                 <span>{{ related_post.created_at|date:"M j, Y" }}</span>
