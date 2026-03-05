@@ -164,7 +164,8 @@
                 style="margin: 2rem 0; padding: 1rem; background-color: var(--bg-light); border-left: 4px solid var(--primary-green); border-radius: 4px;">
                 <p style="margin: 0; font-size: 0.95rem; font-weight: 500;">
                     <em>This article originally appeared on <a href="{{ post.source_url }}" target="_blank"
-                            rel="noopener nofollow" style="color: var(--primary-green); text-decoration: underline;">{{ post.source_name|default:"another source" }}</a>.</em>
+                            rel="noopener nofollow" style="color: var(--primary-green); text-decoration: underline;">{{
+                            post.source_name|default:"another source" }}</a>.</em>
                 </p>
             </div>
             {% endif %}
@@ -179,153 +180,117 @@
             </div>
             {% endif %}
 
-            <div class="article-actions">
+            <div class="article-actions"
+                style="display: flex; gap: 1rem; align-items: center; justify-content: flex-start; margin: 2rem 0; padding: 1.5rem 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
                 {% if not user.is_authenticated %}
-                <button class="btn-outline like-btn {% if has_liked %}liked{% endif %}" data-slug="{{ post.slug }}"
-                    onclick="showLoginMessage('like')" title="Please login to like">
+                <button class="btn-action like-btn {% if has_liked %}liked{% endif %}" data-slug="{{ post.slug }}"
+                    onclick="showLoginMessage('like')" title="Please login to like"
+                    style="flex: 1; max-width: 180px; display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.85rem; border-radius: 50px; border: 2px solid var(--primary-green); background: transparent; color: var(--primary-green); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
                     {% else %}
-                    <button class="btn-outline like-btn {% if has_liked %}liked{% endif %}" data-slug="{{ post.slug }}"
+                    <button class="btn-action like-btn {% if has_liked %}liked{% endif %}" data-slug="{{ post.slug }}"
                         hx-post="{% url 'news:like_post' post.slug %}" hx-target="#like-count" hx-swap="innerHTML"
-                        hx-indicator="#like-indicator">
+                        hx-indicator="#like-indicator"
+                        style="flex: 1; max-width: 180px; display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.85rem; border-radius: 50px; border: 2px solid var(--primary-green); background: transparent; color: var(--primary-green); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
                         {% endif %}
-                        <i class="{% if has_liked %}fas{% else %}far{% endif %} fa-heart"></i>
-                        <span id="like-count">{{ post.likes }}</span> Likes
+                        <i class="{% if has_liked %}fas{% else %}far{% endif %} fa-heart"
+                            style="font-size: 1.2rem;"></i>
+                        <span><strong id="like-count">{{ post.likes }}</strong> Likes</span>
                     </button>
-                    <button id="share-btn" class="btn-outline btn-share-toggle"
-                        onclick="document.getElementById('shareSection').style.display = document.getElementById('shareSection').style.display === 'none' ? 'block' : 'none';">
-                        <i class="far fa-share-square"></i> <span id="share-count">{{ post.shares }}</span> Shares
+
+                    <button id="native-share-btn" class="btn-action btn-share" data-title="{{ post.title }}"
+                        data-url="{{ request.build_absolute_uri }}" onclick="triggerNativeShare(this)"
+                        style="flex: 1; max-width: 180px; display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.85rem; border-radius: 50px; border: none; background: var(--primary-green); color: white; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <i class="fas fa-share-nodes" style="font-size: 1.2rem;"></i> <span>Share</span>
                     </button>
-            </div>
-        </article>
 
-        <!-- Inline Share Section -->
-        <div id="shareSection" class="share-section"
-            style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--light-gray); border-radius: 8px;">
-            <h3 style="font-size: 1.2rem; margin-bottom: 1rem; color: var(--text-dark);">Share this article</h3>
-
-            {% if not user.is_authenticated %}
-            <div class="share-login-notice"
-                style="background:#fff; padding:0.75rem; border-radius:8px; margin-bottom:1rem; font-size:0.9rem; border: 1px solid var(--border-color);">
-                <p><i class="fas fa-info-circle" style="color: var(--primary-green);"></i> <a
-                        href="{% url 'news:login' %}?next={{ request.path }}"
-                        style="font-weight: 600; color: var(--primary-green); text-decoration: underline;">Login</a> to
-                    update the official share count.</p>
-            </div>
-            {% endif %}
-
-            <div class="share-buttons-container"
-                style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-                <button type="button" class="btn-share" data-platform="twitter"
-                    data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}"
-                    onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
-                    data-hx-swap="innerHTML" {% endif %}
-                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #1DA1F2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
-                        class="fab fa-twitter"></i> <span>Twitter</span></button>
-                <button type="button" class="btn-share" data-platform="facebook"
-                    data-url="{{ post.get_absolute_url|urlencode }}" onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}"
-                    data-hx-target="#share-count" data-hx-swap="innerHTML" {% endif %}
-                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #4267B2; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
-                        class="fab fa-facebook-f"></i> <span>Facebook</span></button>
-                <button type="button" class="btn-share" data-platform="linkedin"
-                    data-url="{{ post.get_absolute_url|urlencode }}" data-title="{{ post.title|urlencode }}"
-                    onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
-                    data-hx-swap="innerHTML" {% endif %}
-                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #0077b5; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
-                        class="fab fa-linkedin-in"></i> <span>LinkedIn</span></button>
-                <button type="button" class="btn-share" data-platform="whatsapp"
-                    data-url="{{ post.get_absolute_url|urlencode }}" data-text="{{ post.title|urlencode }}"
-                    onclick="handleShareClick(this)" {% if user.is_authenticated %}data-hx-post="{% url 'news:share_post' post.slug %}" data-hx-target="#share-count"
-                    data-hx-swap="innerHTML" {% endif %}
-                    style="flex: 1; min-width: 120px; padding: 0.75rem; border: none; border-radius: 5px; background: #25D366; color: white; display: flex; justify-content: center; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600;"><i
-                        class="fab fa-whatsapp"></i> <span>WhatsApp</span></button>
-            </div>
-
-            <div class="share-link-input"
-                style="display:flex; border:1px solid var(--border-color); border-radius:5px; overflow:hidden;">
-                <input type="text" id="shareLinkInput" value="{{ request.build_absolute_uri }}" readonly
-                    style="flex:1; padding:0.75rem; border:none; background:#fff; outline:none; font-size:0.9rem; color: var(--text-dark);">
-                <button type="button" class="copy-link-btn" onclick="copyShareLink()"
-                    style="background:var(--primary-green); color:white; border:none; padding:0 1.25rem; cursor:pointer; font-weight:600; transition: background 0.2s;"><i
-                        class="far fa-copy"></i> Copy</button>
-            </div>
-        </div>
-
-        <section class="article-comments"
-            style="margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--border-color);">
-            <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-dark);">Comments</h2>
-
-            {% if user.is_authenticated %}
-            <form method="post" action="{% url 'news:post_detail' post.slug %}" style="margin-bottom: 2.5rem;">
-                {% csrf_token %}
-                <div class="form-group" style="margin-bottom: 1rem;">
-                    {{ comment_form.content }}
-                </div>
-                <button type="submit" class="btn-primary" style="padding: 0.75rem 2rem;">Post Comment</button>
-            </form>
-            {% else %}
-            <div
-                style="background: var(--light-gray); padding: 1.5rem; border-radius: 8px; text-align: center; margin-bottom: 2.5rem; border: 1px solid var(--border-color);">
-                <p>Please <a href="{% url 'news:login' %}?next={{ request.path }}"
-                        style="font-weight: 600; text-decoration: underline;">login</a> to leave a comment.</p>
-            </div>
-            {% endif %}
-
-            <div class="comments-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
-                {% for comment in comments %}
-                <div class="comment-item" style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--light-gray);">
-                    <div class="comment-header"
-                        style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <span style="font-weight: 600; color: var(--text-dark);">
-                            {% if comment.author.first_name and comment.author.last_name %}
-                            {{ comment.author.first_name }} {{ comment.author.last_name }}
-                            {% else %}
-                            {{ comment.author.username }}
-                            {% endif %}
-                        </span>
-                        <span style="color: var(--text-light); font-size: 0.85rem;">{{ comment.created_at|timesince }}
-                            ago</span>
+                    <div id="share-fallback" style="display: none; align-items: center; gap: 0.5rem; flex: 1;">
+                        <input type="text" id="shareLinkInput" value="{{ request.build_absolute_uri }}" readonly
+                            style="flex: 1; max-width: 200px; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.85rem;">
+                        <button onclick="copyShareLink()" class="btn-primary"
+                            style="padding: 0.75rem 1rem; border-radius: 4px;"><i class="far fa-copy"></i> Copy</button>
                     </div>
-                    <div class="comment-body" style="color: #475569; line-height: 1.6;">
-                        {{ comment.content }}
-                    </div>
-                </div>
-                {% empty %}
-                <p style="color: var(--text-light); text-align: center; padding: 2rem 0;">No comments yet. Be the first
-                    to share your thoughts!</p>
-                {% endfor %}
             </div>
-        </section>
 
-        {% if related_posts %}
-        <section class="related-articles"
-            style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-color);">
-            <h2 style="font-size: 1.5rem; margin-bottom: 2rem; color: var(--text-dark);">Related Articles</h2>
-            <div class="posts-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                {% for related_post in related_posts %}
-                <article class="post-card"
-                    style="box-shadow: none; border: 1px solid var(--border-color); background: transparent;">
-                    <a href="{{ related_post.get_absolute_url }}">
-                        <img src="{{ related_post.get_responsive_images.thumbnail|default:related_post.get_image_url }}"
-                            alt="{{ related_post.image_alt_text|default:related_post.title }}" class="post-image"
-                            loading="lazy" style="height: 160px;">
-                    </a>
-                    <div class="post-content" style="padding: 1.25rem;">
-                        <span class="post-category"
-                            style="font-size: 0.75rem; margin-bottom: 0.5rem; display: inline-block;">
-                            {{ related_post.category.name }}
-                        </span>
-                        <h3 class="post-title" style="font-size: 1.1rem; margin-bottom: 0.5rem;"><a
-                                href="{{ related_post.get_absolute_url }}">{{ related_post.title|truncatechars:50 }}</a>
-                        </h3>
-                        <div class="post-meta" style="font-size: 0.85rem;">
-                            <span>{{ related_post.created_at|date:"M j, Y" }}</span>
+            <section class="article-comments"
+                style="margin-top: 3rem; padding-top: 3rem; border-top: 1px solid var(--border-color);">
+                <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-dark);">Comments</h2>
+
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'news:post_detail' post.slug %}" style="margin-bottom: 2.5rem;">
+                    {% csrf_token %}
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        {{ comment_form.content }}
+                    </div>
+                    <button type="submit" class="btn-primary" style="padding: 0.75rem 2rem;">Post Comment</button>
+                </form>
+                {% else %}
+                <div
+                    style="background: var(--light-gray); padding: 1.5rem; border-radius: 8px; text-align: center; margin-bottom: 2.5rem; border: 1px solid var(--border-color);">
+                    <p>Please <a href="{% url 'news:login' %}?next={{ request.path }}"
+                            style="font-weight: 600; text-decoration: underline;">login</a> to leave a comment.</p>
+                </div>
+                {% endif %}
+
+                <div class="comments-list" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    {% for comment in comments %}
+                    <div class="comment-item"
+                        style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--light-gray);">
+                        <div class="comment-header"
+                            style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-weight: 600; color: var(--text-dark);">
+                                {% if comment.author.first_name and comment.author.last_name %}
+                                {{ comment.author.first_name }} {{ comment.author.last_name }}
+                                {% else %}
+                                {{ comment.author.username }}
+                                {% endif %}
+                            </span>
+                            <span style="color: var(--text-light); font-size: 0.85rem;">{{ comment.created_at|timesince
+                                }}
+                                ago</span>
+                        </div>
+                        <div class="comment-body" style="color: #475569; line-height: 1.6;">
+                            {{ comment.content }}
                         </div>
                     </div>
-                </article>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
+                    {% empty %}
+                    <p style="color: var(--text-light); text-align: center; padding: 2rem 0;">No comments yet. Be the
+                        first
+                        to share your thoughts!</p>
+                    {% endfor %}
+                </div>
+            </section>
+
+            {% if related_posts %}
+            <section class="related-articles"
+                style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-color);">
+                <h2 style="font-size: 1.5rem; margin-bottom: 2rem; color: var(--text-dark);">Related Articles</h2>
+                <div class="posts-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    {% for related_post in related_posts %}
+                    <article class="post-card"
+                        style="box-shadow: none; border: 1px solid var(--border-color); background: transparent;">
+                        <a href="{{ related_post.get_absolute_url }}">
+                            <img src="{{ related_post.get_responsive_images.thumbnail|default:related_post.get_image_url }}"
+                                alt="{{ related_post.image_alt_text|default:related_post.title }}" class="post-image"
+                                loading="lazy" style="height: 160px;">
+                        </a>
+                        <div class="post-content" style="padding: 1.25rem;">
+                            <span class="post-category"
+                                style="font-size: 0.75rem; margin-bottom: 0.5rem; display: inline-block;">
+                                {{ related_post.category.name }}
+                            </span>
+                            <h3 class="post-title" style="font-size: 1.1rem; margin-bottom: 0.5rem;"><a
+                                    href="{{ related_post.get_absolute_url }}">{{ related_post.title|truncatechars:50
+                                    }}</a>
+                            </h3>
+                            <div class="post-meta" style="font-size: 0.85rem;">
+                                <span>{{ related_post.created_at|date:"M j, Y" }}</span>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
     </main>
 
     <aside class="article-sidebar">
@@ -533,123 +498,86 @@
         }
     }
 
-    function handleShareClick(element) {
-        const platform = element.getAttribute('data-platform');
-        const url = element.getAttribute('data-url');
-        const text = element.getAttribute('data-text') || '';
-        const title = element.getAttribute('data-title') || '';
+    function triggerNativeShare(btnElement) {
+        const title = btnElement.getAttribute('data-title') || document.title;
+        const url = btnElement.getAttribute('data-url') || window.location.href;
 
-        console.log('Share click:', { platform, url, text, title }); // Debug log
+        // Disable button briefly to prevent double taps
+        btnElement.style.opacity = '0.7';
+        btnElement.style.pointerEvents = 'none';
 
-        // Handle HTMX requests for authenticated users (if needed)
-        if (element.hasAttribute('data-hx-post') && element.hasAttribute('data-hx-target')) {
-            const hxPost = element.getAttribute('data-hx-post');
-            const hxTarget = element.getAttribute('data-hx-target');
-
-            // Use HTMX to make the request
-            htmx.ajax('POST', hxPost, {
-                target: hxTarget,
-                swap: 'innerHTML'
+        if (navigator.share) {
+            navigator.share({
+                title: title,
+                url: url
             }).then(() => {
-                showToast('Post shared successfully!', 'success');
-                closeShareDropdown();
-            }).catch(err => {
-                console.error('Share request failed:', err);
-                showToast('Failed to share post. Please try again.', 'error');
-            });
-            return;
-        }
+                console.log('Successfully shared natively');
+                // Optionally ping the server here via HTMX silently to log a share
+                try {
+                    const hxPost = "{% url 'news:share_post' post.slug %}";
+                    htmx.ajax('POST', hxPost, { swap: 'none' });
+                } catch (e) { console.log("HTMX logging failed", e); }
 
-        // Handle platform sharing for all users
-        const shareUrl = buildShareUrl(platform, url, text, title);
-        if (shareUrl) {
-            // Open platform in new window/tab
-            window.open(shareUrl, '_blank', 'width=600,height=400');
-            showToast(`Opening ${platform}...`, 'info');
-            closeShareDropdown();
+                showToast('Thanks for sharing!', 'success');
+            }).catch((error) => {
+                if (error.name !== 'AbortError') {
+                    console.error('Error sharing:', error);
+                    // Fallback to showing input if native share fails unexpectedly
+                    const fallback = document.getElementById('share-fallback');
+                    if (fallback) fallback.style.display = 'flex';
+                }
+            }).finally(() => {
+                btnElement.style.opacity = '1';
+                btnElement.style.pointerEvents = 'auto';
+            });
         } else {
-            console.error('Failed to build share URL for platform:', platform);
-            showToast('Failed to open sharing platform. Please try again.', 'error');
+            // Fallback for browsers that don't support native sharing (like older desktops)
+            console.log('Native Web Share API not supported in this browser.');
+            const nativeBtn = document.getElementById('native-share-btn');
+            const fallback = document.getElementById('share-fallback');
+
+            if (nativeBtn) nativeBtn.style.display = 'none';
+            if (fallback) fallback.style.display = 'flex';
+
+            btnElement.style.opacity = '1';
+            btnElement.style.pointerEvents = 'auto';
+
+            // Auto copy for convenience
+            copyShareLink();
         }
     }
 
-    function handleCopyLink(element, url) {
-        // Fix URL construction - handle undefined and malformed URLs
-        let fullUrl = '';
+    function copyShareLink() {
+        const linkInput = document.getElementById('shareLinkInput');
+        if (!linkInput) return;
 
-        if (url && url !== 'undefined') {
-            fullUrl = decodeURIComponent(url);
-            if (!fullUrl.startsWith('http')) {
-                fullUrl = window.location.origin + fullUrl;
-            }
-        } else {
-            // Fallback to current page URL
-            fullUrl = window.location.href;
-        }
-
-        console.log('Copying URL:', fullUrl); // Debug log
+        const fullUrl = linkInput.value;
+        const btnElement = document.querySelector('.copy-link-btn');
 
         navigator.clipboard.writeText(fullUrl).then(() => {
-            const originalContent = element.innerHTML;
-            element.innerHTML = '<i class="fas fa-check"></i> <span>Link Copied!</span>';
-            element.style.backgroundColor = '#10b981';
-            element.style.color = 'white';
-            showToast('Link copied to clipboard!', 'success');
+            if (btnElement) {
+                const originalContent = btnElement.innerHTML;
+                btnElement.innerHTML = '<i class="fas fa-check"></i> <span>Copied!</span>';
+                btnElement.style.backgroundColor = '#10b981';
+                btnElement.style.color = 'white';
+                showToast('Link copied to clipboard!', 'success');
 
-            setTimeout(() => {
-                element.innerHTML = originalContent;
-                element.style.backgroundColor = '';
-                element.style.color = '';
-                closeShareDropdown();
-            }, 2000);
+                setTimeout(() => {
+                    btnElement.innerHTML = originalContent;
+                    btnElement.style.backgroundColor = 'var(--primary-green)';
+                    btnElement.style.color = 'white';
+
+                    // Optionally hide fallback msg after
+                    const fallback = document.getElementById('share-fallback');
+                    if (fallback) fallback.style.display = 'none';
+                    const nativeBtn = document.getElementById('native-share-btn');
+                    if (nativeBtn) nativeBtn.style.display = 'flex';
+                }, 3000);
+            }
         }).catch(err => {
             console.error('Failed to copy link:', err);
-            const originalContent = element.innerHTML;
-            element.innerHTML = '<i class="fas fa-exclamation-triangle"></i> <span>Copy Failed</span>';
-            element.style.backgroundColor = '#ef4444';
-            element.style.color = 'white';
             showToast('Failed to copy link. Please try again.', 'error');
-
-            setTimeout(() => {
-                element.innerHTML = originalContent;
-                element.style.backgroundColor = '';
-                element.style.color = '';
-            }, 2000);
         });
-    }
-
-    function buildShareUrl(platform, url, text, title) {
-        // Ensure absolute URL - handle undefined and malformed URLs
-        let fullUrl = '';
-
-        if (url && url !== 'undefined') {
-            fullUrl = decodeURIComponent(url);
-            if (!fullUrl.startsWith('http')) {
-                fullUrl = window.location.origin + fullUrl;
-            }
-        } else {
-            // Fallback to current page URL
-            fullUrl = window.location.href;
-        }
-
-        // Get post title for better sharing
-        const postTitle = title || text || document.title || 'Check out this post';
-
-        console.log('Building share URL:', { platform, fullUrl, postTitle });
-
-        switch (platform) {
-            case 'twitter':
-                return `https://twitter.com/intent/tweet?text=${encodeURIComponent(postTitle)}&url=${encodeURIComponent(fullUrl)}`;
-            case 'facebook':
-                return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(fullUrl)}&quote=${encodeURIComponent(postTitle)}`;
-            case 'linkedin':
-                return `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(fullUrl)}&title=${encodeURIComponent(postTitle)}`;
-            case 'whatsapp':
-                return `https://api.whatsapp.com/send?text=${encodeURIComponent(postTitle + ' ' + fullUrl)}`;
-            default:
-                console.error('Unknown platform:', platform);
-                return null;
-        }
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -800,152 +728,153 @@
         window.addEventListener('resize', function () {
             if (window.innerWidth <= 768) {
                 initMobileImprovements();
+            }
         });
     });
 </script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    if (!("speechSynthesis" in window)) {
-        const ttsPlayer = document.querySelector(".tts-player-wrapper");
-        if(ttsPlayer) ttsPlayer.style.display = "none";
-        return;
-    }
-
-    const synth = window.speechSynthesis;
-    const playBtn = document.getElementById("tts-play-btn");
-    const playIcon = document.getElementById("tts-play-icon");
-    const stopBtn = document.getElementById("tts-stop-btn");
-    const voiceSelect = document.getElementById("tts-voice-select");
-    const statusText = document.getElementById("tts-status-text");
-    const durationText = document.getElementById("tts-duration");
-    const articleContent = document.querySelector(".article-content");
-    
-    let voices = [];
-    let utterance = null;
-    let isPlaying = false;
-    let isPaused = false;
-    
-    let textToRead = "";
-    if (articleContent) {
-        textToRead = articleContent.innerText || articleContent.textContent;
-        const wordCount = textToRead.split(/\s+/).length;
-        const minutes = Math.ceil(wordCount / 150);
-        if(durationText) durationText.innerText = minutes + (minutes === 1 ? " minute" : " minutes");
-    }
-
-    function populateVoices() {
-        if(!voiceSelect) return;
-        voices = synth.getVoices();
-        if(voices.length === 0) return;
-        
-        voiceSelect.innerHTML = "";
-        
-        const enVoices = voices.filter(v => v.lang.startsWith("en"));
-        const otherVoices = voices.filter(v => !v.lang.startsWith("en"));
-        const sortedVoices = [...enVoices, ...otherVoices];
-        
-        sortedVoices.forEach((voice, i) => {
-            const option = document.createElement("option");
-            option.textContent = `${voice.name} (${voice.lang})`;
-            option.setAttribute("data-lang", voice.lang);
-            option.setAttribute("data-name", voice.name);
-            voiceSelect.appendChild(option);
-        });
-        
-        let bestVoice = sortedVoices.find(v => v.name.includes("Google UK English Male")) || 
-                        sortedVoices.find(v => v.name.includes("Google US English")) ||
-                        sortedVoices[0];
-                        
-        if(bestVoice) {
-            for(let i=0; i<voiceSelect.options.length; i++) {
-                if(voiceSelect.options[i].getAttribute("data-name") === bestVoice.name) {
-                    voiceSelect.selectedIndex = i;
-                    break;
-                }
-            }
+    document.addEventListener("DOMContentLoaded", function () {
+        if (!("speechSynthesis" in window)) {
+            const ttsPlayer = document.querySelector(".tts-player-wrapper");
+            if (ttsPlayer) ttsPlayer.style.display = "none";
+            return;
         }
-    }
 
-    populateVoices();
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = populateVoices;
-    }
+        const synth = window.speechSynthesis;
+        const playBtn = document.getElementById("tts-play-btn");
+        const playIcon = document.getElementById("tts-play-icon");
+        const stopBtn = document.getElementById("tts-stop-btn");
+        const voiceSelect = document.getElementById("tts-voice-select");
+        const statusText = document.getElementById("tts-status-text");
+        const durationText = document.getElementById("tts-duration");
+        const articleContent = document.querySelector(".article-content");
 
-    function stopPlayback() {
-        synth.cancel();
-        isPlaying = false;
-        isPaused = false;
-        if(playIcon) {
-            playIcon.className = "fas fa-play";
-            playIcon.style.marginLeft = "3px";
+        let voices = [];
+        let utterance = null;
+        let isPlaying = false;
+        let isPaused = false;
+
+        let textToRead = "";
+        if (articleContent) {
+            textToRead = articleContent.innerText || articleContent.textContent;
+            const wordCount = textToRead.split(/\s+/).length;
+            const minutes = Math.ceil(wordCount / 150);
+            if (durationText) durationText.innerText = minutes + (minutes === 1 ? " minute" : " minutes");
         }
-        if(playBtn) playBtn.style.background = "var(--primary-green)";
-        if(statusText) statusText.innerText = "Listen to this article";
-        if(stopBtn) stopBtn.style.display = "none";
-    }
 
-    if(playBtn) {
-        playBtn.addEventListener("click", function() {
-            if (isPlaying && !isPaused) {
-                synth.pause();
-                isPaused = true;
-                if(playIcon) {
-                    playIcon.className = "fas fa-play";
-                    playIcon.style.marginLeft = "3px";
-                }
-                playBtn.style.background = "var(--primary-green)";
-                if(statusText) statusText.innerText = "Paused";
-            } else if (isPlaying && isPaused) {
-                synth.resume();
-                isPaused = false;
-                if(playIcon) {
-                    playIcon.className = "fas fa-pause";
-                    playIcon.style.marginLeft = "0";
-                }
-                playBtn.style.background = "#e74c3c";
-                if(statusText) statusText.innerText = "Playing audio...";
-            } else {
-                if (!textToRead) return;
-                stopPlayback();
-                
-                utterance = new SpeechSynthesisUtterance(textToRead);
-                const selectedOption = voiceSelect?.selectedOptions[0]?.getAttribute("data-name");
-                if(selectedOption) {
-                    for(let i = 0; i < voices.length ; i++) {
-                        if(voices[i].name === selectedOption) {
-                            utterance.voice = voices[i];
-                            break;
-                        }
+        function populateVoices() {
+            if (!voiceSelect) return;
+            voices = synth.getVoices();
+            if (voices.length === 0) return;
+
+            voiceSelect.innerHTML = "";
+
+            const enVoices = voices.filter(v => v.lang.startsWith("en"));
+            const otherVoices = voices.filter(v => !v.lang.startsWith("en"));
+            const sortedVoices = [...enVoices, ...otherVoices];
+
+            sortedVoices.forEach((voice, i) => {
+                const option = document.createElement("option");
+                option.textContent = `${voice.name} (${voice.lang})`;
+                option.setAttribute("data-lang", voice.lang);
+                option.setAttribute("data-name", voice.name);
+                voiceSelect.appendChild(option);
+            });
+
+            let bestVoice = sortedVoices.find(v => v.name.includes("Google UK English Male")) ||
+                sortedVoices.find(v => v.name.includes("Google US English")) ||
+                sortedVoices[0];
+
+            if (bestVoice) {
+                for (let i = 0; i < voiceSelect.options.length; i++) {
+                    if (voiceSelect.options[i].getAttribute("data-name") === bestVoice.name) {
+                        voiceSelect.selectedIndex = i;
+                        break;
                     }
                 }
-                
-                utterance.rate = 1.0;
-                utterance.pitch = 1.0;
-                
-                utterance.onend = stopPlayback;
-                utterance.onerror = stopPlayback;
-                
-                synth.speak(utterance);
-                
-                isPlaying = true;
-                isPaused = false;
-                if(playIcon) {
-                    playIcon.className = "fas fa-pause";
-                    playIcon.style.marginLeft = "0";
-                }
-                playBtn.style.background = "#e74c3c";
-                statusText.innerText = "Playing audio...";
-                stopBtn.style.display = "block";
             }
+        }
+
+        populateVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = populateVoices;
+        }
+
+        function stopPlayback() {
+            synth.cancel();
+            isPlaying = false;
+            isPaused = false;
+            if (playIcon) {
+                playIcon.className = "fas fa-play";
+                playIcon.style.marginLeft = "3px";
+            }
+            if (playBtn) playBtn.style.background = "var(--primary-green)";
+            if (statusText) statusText.innerText = "Listen to this article";
+            if (stopBtn) stopBtn.style.display = "none";
+        }
+
+        if (playBtn) {
+            playBtn.addEventListener("click", function () {
+                if (isPlaying && !isPaused) {
+                    synth.pause();
+                    isPaused = true;
+                    if (playIcon) {
+                        playIcon.className = "fas fa-play";
+                        playIcon.style.marginLeft = "3px";
+                    }
+                    playBtn.style.background = "var(--primary-green)";
+                    if (statusText) statusText.innerText = "Paused";
+                } else if (isPlaying && isPaused) {
+                    synth.resume();
+                    isPaused = false;
+                    if (playIcon) {
+                        playIcon.className = "fas fa-pause";
+                        playIcon.style.marginLeft = "0";
+                    }
+                    playBtn.style.background = "#e74c3c";
+                    if (statusText) statusText.innerText = "Playing audio...";
+                } else {
+                    if (!textToRead) return;
+                    stopPlayback();
+
+                    utterance = new SpeechSynthesisUtterance(textToRead);
+                    const selectedOption = voiceSelect?.selectedOptions[0]?.getAttribute("data-name");
+                    if (selectedOption) {
+                        for (let i = 0; i < voices.length; i++) {
+                            if (voices[i].name === selectedOption) {
+                                utterance.voice = voices[i];
+                                break;
+                            }
+                        }
+                    }
+
+                    utterance.rate = 1.0;
+                    utterance.pitch = 1.0;
+
+                    utterance.onend = stopPlayback;
+                    utterance.onerror = stopPlayback;
+
+                    synth.speak(utterance);
+
+                    isPlaying = true;
+                    isPaused = false;
+                    if (playIcon) {
+                        playIcon.className = "fas fa-pause";
+                        playIcon.style.marginLeft = "0";
+                    }
+                    playBtn.style.background = "#e74c3c";
+                    statusText.innerText = "Playing audio...";
+                    stopBtn.style.display = "block";
+                }
+            });
+        }
+
+        if (stopBtn) stopBtn.addEventListener("click", stopPlayback);
+
+        window.addEventListener("beforeunload", function () {
+            synth.cancel();
         });
-    }
-    
-    if(stopBtn) stopBtn.addEventListener("click", stopPlayback);
-    
-    window.addEventListener("beforeunload", function() {
-        synth.cancel();
     });
-});
 </script>
 {% endblock %}
