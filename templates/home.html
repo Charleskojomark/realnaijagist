@@ -42,14 +42,8 @@
                             <div class="hero-overlay">
                                 <h1 class="hero-title">{{ slide.title }}</h1>
                                 <div class="hero-meta">
-                                    <span><i class="fas fa-eye"></i>
-                                        {% if slide.post %}
-                                        {{ slide.post.views }} {% if slide.post.views == 1 %}view{% else %}views{% endif
-                                        %}
-                                        {% else %}
-                                        {{ slide.views }} {% if slide.views == 1 %}view{% else %}views{% endif %}
-                                        {% endif %}
-                                    </span>
+                                    <span><i class="fas fa-eye"></i> {{ slide.total_views }} view{{
+                                        slide.total_views|pluralize }}</span>
                                     <span><i class="fas fa-clock"></i> {{ slide.created_at|timesince }} ago</span>
                                 </div>
                             </div>

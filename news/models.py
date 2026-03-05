@@ -322,6 +322,12 @@ class CarouselSlide(models.Model):
     def __str__(self):
         return f"{self.title} (Order: {self.order})"
 
+    @property
+    def total_views(self):
+        if self.post:
+            return self.post.views
+        return self.views
+
     def get_absolute_url(self):
         return reverse('news:carousel_slide_detail', kwargs={'pk': self.pk})
 
