@@ -62,6 +62,8 @@ class FeedFetcher:
             summary = self._extract_summary(entry)
             image_url = self._extract_image(entry)
             pub_date = self._extract_pub_date(entry)
+            
+            full_content = self._fetch_full_article_content(original_url)
 
             results['articles'].append({
                 'title': title,
@@ -72,7 +74,7 @@ class FeedFetcher:
 
             if not dry_run:
                 try:
-                    self._create_article(title, original_url, summary, image_url, pub_date, auto_publish)
+                    self._create_article(title, original_url, summary, full_content, image_url, pub_date, auto_publish)
                     results['added'] += 1
                 except Exception as e:
                     logger.exception(f"Failed to process article {title}: {e}")
@@ -107,6 +109,53 @@ class FeedFetcher:
             clean_text = clean_text[:297] + '...'
             
         return clean_text
+
+    def _fetch_full_article_content(self, url):
+        """Fetch and extract the full article content from the source URL."""
+        try:
+            response = requests.get(url, headers=self.headers, timeout=15)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.content, 'html.parser')
+            
+            # Common article containers
+            article_body = None
+            selectors = [
+                'article',
+                '.entry-content',
+                '.post-content',
+                '.article-content',
+                '[itemprop="articleBody"]',
+                '.content-inner',
+            ]
+            
+            for selector in selectors:
+                body = soup.select_one(selector)
+                if body:
+                    article_body = body
+                    break
+                    
+            if not article_body:
+                # Fallback to the largest div with paragraphs
+                divs = soup.find_all('div')
+                if divs:
+                    article_body = max(divs, key=lambda d: len(d.find_all('p')))
+                    
+            if article_body:
+                # Clean up unwanted elements
+                for element in article_body(["script", "style", "nav", "footer", "header", "aside", ".social-share", ".related-posts", ".advertisement", ".addtoany_share_save_container"]):
+                    element.decompose()
+                    
+                # Extract paragraphs and wrap them nicely to keep formatting clean
+                paragraphs = article_body.find_all('p')
+                if paragraphs:
+                    content = "".join([str(p) for p in paragraphs if p.text.strip()])
+                    if len(content) > 500: # Ensure we actually got substantial content
+                        return content
+                        
+        except Exception as e:
+            logger.warning(f"Failed to fetch full content from {url}: {e}")
+            
+        return None
 
     def _extract_image(self, entry):
         """Extract the best image URL from the RSS entry."""
@@ -144,7 +193,7 @@ class FeedFetcher:
                 pass
         return timezone.now()
 
-    def _create_article(self, title, original_url, summary, image_url, pub_date, auto_publish):
+    def _create_article(self, title, original_url, summary, full_content, image_url, pub_date, auto_publish):
         """Create the ScrapedArticle, download image, and create the Post."""
         
         from django.utils.text import slugify
@@ -156,7 +205,8 @@ class FeedFetcher:
             author = None
 
         # Build attribution content
-        content = f"<p>{summary}</p><p><em><a href='{original_url}' target='_blank' rel='noopener nofollow'>Read more at {self.source.name}</a></em></p>"
+        display_content = full_content if full_content else f"<p>{summary}</p>"
+        content = f"{display_content}<hr style='margin: 2rem 0; border: 0; border-top: 1px solid #ccc;'><p><em><a href='{original_url}' target='_blank' rel='noopener nofollow'>This article originally appeared on {self.source.name}</a></em></p>"
 
         # Determine status
         status = Post.PostStatus.PUBLISHED if auto_publish else Post.PostStatus.DRAFT
