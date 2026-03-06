@@ -1,7 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}RealNaijaGist - Latest News{% endblock %}
+{% block title %}{% if category %}{{ category.name }} News - RealNaijaGist{% elif query %}Search: "{{ query }}" -
+RealNaijaGist{% else %}RealNaijaGist - Latest Nigerian News{% endif %}{% endblock %}
+
+{% block meta_description %}{% if category %}Read the latest {{ category.name }} news and stories on RealNaijaGist. Stay
+updated with breaking Nigerian news.{% elif query %}Search results for "{{ query }}" on RealNaijaGist - Your premier
+Nigerian news source.{% else %}RealNaijaGist: Your premier source for Nigerian news, entertainment, lifestyle, and
+trending stories. Stay updated daily.{% endif %}{% endblock %}
+
+{% block og_title %}{% if category %}{{ category.name }} News | RealNaijaGist{% elif query %}Search: {{ query }} |
+RealNaijaGist{% else %}RealNaijaGist - Latest Nigerian News{% endif %}{% endblock %}
+
+{% block og_description %}{% if category %}Read the latest {{ category.name }} news and stories on RealNaijaGist.{% elif
+query %}Search results for "{{ query }}" on RealNaijaGist.{% else %}Your premier source for Nigerian news,
+entertainment, lifestyle, and trending stories.{% endif %}{% endblock %}
 {% block content %}
 {% include 'partials/messages.html' %}
 <section class="search-container">

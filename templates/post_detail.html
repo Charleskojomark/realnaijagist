@@ -6,7 +6,9 @@
 {% block meta_keywords %}
 {{ post.tags.all|join:", " }}, {{ post.category.name }}, Nigerian news, entertainment
 {% endblock %}
-{% block canonical_url %}{{ request.build_absolute_uri }}{% endblock %}
+{% block canonical_url %}{{ request.scheme }}://{{ request.get_host }}{{ post.get_absolute_url }}{% endblock %}
+{% block og_type %}article{% endblock %}
+
 {% block og_title %}{{ post.title }}{% endblock %}
 {% block og_description %}{{ post.excerpt|truncatechars:160|striptags }}{% endblock %}
 {% block og_image %}
@@ -27,14 +29,61 @@
 {% endif %}
 {% endblock %}
 
-{% block extra_head %}
-<meta name="author" content="{{ post.author.username }}">
-<meta property="article:published_time" content="{{ post.created_at|date:'c' }}">
+{% block article_meta %}
+<meta property="article:published_time" content="{{ post.published_at|date:'c' }}">
 <meta property="article:modified_time" content="{{ post.updated_at|date:'c' }}">
 <meta property="article:section" content="{{ post.category.name }}">
+{% if post.author.get_full_name %}
+<meta property="article:author" content="{{ post.author.get_full_name }}">
+{% else %}
+<meta property="article:author" content="{{ post.author.username }}">
+{% endif %}
 {% for tag in post.tags.all %}
 <meta property="article:tag" content="{{ tag.name }}">
 {% endfor %}
+{% endblock article_meta %}
+
+{% block json_ld %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": "{{ post.title|escapejs }}",
+    "description": "{{ post.excerpt|striptags|truncatechars:160|escapejs }}",
+    "url": "{{ request.scheme }}://{{ request.get_host }}{{ post.get_absolute_url }}",
+    "datePublished": "{{ post.published_at|date:'c' }}",
+    "dateModified": "{{ post.updated_at|date:'c' }}",
+    "author": {
+        "@type": "Person",
+        "name": "{% if post.author.get_full_name %}{{ post.author.get_full_name|escapejs }}{% else %}{{ post.author.username|escapejs }}{% endif %}"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "RealNaijaGist",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}"
+        }
+    },
+    "image": {
+        "@type": "ImageObject",
+        "url": "{% if post.get_image_url %}{{ post.get_image_url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}{% endif %}",
+        "width": 1200,
+        "height": 630
+    },
+    "articleSection": "{{ post.category.name|escapejs }}",
+    "keywords": "{{ post.meta_keywords|default:post.category.name|escapejs }}",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ request.scheme }}://{{ request.get_host }}{{ post.get_absolute_url }}"
+    }
+}
+</script>
+{% endblock json_ld %}
+
+{% block extra_head %}
+<meta name="author"
+    content="{% if post.author.get_full_name %}{{ post.author.get_full_name }}{% else %}{{ post.author.username }}{% endif %}">
 
 <!-- Enhanced Open Graph Meta Tags -->
 <meta property="og:image:width" content="1200">
@@ -46,9 +95,7 @@
 <meta name="twitter:image:alt" content="{{ post.title|escapejs }} - RealNaijaGist">
 <meta name="twitter:site" content="@RealNaijaGist">
 <meta name="twitter:creator" content="@RealNaijaGist">
-
-<!-- Debug: OG Image URLs (remove in production) -->
-<!-- Post Image URL: {{ post.get_image_url }} -->
+-->
 <!-- Absolute Image URL: {{ post.get_image_url|absolute_url:request }} -->
 <!-- Fallback Image: {{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %} -->
 <!-- Structured Data for Article -->

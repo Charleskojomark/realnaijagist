@@ -4,4 +4,11 @@ Disallow: /wp-includes/
 Disallow: /xmlrpc.php
 Disallow: /admin/
 Disallow: /accounts/
+Disallow: /search/
+# Block paginated and filtered query strings (saves crawl budget)
+Disallow: /*?page=
+Disallow: /*?q=
+Disallow: /*?category=
+Allow: /
+
 Sitemap: https://realnaijagist.com/sitemap-index.xml
