@@ -30,16 +30,19 @@ TITLE_PROMPT = """Rephrase this news headline into different natural-sounding wo
 Original: {title}"""
 
 
-CONTENT_PROMPT = """You are a professional news editor. Rewrite the following article in your own original words. 
+CONTENT_PROMPT = """You are a professional news editor. Rewrite the following article in your own original words.
 
 Rules:
 - Keep ALL the facts, names, numbers, dates, and key information EXACTLY the same
 - Use completely different sentence structures and vocabulary
 - Write in a clear, engaging journalistic style
-- Do NOT add any new information, opinions, or commentary
-- Do NOT include any introduction like "Here is the rewritten article:" - just give the rewritten content
-- Return plain HTML with <p> tags only (no <h1>, <h2>, images or other elements)
-- Keep the same length approximately
+- Split the article into multiple SHORT paragraphs (3-6 sentences each) for easy reading
+- Each paragraph MUST be on its own line separated from the others
+- Do NOT add any new information, opinions, or commentary  
+- Do NOT include any introduction like "Here is the rewritten article:" - just output the content
+- Do NOT add any source attribution, footer, or mention where the article came from
+- Return the output as HTML: wrap EACH paragraph in its own <p>...</p> tag
+- Do NOT use any other HTML tags (no h1, h2, ul, strong, etc.)
 
 Article to rewrite:
 {content}"""

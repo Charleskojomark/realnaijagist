@@ -1840,7 +1840,8 @@ body {
 }
 
 .article-content p {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.9rem;
+    line-height: 1.9;
 }
 
 .article-content h2,
