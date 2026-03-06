@@ -21,7 +21,7 @@
     </div>
 </section>
 
-{% if not query %}
+{% if not query and not category %}
 <section class="hero fade-in">
     <div class="hero-content">
         <div class="hero-main">
@@ -103,8 +103,8 @@
 
 <div class="container">
     <main class="main-content">
-        <h2 class="category-title">{% if query %}Search Results for "{{ query }}"{% elif category %}Posts in {{
-            category.name }}{% else %}Latest Posts{% endif %}</h2>
+        <h2 class="category-title">{% if query %}Search Results for "{{ query }}"{% elif category %}{{ category.name
+            }}{% else %}Latest Posts{% endif %}</h2>
         <div class="posts-grid" id="postsGrid">
             {% for post in posts %}
             <article class="post-card slide-up">
