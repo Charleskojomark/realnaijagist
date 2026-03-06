@@ -116,3 +116,4 @@ xgboost==3.0.0
 youtube-dl==2021.12.17
 cloudscraper==1.2.71
 trafilatura==2.0.0
+openai==2.26.0

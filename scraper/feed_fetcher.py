@@ -14,6 +14,7 @@ from cloudinary.uploader import upload as cloudinary_upload
 
 from news.models import Post, Category
 from scraper.models import NewsSource, ScrapedArticle
+from scraper import ai_rewriter
 
 logger = logging.getLogger(__name__)
 
@@ -66,6 +67,11 @@ class FeedFetcher:
             pub_date = self._extract_pub_date(entry)
             
             full_content = self._fetch_full_article_content(original_url)
+
+            # AI rewrite: rephrase title & content for originality (copyright safe)
+            title = ai_rewriter.rewrite_title(title)
+            if full_content:
+                full_content = ai_rewriter.rewrite_content(full_content)
 
             results['articles'].append({
                 'title': title,
