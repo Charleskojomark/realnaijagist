@@ -36,8 +36,8 @@ Rules:
 - Keep ALL the facts, names, numbers, dates, and key information EXACTLY the same
 - Use completely different sentence structures and vocabulary
 - Write in a clear, engaging journalistic style
-- Split the article into multiple SHORT paragraphs (3-6 sentences each) for easy reading
-- Each paragraph MUST be on its own line separated from the others
+- Each paragraph must contain EXACTLY 1 to 2 sentences — no more
+- Use MANY short paragraphs so the article is very easy to read on mobile
 - Do NOT add any new information, opinions, or commentary  
 - Do NOT include any introduction like "Here is the rewritten article:" - just output the content
 - Do NOT add any source attribution, footer, or mention where the article came from
