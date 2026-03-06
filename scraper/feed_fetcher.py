@@ -198,30 +198,80 @@ class FeedFetcher:
             
         return None
 
+    # Keywords that indicate a generic logo/placeholder, not the article image
+    _LOGO_KEYWORDS = ('logo', 'placeholder', 'default', 'icon', 'banner', 'avatar', 'favicon', 'brand')
+
+    def _is_generic_image(self, url: str) -> bool:
+        """Return True if the URL looks like a site logo or placeholder, not a real article image."""
+        if not url:
+            return True
+        url_lower = url.lower()
+        return any(kw in url_lower for kw in self._LOGO_KEYWORDS)
+
+    def _scrape_article_image(self, article_url: str):
+        """Scrape the article page for the real featured image using og:image."""
+        try:
+            import cloudscraper as cs
+            scraper = cs.create_scraper(browser={'browser': 'chrome', 'platform': 'windows', 'desktop': True})
+            resp = scraper.get(article_url, timeout=12)
+            if resp.status_code != 200:
+                return None
+            soup = BeautifulSoup(resp.text, 'html.parser')
+            # 1. Try og:image — most reliable
+            og = soup.find('meta', property='og:image') or soup.find('meta', attrs={'name': 'og:image'})
+            if og and og.get('content'):
+                return og['content']
+            # 2. Try twitter:image
+            tw = soup.find('meta', attrs={'name': 'twitter:image'})
+            if tw and tw.get('content'):
+                return tw['content']
+            # 3. Look for a prominent article image
+            for selector in ['article img', '.post-thumbnail img', '.featured-image img', '.entry-content img']:
+                img = soup.select_one(selector)
+                if img and img.get('src') and not self._is_generic_image(img['src']):
+                    return img['src']
+        except Exception as e:
+            logger.warning(f"Failed to scrape article image from {article_url}: {e}")
+        return None
+
     def _extract_image(self, entry):
         """Extract the best image URL from the RSS entry."""
-        # 1. Check media:content
+        # 1. Check media:content (skip logos)
         if hasattr(entry, 'media_content'):
             for media in entry.media_content:
-                if 'url' in media and media.get('medium') == 'image':
-                    return media['url']
+                url = media.get('url', '')
+                if url and media.get('medium') == 'image' and not self._is_generic_image(url):
+                    return url
 
-        # 2. Check enclosures
+        # 2. Check enclosures (skip logos)
         if hasattr(entry, 'enclosures'):
             for enc in entry.enclosures:
-                if 'type' in enc and enc['type'].startswith('image/'):
-                    return enc['href']
+                url = enc.get('href', '')
+                if url and enc.get('type', '').startswith('image/') and not self._is_generic_image(url):
+                    return url
 
-        # 3. Check for <img> in summary/description
+        # 3. Check media:thumbnail
+        if hasattr(entry, 'media_thumbnail'):
+            for thumb in entry.media_thumbnail:
+                url = thumb.get('url', '')
+                if url and not self._is_generic_image(url):
+                    return url
+
+        # 4. Check for <img> in summary/description
         raw_content = getattr(entry, 'content', [{'value': ''}])[0].get('value', '')
         raw_summary = getattr(entry, 'summary', '')
-        
         for html_content in [raw_content, raw_summary]:
             if html_content and '<img' in html_content:
                 soup = BeautifulSoup(html_content, 'html.parser')
                 img = soup.find('img')
-                if img and img.get('src'):
-                    return img['src']
+                src = img.get('src', '') if img else ''
+                if src and not self._is_generic_image(src):
+                    return src
+
+        # 5. Last resort: scrape the article page for og:image
+        article_url = getattr(entry, 'link', None)
+        if article_url:
+            return self._scrape_article_image(article_url)
 
         return None
 
